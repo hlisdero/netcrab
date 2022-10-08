@@ -3,14 +3,17 @@ mod place_tests;
 
 use crate::net::token::Token;
 
-#[derive(Default)]
 pub struct Place {
+    pub label: Option<String>,
     tokens: Vec<Token>,
 }
 
 impl Place {
-    pub fn new() -> Place {
-        Place::default()
+    pub fn new(label: String) -> Place {
+        Place {
+            label: Some(label),
+            tokens: Vec::new(),
+        }
     }
 
     pub fn is_empty(&self) -> bool {
@@ -27,5 +30,14 @@ impl Place {
 
     pub fn get_tokens(&self) -> &Vec<Token> {
         &self.tokens
+    }
+}
+
+impl Default for Place {
+    fn default() -> Self {
+        Self {
+            label: None,
+            tokens: Vec::new(),
+        }
     }
 }
