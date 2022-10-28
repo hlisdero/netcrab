@@ -1,6 +1,8 @@
 use std::collections::HashSet;
 use std::hash::Hash;
 
+/// Trait to implement adding and removing references to the preset and the postset.
+/// The references are of type Self::RefType.
 pub trait Connectable {
     type RefType: Eq + Hash;
 
