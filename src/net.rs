@@ -1,19 +1,13 @@
-mod edge;
-mod place;
-mod transition;
+mod node;
 
 #[cfg(test)]
 mod net_tests;
 
-use crate::net::edge::Edge;
-use crate::net::place::Place;
-use crate::net::transition::Transition;
-
+use crate::net::node::{Place, Transition};
 #[derive(Default)]
 pub struct Net {
     places: Vec<Place>,
     transition: Vec<Transition>,
-    edges: Vec<Edge>,
 }
 
 impl Net {
@@ -35,9 +29,5 @@ impl Net {
 
     pub fn get_transitions(&self) -> &Vec<Transition> {
         &self.transition
-    }
-
-    pub fn get_edges(&self) -> &Vec<Edge> {
-        &self.edges
     }
 }

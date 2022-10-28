@@ -1,5 +1,4 @@
 use super::*;
-use crate::net::place::Place;
 
 #[test]
 fn new_default_has_no_places() {
