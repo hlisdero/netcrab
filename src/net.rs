@@ -1,3 +1,6 @@
+use crate::net::node_ref::{PlaceRef, TransitionRef};
+use std::collections::HashMap;
+
 mod node;
 mod node_ref;
 
@@ -6,29 +9,27 @@ mod net_tests;
 
 use crate::net::node::{Place, Transition};
 #[derive(Default)]
-pub struct Net {
-    places: Vec<Place>,
-    transition: Vec<Transition>,
+pub struct PetriNet {
+    places: HashMap<PlaceRef, Place>,
+    transitions: HashMap<TransitionRef, Transition>,
 }
 
-impl Net {
+impl PetriNet {
     pub fn get_size(&self) -> usize {
         self.places.len()
     }
 
-    pub fn add_place(&mut self, place: Place) {
-        self.places.push(place);
+    pub fn add_place(&mut self, place_label: &String) {
+        self.places.insert(
+            PlaceRef(place_label.clone()),
+            Place::new(place_label.clone()),
+        );
     }
 
-    pub fn add_transition(&mut self, transition: Transition) {
-        self.transition.push(transition);
-    }
-
-    pub fn get_places(&self) -> &Vec<Place> {
-        &self.places
-    }
-
-    pub fn get_transitions(&self) -> &Vec<Transition> {
-        &self.transition
+    pub fn add_transition(&mut self, transition_label: &String) {
+        self.transitions.insert(
+            TransitionRef(transition_label.clone()),
+            Transition::new(transition_label.clone()),
+        );
     }
 }
