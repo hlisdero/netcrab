@@ -8,6 +8,10 @@ pub struct Place {
     pub marking: usize,
 }
 
+pub struct Transition {
+    pub label: Option<String>,
+}
+
 impl Place {
     pub fn new(label: String) -> Place {
         Place {
@@ -33,23 +37,18 @@ impl Place {
     }
 }
 
+impl Transition {
+    pub fn new(label: String) -> Transition {
+        Transition { label: Some(label) }
+    }
+}
+
 impl Default for Place {
     fn default() -> Self {
         Self {
             label: None,
             marking: 0,
         }
-    }
-}
-
-#[derive(Clone)]
-pub struct Transition {
-    pub label: Option<String>,
-}
-
-impl Transition {
-    pub fn new(label: String) -> Transition {
-        Transition { label: Some(label) }
     }
 }
 
