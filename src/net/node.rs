@@ -8,6 +8,7 @@ mod place_tests;
 #[cfg(test)]
 mod transition_tests;
 
+#[derive(Default)]
 pub struct Place {
     pub label: Option<String>,
     pub marking: usize,
@@ -15,6 +16,7 @@ pub struct Place {
     pub postset: HashSet<TransitionRef>,
 }
 
+#[derive(Default)]
 pub struct Transition {
     pub label: Option<String>,
     pub preset: HashSet<PlaceRef>,
@@ -52,27 +54,6 @@ impl Transition {
     pub fn new(label: String) -> Transition {
         Transition {
             label: Some(label),
-            preset: HashSet::new(),
-            postset: HashSet::new(),
-        }
-    }
-}
-
-impl Default for Place {
-    fn default() -> Self {
-        Self {
-            label: None,
-            marking: 0,
-            preset: HashSet::new(),
-            postset: HashSet::new(),
-        }
-    }
-}
-
-impl Default for Transition {
-    fn default() -> Self {
-        Self {
-            label: None,
             preset: HashSet::new(),
             postset: HashSet::new(),
         }
