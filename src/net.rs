@@ -1,4 +1,5 @@
 mod node;
+mod node_ref;
 
 #[cfg(test)]
 mod net_tests;
