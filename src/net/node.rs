@@ -38,7 +38,7 @@ impl Place {
     }
 
     pub fn add_token(&mut self) {
-        self.marking += 1
+        self.marking += 1;
     }
 
     pub fn remove_token(&mut self) -> Result<(), &str> {
