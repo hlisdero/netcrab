@@ -11,66 +11,70 @@ fn place_new_assigns_label() {
 #[test]
 fn place_default_creates_place_with_no_label() {
     let place = Place::default();
+
     assert_eq!(place.label, None);
 }
 
 #[test]
 fn place_default_is_empty() {
     let place = Place::default();
+
     assert!(place.is_empty());
 }
 
 #[test]
 fn place_add_token_updates_length() {
     let mut place = Place::default();
-    let token = Token::default();
-    place.add_token(token);
+
+    place.add_token();
+
     assert!(!place.is_empty());
 }
 
 #[test]
 fn place_add_lots_of_tokens() {
     let mut place = Place::default();
-    let tokens = vec![Token::default(); 10];
 
-    for t in tokens {
-        place.add_token(t);
+    for _ in 0..10 {
+        place.add_token();
     }
 
     assert!(!place.is_empty());
-    assert_eq!(place.get_tokens().len(), 10);
+    assert_eq!(place.marking, 10);
 }
 
 #[test]
 fn place_remove_token_updates_length() {
     let mut place = Place::default();
-    let token = Token::default();
-    place.add_token(token);
-    place.remove_token();
+
+    place.add_token();
+    let result = place.remove_token();
+
+    assert!(result.is_ok());
     assert!(place.is_empty());
 }
 
 #[test]
-fn place_remove_token_returns_none_if_empty() {
+fn place_remove_token_returns_err_if_empty() {
     let mut place = Place::default();
     let result = place.remove_token();
+
+    assert!(result.is_err());
     assert!(place.is_empty());
-    assert!(result.is_none());
 }
 
 #[test]
 fn place_remove_lots_of_tokens() {
     let mut place = Place::default();
-    let tokens = vec![Token::default(); 10];
 
-    for t in tokens {
-        place.add_token(t);
+    for _ in 0..10 {
+        place.add_token();
     }
 
     for _ in 0..7 {
-        place.remove_token();
+        assert!(place.remove_token().is_ok());
     }
 
     assert!(!place.is_empty());
-    assert_eq!(place.get_tokens().len(), 3);
+    assert_eq!(place.marking, 3);
 }

@@ -1,35 +1,33 @@
 #[cfg(test)]
 mod place_tests;
 
-use crate::net::token::Token;
-
 pub struct Place {
     pub label: Option<String>,
-    tokens: Vec<Token>,
+    pub marking: usize,
 }
 
 impl Place {
     pub fn new(label: String) -> Place {
         Place {
             label: Some(label),
-            tokens: Vec::new(),
+            marking: 0,
         }
     }
 
     pub fn is_empty(&self) -> bool {
-        self.tokens.is_empty()
+        self.marking == 0
     }
 
-    pub fn add_token(&mut self, token: Token) {
-        self.tokens.push(token);
+    pub fn add_token(&mut self) {
+        self.marking += 1
     }
 
-    pub fn remove_token(&mut self) -> Option<Token> {
-        self.tokens.pop()
-    }
-
-    pub fn get_tokens(&self) -> &Vec<Token> {
-        &self.tokens
+    pub fn remove_token(&mut self) -> Result<(), &str> {
+        if self.is_empty() {
+            return Err("Cannot remove token from empty place");
+        }
+        self.marking -= 1;
+        Ok(())
     }
 }
 
@@ -37,7 +35,7 @@ impl Default for Place {
     fn default() -> Self {
         Self {
             label: None,
-            tokens: Vec::new(),
+            marking: 0,
         }
     }
 }

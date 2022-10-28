@@ -1,6 +1,5 @@
 mod edge;
 mod place;
-mod token;
 mod transition;
 
 #[cfg(test)]
