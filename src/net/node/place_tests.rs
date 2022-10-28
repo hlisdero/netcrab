@@ -78,3 +78,41 @@ fn place_remove_lots_of_tokens() {
     assert!(!place.is_empty());
     assert_eq!(place.marking, 3);
 }
+
+#[test]
+fn place_add_incoming_transition_returns_true_when_success() {
+    let mut place = Place::new("Example place".to_string());
+    let reference = TransitionRef("Example transition".to_string());
+
+    assert!(place.add_incoming(reference));
+}
+
+#[test]
+fn place_add_incoming_transition_returns_false_when_already_exists() {
+    let mut place = Place::new("Example place".to_string());
+    let reference = TransitionRef("Example transition".to_string());
+
+    assert!(place.add_incoming(reference));
+    let reference = TransitionRef("Example transition".to_string());
+    assert!(!place.add_incoming(reference));
+}
+
+#[test]
+fn place_remove_incoming_transition_returns_true_when_success() {
+    let mut place = Place::new("Example place".to_string());
+    let reference = TransitionRef("Example transition".to_string());
+
+    assert!(place.add_incoming(reference));
+    let reference = TransitionRef("Example transition".to_string());
+    assert!(place.remove_incoming(&reference));
+}
+
+#[test]
+fn place_remove_incoming_transition_returns_false_when_not_found() {
+    let mut place = Place::new("Example place".to_string());
+    let reference = TransitionRef("Example transition".to_string());
+
+    assert!(place.add_incoming(reference));
+    let reference = TransitionRef("Example not found".to_string());
+    assert!(!place.remove_incoming(&reference));
+}

@@ -1,12 +1,5 @@
-pub enum NodeRef {
-    Place(PlaceRef),
-    Transition(TransitionRef),
-}
+#[derive(PartialEq, Eq, Hash)]
+pub struct PlaceRef(pub String);
 
-pub struct PlaceRef {
-    index: String,
-}
-
-pub struct TransitionRef {
-    index: String,
-}
+#[derive(PartialEq, Eq, Hash)]
+pub struct TransitionRef(pub String);

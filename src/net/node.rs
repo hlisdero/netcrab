@@ -1,5 +1,8 @@
+use crate::net::node::connectable::Connectable;
 use crate::net::node_ref::{PlaceRef, TransitionRef};
 use std::collections::HashSet;
+
+mod connectable;
 #[cfg(test)]
 mod place_tests;
 #[cfg(test)]
@@ -73,5 +76,29 @@ impl Default for Transition {
             preset: HashSet::new(),
             postset: HashSet::new(),
         }
+    }
+}
+
+impl Connectable for Place {
+    type RefType = TransitionRef;
+
+    fn get_preset(&mut self) -> &mut HashSet<Self::RefType> {
+        &mut self.preset
+    }
+
+    fn get_postset(&mut self) -> &mut HashSet<Self::RefType> {
+        &mut self.postset
+    }
+}
+
+impl Connectable for Transition {
+    type RefType = PlaceRef;
+
+    fn get_preset(&mut self) -> &mut HashSet<Self::RefType> {
+        &mut self.preset
+    }
+
+    fn get_postset(&mut self) -> &mut HashSet<Self::RefType> {
+        &mut self.postset
     }
 }
