@@ -11,16 +11,16 @@ mod transition_tests;
 #[derive(Default)]
 pub struct Place {
     pub label: Option<String>,
-    pub marking: usize,
-    pub preset: HashSet<TransitionRef>,
-    pub postset: HashSet<TransitionRef>,
+    marking: usize,
+    preset: HashSet<TransitionRef>,
+    postset: HashSet<TransitionRef>,
 }
 
 #[derive(Default)]
 pub struct Transition {
     pub label: Option<String>,
-    pub preset: HashSet<PlaceRef>,
-    pub postset: HashSet<PlaceRef>,
+    preset: HashSet<PlaceRef>,
+    postset: HashSet<PlaceRef>,
 }
 
 impl Place {
@@ -37,8 +37,16 @@ impl Place {
         self.marking == 0
     }
 
-    pub fn add_token(&mut self) {
-        self.marking += 1;
+    pub fn marking(&self) -> usize {
+        self.marking
+    }
+
+    pub fn add_token(&mut self) -> Result<(), &str> {
+        self.marking = match self.marking.checked_add(1) {
+            Some(value) => value,
+            None => return Err("Overflow when adding token"),
+        };
+        Ok(())
     }
 
     pub fn remove_token(&mut self) -> Result<(), &str> {

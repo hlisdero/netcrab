@@ -22,32 +22,38 @@ fn place_default_is_empty() {
     assert!(place.is_empty());
 }
 
+fn place_default_marking_is_zero() {
+    let place = Place::default();
+
+    assert_eq!(place.marking(), 0);
+}
+
 #[test]
-fn place_add_token_updates_length() {
+fn place_add_token_updates_marking() {
     let mut place = Place::default();
 
-    place.add_token();
-
+    assert!(place.add_token().is_ok());
     assert!(!place.is_empty());
 }
 
 #[test]
 fn place_add_lots_of_tokens() {
     let mut place = Place::default();
+    assert_eq!(place.marking(), 0);
 
     for _ in 0..10 {
-        place.add_token();
+        assert!(place.add_token().is_ok());
     }
 
     assert!(!place.is_empty());
-    assert_eq!(place.marking, 10);
+    assert_eq!(place.marking(), 10);
 }
 
 #[test]
 fn place_remove_token_updates_length() {
     let mut place = Place::default();
 
-    place.add_token();
+    assert!(place.add_token().is_ok());
     let result = place.remove_token();
 
     assert!(result.is_ok());
@@ -68,7 +74,7 @@ fn place_remove_lots_of_tokens() {
     let mut place = Place::default();
 
     for _ in 0..10 {
-        place.add_token();
+        assert!(place.add_token().is_ok());
     }
 
     for _ in 0..7 {
@@ -76,7 +82,7 @@ fn place_remove_lots_of_tokens() {
     }
 
     assert!(!place.is_empty());
-    assert_eq!(place.marking, 3);
+    assert_eq!(place.marking(), 3);
 }
 
 #[test]
