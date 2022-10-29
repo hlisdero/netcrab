@@ -2,7 +2,7 @@
 
 #### A tool suite for creating, visualizing and analyzing Petri-Nets made in Rust
 
-## Supported formats:
+## Supported export formats:
 
 - Petri Net Markup Language (PNML) [https://www.pnml.org/](https://www.pnml.org/)
 - LoLA - A Low Level Petri Net Analyzer [https://theo.informatik.uni-rostock.de/theo-forschung/tools/lola/](https://theo.informatik.uni-rostock.de/theo-forschung/tools/lola/)
