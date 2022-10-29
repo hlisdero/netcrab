@@ -15,8 +15,12 @@ pub struct PetriNet {
 }
 
 impl PetriNet {
-    pub fn get_size(&self) -> usize {
+    pub fn get_cardinality_places(&self) -> usize {
         self.places.len()
+    }
+
+    pub fn get_cardinality_transitions(&self) -> usize {
+        self.transitions.len()
     }
 
     pub fn add_place(&mut self, place_label: &String) {
