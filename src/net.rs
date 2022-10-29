@@ -1,6 +1,6 @@
 use crate::net::node::{ConnectableNode, Place, Transition};
 use crate::net::node_ref::{PlaceRef, TransitionRef};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 mod node;
 mod node_ref;
@@ -85,7 +85,7 @@ impl PetriNet {
     }
 
     /// Get the marking vector for the net.
-    /// Returns a HashMap with the place references as the keys and the number of tokens as values.
+    /// Returns a `HashMap` with the place references as the keys and the number of tokens as values.
     pub fn marking_vector(&mut self) -> HashMap<PlaceRef, usize> {
         let mut marking_vector: HashMap<PlaceRef, usize> = HashMap::new();
         for (key, value) in self.places.iter() {
@@ -118,6 +118,18 @@ impl PetriNet {
     /// i.e. if the referenced transition still exists in the net.
     pub fn check_transition_ref(&self, transition_ref: &TransitionRef) -> bool {
         self.transitions.contains_key(transition_ref)
+    }
+
+    /// Find unconnected places in the net.
+    /// Return a `HashSet` with the place references as keys.
+    pub fn find_unconnected_places(&self) -> HashSet<PlaceRef> {
+        let mut unconnected_set: HashSet<PlaceRef> = HashSet::new();
+        for (place_ref, place) in self.places.iter() {
+            if place.get_preset().is_empty() && place.get_postset().is_empty() {
+                unconnected_set.insert(place_ref.clone());
+            }
+        }
+        unconnected_set
     }
 
     fn get_place(&mut self, place_ref: &PlaceRef) -> Result<&mut Place, &str> {

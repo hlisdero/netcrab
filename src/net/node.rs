@@ -71,11 +71,19 @@ impl Transition {
 impl ConnectableNode for Place {
     type RefType = TransitionRef;
 
-    fn get_preset(&mut self) -> &mut HashSet<Self::RefType> {
+    fn get_preset(&self) -> &HashSet<Self::RefType> {
+        &self.preset
+    }
+
+    fn get_postset(&self) -> &HashSet<Self::RefType> {
+        &self.postset
+    }
+
+    fn get_preset_mut(&mut self) -> &mut HashSet<Self::RefType> {
         &mut self.preset
     }
 
-    fn get_postset(&mut self) -> &mut HashSet<Self::RefType> {
+    fn get_postset_mut(&mut self) -> &mut HashSet<Self::RefType> {
         &mut self.postset
     }
 }
@@ -83,11 +91,19 @@ impl ConnectableNode for Place {
 impl ConnectableNode for Transition {
     type RefType = PlaceRef;
 
-    fn get_preset(&mut self) -> &mut HashSet<Self::RefType> {
+    fn get_preset(&self) -> &HashSet<Self::RefType> {
+        &self.preset
+    }
+
+    fn get_postset(&self) -> &HashSet<Self::RefType> {
+        &self.postset
+    }
+
+    fn get_preset_mut(&mut self) -> &mut HashSet<Self::RefType> {
         &mut self.preset
     }
 
-    fn get_postset(&mut self) -> &mut HashSet<Self::RefType> {
+    fn get_postset_mut(&mut self) -> &mut HashSet<Self::RefType> {
         &mut self.postset
     }
 }

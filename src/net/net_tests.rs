@@ -173,3 +173,47 @@ fn net_add_place_transition_form_chain() {
     let result = net.add_arc_transition_place(&transition_2, &place_3);
     assert!(result.is_ok());
 }
+
+#[test]
+fn net_find_unconnected_places_returns_empty_set_for_empty_net() {
+    let net = PetriNet::default();
+    let unconnected_set = net.find_unconnected_places();
+
+    assert!(unconnected_set.is_empty());
+}
+
+#[test]
+fn net_find_unconnected_places_some_empty_places() {
+    let mut net = PetriNet::default();
+    let place_1 = net.add_place(&"P1".to_string());
+    let place_2 = net.add_place(&"P2".to_string());
+    let place_3 = net.add_place(&"P3".to_string());
+
+    let transition_1 = net.add_transition(&"T1".to_string());
+    let transition_2 = net.add_transition(&"T2".to_string());
+
+    let result = net.add_arc_place_transition(&place_1, &transition_1);
+    assert!(result.is_ok());
+    let result = net.add_arc_transition_place(&transition_1, &place_2);
+    assert!(result.is_ok());
+    let result = net.add_arc_place_transition(&place_2, &transition_2);
+    assert!(result.is_ok());
+
+    let unconnected_set = net.find_unconnected_places();
+    assert_eq!(unconnected_set.len(), 1);
+    assert!(unconnected_set.contains(&place_3));
+}
+
+#[test]
+fn net_find_unconnected_places_all_empty_places() {
+    let mut net = PetriNet::default();
+    let place_1 = net.add_place(&"P1".to_string());
+    let place_2 = net.add_place(&"P2".to_string());
+    let place_3 = net.add_place(&"P3".to_string());
+
+    let unconnected_set = net.find_unconnected_places();
+    assert_eq!(unconnected_set.len(), 3);
+    assert!(unconnected_set.contains(&place_1));
+    assert!(unconnected_set.contains(&place_2));
+    assert!(unconnected_set.contains(&place_3));
+}
