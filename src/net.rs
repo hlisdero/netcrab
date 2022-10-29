@@ -1,4 +1,4 @@
-use crate::net::node::{Connectable, Place, Transition};
+use crate::net::node::{ConnectableNode, Place, Transition};
 use crate::net::node_ref::{PlaceRef, TransitionRef};
 use std::collections::HashMap;
 

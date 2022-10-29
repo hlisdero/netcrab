@@ -1,4 +1,4 @@
-pub use crate::net::node::connectable::Connectable;
+pub use crate::net::node::connectable::ConnectableNode;
 use crate::net::node_ref::{PlaceRef, TransitionRef};
 use std::collections::HashSet;
 
@@ -60,7 +60,7 @@ impl Transition {
     }
 }
 
-impl Connectable for Place {
+impl ConnectableNode for Place {
     type RefType = TransitionRef;
 
     fn get_preset(&mut self) -> &mut HashSet<Self::RefType> {
@@ -72,7 +72,7 @@ impl Connectable for Place {
     }
 }
 
-impl Connectable for Transition {
+impl ConnectableNode for Transition {
     type RefType = PlaceRef;
 
     fn get_preset(&mut self) -> &mut HashSet<Self::RefType> {

@@ -3,7 +3,7 @@ use std::hash::Hash;
 
 /// Trait to implement adding and removing references to the preset and the postset.
 /// The references are of type `Self::RefType`.
-pub trait Connectable {
+pub trait ConnectableNode {
     type RefType: Eq + Hash;
 
     /// Return a mutable reference to the set of nodes with incoming connections to this node.
