@@ -1,5 +1,5 @@
-#[derive(PartialEq, Eq, Hash)]
+#[derive(Clone, Eq, Hash, PartialEq)]
 pub struct PlaceRef(pub String);
 
-#[derive(PartialEq, Eq, Hash)]
+#[derive(Clone, Eq, Hash, PartialEq)]
 pub struct TransitionRef(pub String);
