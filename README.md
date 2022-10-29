@@ -10,9 +10,9 @@
 
 ## Petri Net implementation
 
-The main implementation is found in `net.rs`. It uses two `HashMap` to store the places and transitions. References to places and transitions are `PlaceRef` and `TransitionRef` respectively. These types are a wrapper around `String`. Places and transitions are labelled with `String`. These must be unique in the net.
+The main implementation is found in `net.rs`. It uses two `HashMap` to store the places and transitions. References to places and transitions are named `PlaceRef` and `TransitionRef` respectively. These types are a wrapper around `String`. Places and transitions are labelled with `String`. These must be unique in the net.
 
-References to the places and transitions are returned when adding them to the net. These references can latter be used to add arcs and to access the markings.
+References to the places and transitions are returned when adding them to the net. These references can later be used to add arcs and to access the markings.
 
 _Note: References can be cloned. One may have as many references to a node or transition as desired._
 
