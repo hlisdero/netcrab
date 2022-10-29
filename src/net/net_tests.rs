@@ -29,6 +29,100 @@ fn net_add_transition_updates_size() {
 }
 
 #[test]
+fn net_marking_returns_number_of_tokens_in_place() {
+    let mut net = PetriNet::default();
+    let place_ref = net.add_place(&"Example place".to_string());
+
+    let result = net.marking(&place_ref);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 0);
+}
+
+#[test]
+fn net_marking_add_token_increases_number_of_tokens_in_place() {
+    let mut net = PetriNet::default();
+    let place_ref = net.add_place(&"Example place".to_string());
+
+    assert!(net.add_token(&place_ref).is_ok());
+
+    let result = net.marking(&place_ref);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 1);
+}
+
+#[test]
+fn net_marking_add_token_multiple_times() {
+    let mut net = PetriNet::default();
+    let place_ref = net.add_place(&"Example place".to_string());
+
+    assert!(net.add_token(&place_ref).is_ok());
+    assert!(net.add_token(&place_ref).is_ok());
+    assert!(net.add_token(&place_ref).is_ok());
+    assert!(net.add_token(&place_ref).is_ok());
+    assert!(net.add_token(&place_ref).is_ok());
+
+    let result = net.marking(&place_ref);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 5);
+}
+
+#[test]
+fn net_marking_remove_token_decreases_number_of_tokens_in_place() {
+    let mut net = PetriNet::default();
+    let place_ref = net.add_place(&"Example place".to_string());
+
+    assert!(net.add_token(&place_ref).is_ok());
+    assert!(net.add_token(&place_ref).is_ok());
+    assert!(net.remove_token(&place_ref).is_ok());
+
+    let result = net.marking(&place_ref);
+    assert!(result.is_ok());
+    assert_eq!(result.unwrap(), 1);
+}
+
+#[test]
+fn net_marking_remove_token_returns_err_if_place_empty() {
+    let mut net = PetriNet::default();
+    let place_ref = net.add_place(&"Example place".to_string());
+
+    assert!(net.remove_token(&place_ref).is_err());
+}
+
+#[test]
+fn net_marking_vector_three_empty_places() {
+    let mut net = PetriNet::default();
+    let place_1 = net.add_place(&"P1".to_string());
+    let place_2 = net.add_place(&"P2".to_string());
+    let place_3 = net.add_place(&"P3".to_string());
+
+    let result = net.marking_vector();
+    assert_eq!(*result.get(&place_1).unwrap(), 0);
+    assert_eq!(*result.get(&place_2).unwrap(), 0);
+    assert_eq!(*result.get(&place_3).unwrap(), 0);
+}
+
+#[test]
+fn net_marking_vector_two_places() {
+    let mut net = PetriNet::default();
+    let place_1 = net.add_place(&"P1".to_string());
+    let place_2 = net.add_place(&"P2".to_string());
+
+    assert!(net.add_token(&place_1).is_ok());
+    assert!(net.add_token(&place_1).is_ok());
+    assert!(net.add_token(&place_1).is_ok());
+    assert!(net.add_token(&place_1).is_ok());
+    assert!(net.add_token(&place_1).is_ok());
+
+    assert!(net.add_token(&place_2).is_ok());
+    assert!(net.add_token(&place_2).is_ok());
+    assert!(net.add_token(&place_2).is_ok());
+
+    let result = net.marking_vector();
+    assert_eq!(*result.get(&place_1).unwrap(), 5);
+    assert_eq!(*result.get(&place_2).unwrap(), 3);
+}
+
+#[test]
 fn net_add_arc_place_transition_simple() {
     let mut net = PetriNet::default();
     let place_ref = net.add_place(&"Example place".to_string());

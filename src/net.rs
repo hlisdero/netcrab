@@ -77,6 +77,37 @@ impl PetriNet {
         Ok(())
     }
 
+    /// Get number of tokens in a place in the net.
+    /// Receives a valid place reference.
+    pub fn marking(&mut self, place_ref: &PlaceRef) -> Result<usize, &str> {
+        let place = self.get_place(place_ref)?;
+        Ok(place.marking())
+    }
+
+    /// Get the marking vector for the net.
+    /// Returns a HashMap with the place references as the keys and the number of tokens as values.
+    pub fn marking_vector(&mut self) -> HashMap<PlaceRef, usize> {
+        let mut marking_vector: HashMap<PlaceRef, usize> = HashMap::new();
+        for (key, value) in self.places.iter() {
+            marking_vector.insert(key.clone(), value.marking());
+        }
+        marking_vector
+    }
+
+    /// Add one token to a place in the net.
+    /// Receives a valid place reference.
+    pub fn add_token(&mut self, place_ref: &PlaceRef) -> Result<(), &str> {
+        let place = self.get_place(place_ref)?;
+        place.add_token()
+    }
+
+    /// Remove one token from a place in the net.
+    /// Receives a valid place reference.
+    pub fn remove_token(&mut self, place_ref: &PlaceRef) -> Result<(), &str> {
+        let place = self.get_place(place_ref)?;
+        place.remove_token()
+    }
+
     /// Check if the place reference is valid for this net,
     /// i.e. if the referenced place still exists in the net.
     pub fn check_place_ref(&self, place_ref: &PlaceRef) -> bool {
@@ -87,6 +118,13 @@ impl PetriNet {
     /// i.e. if the referenced transition still exists in the net.
     pub fn check_transition_ref(&self, transition_ref: &TransitionRef) -> bool {
         self.transitions.contains_key(transition_ref)
+    }
+
+    fn get_place(&mut self, place_ref: &PlaceRef) -> Result<&mut Place, &str> {
+        match self.places.get_mut(place_ref) {
+            Some(place) => Ok(place),
+            None => return Err("Place reference is invalid. It is not present in the net."),
+        }
     }
 
     fn get_place_transition_pair(
