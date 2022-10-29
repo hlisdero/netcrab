@@ -1,3 +1,4 @@
+use crate::net::node::{Place, Transition};
 use crate::net::node_ref::{PlaceRef, TransitionRef};
 use std::collections::HashMap;
 
@@ -7,7 +8,6 @@ mod node_ref;
 #[cfg(test)]
 mod net_tests;
 
-use crate::net::node::{Place, Transition};
 #[derive(Default)]
 pub struct PetriNet {
     places: HashMap<PlaceRef, Place>,
@@ -31,5 +31,13 @@ impl PetriNet {
             TransitionRef(transition_label.clone()),
             Transition::new(transition_label.clone()),
         );
+    }
+
+    pub fn check_place_ref(&self, place_ref: &PlaceRef) -> bool {
+        self.places.contains_key(place_ref)
+    }
+
+    pub fn check_transition_ref(&self, transition_ref: &TransitionRef) -> bool {
+        self.transitions.contains_key(transition_ref)
     }
 }
