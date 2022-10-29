@@ -22,6 +22,7 @@ fn place_default_is_empty() {
     assert!(place.is_empty());
 }
 
+#[test]
 fn place_default_marking_is_zero() {
     let place = Place::default();
 
