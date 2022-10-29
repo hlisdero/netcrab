@@ -2,7 +2,7 @@ use crate::net::node::connectable::Connectable;
 use crate::net::node_ref::{PlaceRef, TransitionRef};
 use std::collections::HashSet;
 
-mod connectable;
+pub mod connectable;
 #[cfg(test)]
 mod place_tests;
 #[cfg(test)]
