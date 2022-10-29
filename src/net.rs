@@ -23,6 +23,8 @@ impl PetriNet {
         self.transitions.len()
     }
 
+    /// Add a place to the net.
+    /// If the label already exists, it silently overwrites it.
     pub fn add_place(&mut self, place_label: &String) {
         self.places.insert(
             PlaceRef(place_label.clone()),
@@ -30,6 +32,8 @@ impl PetriNet {
         );
     }
 
+    /// Add a transition to the net.
+    /// If the label already exists, it silently overwrites it.
     pub fn add_transition(&mut self, transition_label: &String) {
         self.transitions.insert(
             TransitionRef(transition_label.clone()),
