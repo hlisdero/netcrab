@@ -15,10 +15,12 @@ pub struct PetriNet {
 }
 
 impl PetriNet {
+    /// Get the number of places in the net.
     pub fn get_cardinality_places(&self) -> usize {
         self.places.len()
     }
 
+    /// Get the number of transitions in the net.
     pub fn get_cardinality_transitions(&self) -> usize {
         self.transitions.len()
     }
@@ -43,6 +45,8 @@ impl PetriNet {
         transition_ref
     }
 
+    /// Add an arc from a place to a transition with multiplicity one.
+    /// Receives a valid place reference and a valid transition reference.
     pub fn add_arc_place_transition(
         &mut self,
         place_ref: &PlaceRef,
@@ -57,6 +61,8 @@ impl PetriNet {
         Ok(())
     }
 
+    /// Add an arc from a transition to a place with multiplicity one.
+    /// Receives a valid place reference and a valid transition reference.
     pub fn add_arc_transition_place(
         &mut self,
         transition_ref: &TransitionRef,
@@ -71,10 +77,14 @@ impl PetriNet {
         Ok(())
     }
 
+    /// Check if the place reference is valid for this net,
+    /// i.e. if the referenced place still exists in the net.
     pub fn check_place_ref(&self, place_ref: &PlaceRef) -> bool {
         self.places.contains_key(place_ref)
     }
 
+    /// Check if the transition reference is valid for this net,
+    /// i.e. if the referenced transition still exists in the net.
     pub fn check_transition_ref(&self, transition_ref: &TransitionRef) -> bool {
         self.transitions.contains_key(transition_ref)
     }
