@@ -1,5 +1,6 @@
 use crate::net::node::{ConnectableNode, Place, Transition};
 use crate::net::node_ref::{PlaceRef, TransitionRef};
+use std::collections::hash_map::Iter;
 use std::collections::{HashMap, HashSet};
 
 mod node;
@@ -23,6 +24,40 @@ impl PetriNet {
     /// Get the number of transitions in the net.
     pub fn get_cardinality_transitions(&self) -> usize {
         self.transitions.len()
+    }
+
+    /// Return an iterator over the place references and their corresponding places.
+    pub fn places_iter(&self) -> Iter<PlaceRef, Place> {
+        self.places.iter()
+    }
+
+    /// Return an iterator over the transition references and their corresponding transitions.
+    pub fn transitions_iter(&self) -> Iter<TransitionRef, Transition> {
+        self.transitions.iter()
+    }
+
+    /// Check if the place reference is valid for this net,
+    /// i.e. if the referenced place still exists in the net.
+    pub fn check_place_ref(&self, place_ref: &PlaceRef) -> bool {
+        self.places.contains_key(place_ref)
+    }
+
+    /// Check if the transition reference is valid for this net,
+    /// i.e. if the referenced transition still exists in the net.
+    pub fn check_transition_ref(&self, transition_ref: &TransitionRef) -> bool {
+        self.transitions.contains_key(transition_ref)
+    }
+
+    /// Find unconnected places in the net.
+    /// Return a `HashSet` with the place references as keys.
+    pub fn find_unconnected_places(&self) -> HashSet<PlaceRef> {
+        let mut unconnected_set: HashSet<PlaceRef> = HashSet::new();
+        for (place_ref, place) in self.places.iter() {
+            if place.get_preset().is_empty() && place.get_postset().is_empty() {
+                unconnected_set.insert(place_ref.clone());
+            }
+        }
+        unconnected_set
     }
 
     /// Add a place to the net.
@@ -106,30 +141,6 @@ impl PetriNet {
     pub fn remove_token(&mut self, place_ref: &PlaceRef) -> Result<(), &str> {
         let place = self.get_place(place_ref)?;
         place.remove_token()
-    }
-
-    /// Check if the place reference is valid for this net,
-    /// i.e. if the referenced place still exists in the net.
-    pub fn check_place_ref(&self, place_ref: &PlaceRef) -> bool {
-        self.places.contains_key(place_ref)
-    }
-
-    /// Check if the transition reference is valid for this net,
-    /// i.e. if the referenced transition still exists in the net.
-    pub fn check_transition_ref(&self, transition_ref: &TransitionRef) -> bool {
-        self.transitions.contains_key(transition_ref)
-    }
-
-    /// Find unconnected places in the net.
-    /// Return a `HashSet` with the place references as keys.
-    pub fn find_unconnected_places(&self) -> HashSet<PlaceRef> {
-        let mut unconnected_set: HashSet<PlaceRef> = HashSet::new();
-        for (place_ref, place) in self.places.iter() {
-            if place.get_preset().is_empty() && place.get_postset().is_empty() {
-                unconnected_set.insert(place_ref.clone());
-            }
-        }
-        unconnected_set
     }
 
     fn get_place(&mut self, place_ref: &PlaceRef) -> Result<&mut Place, &str> {
