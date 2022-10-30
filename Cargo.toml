@@ -1,12 +1,13 @@
 [package]
 name = "netcrab"
 version = "0.1.0"
-authors = ["Horacio Lisdero Scaffino <hlisdero@users.noreply.github.com>"]
-edition = "2021"
 description = "A tool suite for creating, visualizing and analyzing Petri nets"
-homepage = "https://github.com/hlisdero/netcrab/"
 repository = "https://github.com/hlisdero/netcrab/"
+homepage = "https://github.com/hlisdero/netcrab/"
+authors = ["Horacio Lisdero Scaffino <hlisdero@users.noreply.github.com>"]
+readme = "README.md"
 license = "MIT OR Apache-2.0"
 keywords = ["petri-net", "dot", "pnml"]
+edition = "2021"
 
 [dependencies]
