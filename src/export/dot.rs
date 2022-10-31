@@ -165,19 +165,11 @@ mod dot_tests {
         let p4 = net.add_place(&"P4".to_string());
         let p5 = net.add_place(&"P5".to_string());
 
-        for _ in 0..5 {
-            assert!(net.add_token(&p1).is_ok());
-        }
-        for _ in 0..6 {
-            assert!(net.add_token(&p2).is_ok());
-        }
-        for _ in 0..3 {
-            assert!(net.add_token(&p3).is_ok());
-        }
-        for _ in 0..2 {
-            assert!(net.add_token(&p4).is_ok());
-        }
-        assert!(net.add_token(&p5).is_ok());
+        assert!(net.add_token(&p1, 5).is_ok());
+        assert!(net.add_token(&p2, 6).is_ok());
+        assert!(net.add_token(&p3, 3).is_ok());
+        assert!(net.add_token(&p4, 2).is_ok());
+        assert!(net.add_token(&p5, 1).is_ok());
         let result = net.to_dot_string();
 
         assert!(result.is_ok());

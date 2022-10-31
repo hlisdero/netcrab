@@ -30,8 +30,8 @@ impl Place {
         self.marking
     }
 
-    pub fn add_token(&mut self) -> Result<(), &str> {
-        self.marking = match self.marking.checked_add(1) {
+    pub fn add_token(&mut self, tokens_to_add: usize) -> Result<(), &str> {
+        self.marking = match self.marking.checked_add(tokens_to_add) {
             Some(value) => value,
             None => return Err("Overflow when adding token"),
         };
@@ -129,7 +129,7 @@ mod place_tests {
     fn place_add_token_updates_marking() {
         let mut place = Place::default();
 
-        assert!(place.add_token().is_ok());
+        assert!(place.add_token(1).is_ok());
         assert!(!place.is_empty());
     }
 
@@ -138,9 +138,7 @@ mod place_tests {
         let mut place = Place::default();
         assert_eq!(place.marking(), 0);
 
-        for _ in 0..10 {
-            assert!(place.add_token().is_ok());
-        }
+        assert!(place.add_token(10).is_ok());
 
         assert!(!place.is_empty());
         assert_eq!(place.marking(), 10);
@@ -150,7 +148,7 @@ mod place_tests {
     fn place_remove_token_updates_length() {
         let mut place = Place::default();
 
-        assert!(place.add_token().is_ok());
+        assert!(place.add_token(1).is_ok());
         let result = place.remove_token();
 
         assert!(result.is_ok());
@@ -170,9 +168,7 @@ mod place_tests {
     fn place_remove_lots_of_tokens() {
         let mut place = Place::default();
 
-        for _ in 0..10 {
-            assert!(place.add_token().is_ok());
-        }
+        assert!(place.add_token(10).is_ok());
 
         for _ in 0..7 {
             assert!(place.remove_token().is_ok());

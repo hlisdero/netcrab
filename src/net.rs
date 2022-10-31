@@ -166,9 +166,9 @@ impl PetriNet {
     /// # Errors
     ///
     /// If the `PlaceRef` is invalid, then an error is returned.
-    pub fn add_token(&mut self, place_ref: &PlaceRef) -> Result<(), &str> {
+    pub fn add_token(&mut self, place_ref: &PlaceRef, tokens_to_add: usize) -> Result<(), &str> {
         let place = self.get_place(place_ref)?;
-        place.add_token()
+        place.add_token(tokens_to_add)
     }
 
     /// Remove one token from a place in the net.
@@ -361,7 +361,7 @@ mod net_tests {
         let mut net = PetriNet::new();
         let place_ref = net.add_place(&"Example place".to_string());
 
-        assert!(net.add_token(&place_ref).is_ok());
+        assert!(net.add_token(&place_ref, 1).is_ok());
 
         let result = net.marking(&place_ref);
         assert!(result.is_ok());
@@ -373,11 +373,7 @@ mod net_tests {
         let mut net = PetriNet::new();
         let place_ref = net.add_place(&"Example place".to_string());
 
-        assert!(net.add_token(&place_ref).is_ok());
-        assert!(net.add_token(&place_ref).is_ok());
-        assert!(net.add_token(&place_ref).is_ok());
-        assert!(net.add_token(&place_ref).is_ok());
-        assert!(net.add_token(&place_ref).is_ok());
+        assert!(net.add_token(&place_ref, 5).is_ok());
 
         let result = net.marking(&place_ref);
         assert!(result.is_ok());
@@ -389,8 +385,7 @@ mod net_tests {
         let mut net = PetriNet::new();
         let place_ref = net.add_place(&"Example place".to_string());
 
-        assert!(net.add_token(&place_ref).is_ok());
-        assert!(net.add_token(&place_ref).is_ok());
+        assert!(net.add_token(&place_ref, 2).is_ok());
         assert!(net.remove_token(&place_ref).is_ok());
 
         let result = net.marking(&place_ref);
@@ -425,15 +420,8 @@ mod net_tests {
         let place_1 = net.add_place(&"P1".to_string());
         let place_2 = net.add_place(&"P2".to_string());
 
-        assert!(net.add_token(&place_1).is_ok());
-        assert!(net.add_token(&place_1).is_ok());
-        assert!(net.add_token(&place_1).is_ok());
-        assert!(net.add_token(&place_1).is_ok());
-        assert!(net.add_token(&place_1).is_ok());
-
-        assert!(net.add_token(&place_2).is_ok());
-        assert!(net.add_token(&place_2).is_ok());
-        assert!(net.add_token(&place_2).is_ok());
+        assert!(net.add_token(&place_1, 5).is_ok());
+        assert!(net.add_token(&place_2, 3).is_ok());
 
         let result = net.marking_vector();
         assert_eq!(*result.get(&place_1).unwrap(), 5);
