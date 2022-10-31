@@ -1,3 +1,5 @@
+use super::node::Transition;
+
 #[derive(Clone, Eq, Hash, PartialEq)]
 pub struct PlaceRef(pub String);
 
@@ -5,13 +7,13 @@ pub struct PlaceRef(pub String);
 pub struct TransitionRef(pub String);
 
 impl PlaceRef {
-    pub fn to_string(&self) -> String {
-        self.0.to_string()
+    pub fn as_string(&self) -> &String {
+        &self.0
     }
 }
 
 impl TransitionRef {
-    pub fn to_string(&self) -> String {
-        self.0.to_string()
+    pub fn as_string(&self) -> &String {
+        &self.0
     }
 }

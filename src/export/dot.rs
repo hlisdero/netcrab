@@ -46,8 +46,8 @@ impl PetriNet {
     where
         T: std::io::Write,
     {
-        for (_, place) in self.places_iter() {
-            let label = Self::label_to_string(&place.label);
+        for (place_ref, place) in self.places_iter() {
+            let label = Self::sanitize_string(place_ref.as_string());
             let marking = Self::marking_to_string(place.marking());
             let line = format!(
                 "    {} [shape=\"circle\" xlabel=\"{}\" label=\"{}\"];\n",
@@ -64,8 +64,8 @@ impl PetriNet {
     where
         T: std::io::Write,
     {
-        for (_, transition) in self.transitions_iter() {
-            let label = Self::label_to_string(&transition.label);
+        for (transition_ref, _) in self.transitions_iter() {
+            let label = Self::sanitize_string(transition_ref.as_string());
             let line = format!("    {} [shape=\"box\" xlabel=\"{}\"];\n", label, label);
             writer.write_all(line.as_bytes())?;
         }
@@ -82,20 +82,20 @@ impl PetriNet {
         for (place_ref, transition_ref) in edges {
             let line = format!(
                 "    {} -> {};\n",
-                place_ref.to_string(),
-                transition_ref.to_string()
+                Self::sanitize_string(place_ref.as_string()),
+                Self::sanitize_string(transition_ref.as_string())
             );
-            writer.write(line.as_bytes())?;
+            writer.write_all(line.as_bytes())?;
         }
 
         let edges = self.find_edges_transition_place();
         for (transition_ref, place_ref) in edges {
             let line = format!(
                 "    {} -> {};\n",
-                transition_ref.to_string(),
-                place_ref.to_string()
+                Self::sanitize_string(transition_ref.as_string()),
+                Self::sanitize_string(place_ref.as_string()),
             );
-            writer.write(line.as_bytes())?;
+            writer.write_all(line.as_bytes())?;
         }
 
         Ok(())
@@ -106,11 +106,8 @@ impl PetriNet {
     ///
     /// Using escape sequences it is possible to achieve special behavior.
     /// [More info](https://graphviz.org/docs/attr-types/escString/)
-    fn label_to_string(option: &Option<String>) -> String {
-        match option {
-            Some(label) => label.replace('\n', "").replace('\"', "\\\""),
-            None => String::from("unnamed"),
-        }
+    fn sanitize_string(string: &String) -> String {
+        string.replace('\n', "").replace('\"', "\\\"")
     }
 
     /// Convert the marking to a valid string.
