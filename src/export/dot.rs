@@ -81,8 +81,8 @@ impl PetriNet {
     where
         T: std::io::Write,
     {
-        let edges = self.find_edges_place_transition();
-        for (place_ref, transition_ref) in edges {
+        let arcs = self.find_arcs_place_transition();
+        for (place_ref, transition_ref) in arcs {
             let line = format!(
                 "    {} -> {};\n",
                 Self::sanitize_string(place_ref.as_string()),
@@ -91,8 +91,8 @@ impl PetriNet {
             writer.write_all(line.as_bytes())?;
         }
 
-        let edges = self.find_edges_transition_place();
-        for (transition_ref, place_ref) in edges {
+        let arcs = self.find_arcs_transition_place();
+        for (transition_ref, place_ref) in arcs {
             let line = format!(
                 "    {} -> {};\n",
                 Self::sanitize_string(transition_ref.as_string()),
