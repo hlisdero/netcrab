@@ -1,5 +1,3 @@
-use super::node::Transition;
-
 #[derive(Clone, Eq, Hash, PartialEq)]
 pub struct PlaceRef(pub String);
 
