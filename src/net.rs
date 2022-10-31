@@ -13,6 +13,10 @@ pub struct PetriNet {
 }
 
 impl PetriNet {
+    pub fn new() -> PetriNet {
+        PetriNet::default()
+    }
+
     /// Get the number of places in the net.
     #[must_use]
     pub fn get_cardinality_places(&self) -> usize {
@@ -222,19 +226,19 @@ mod net_tests {
 
     #[test]
     fn new_default_has_no_places() {
-        let net = PetriNet::default();
+        let net = PetriNet::new();
         assert_eq!(net.get_cardinality_places(), 0);
     }
 
     #[test]
     fn new_default_has_no_transitions() {
-        let new = PetriNet::default();
+        let new = PetriNet::new();
         assert_eq!(new.get_cardinality_transitions(), 0)
     }
 
     #[test]
     fn net_find_unconnected_places_returns_empty_set_for_empty_net() {
-        let net = PetriNet::default();
+        let net = PetriNet::new();
         let unconnected_set = net.find_unconnected_places();
 
         assert!(unconnected_set.is_empty());
@@ -242,7 +246,7 @@ mod net_tests {
 
     #[test]
     fn net_find_unconnected_places_some_empty_places() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_1 = net.add_place(&"P1".to_string());
         let place_2 = net.add_place(&"P2".to_string());
         let place_3 = net.add_place(&"P3".to_string());
@@ -264,7 +268,7 @@ mod net_tests {
 
     #[test]
     fn net_find_unconnected_places_all_empty_places() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_1 = net.add_place(&"P1".to_string());
         let place_2 = net.add_place(&"P2".to_string());
         let place_3 = net.add_place(&"P3".to_string());
@@ -278,7 +282,7 @@ mod net_tests {
 
     #[test]
     fn net_find_edges_place_transition_list_all_edges() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_1 = net.add_place(&"P1".to_string());
         let place_2 = net.add_place(&"P2".to_string());
         let place_3 = net.add_place(&"P3".to_string());
@@ -303,7 +307,7 @@ mod net_tests {
 
     #[test]
     fn net_find_edges_transition_place_list_all_edges() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_1 = net.add_place(&"P1".to_string());
         let place_2 = net.add_place(&"P2".to_string());
         let place_3 = net.add_place(&"P3".to_string());
@@ -328,7 +332,7 @@ mod net_tests {
 
     #[test]
     fn net_add_place_updates_size() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         net.add_place(&"Example place".to_string());
 
         assert_eq!(net.get_cardinality_places(), 1);
@@ -336,7 +340,7 @@ mod net_tests {
 
     #[test]
     fn net_add_transition_updates_size() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         net.add_transition(&"Example transition".to_string());
 
         assert_eq!(net.get_cardinality_transitions(), 1);
@@ -344,7 +348,7 @@ mod net_tests {
 
     #[test]
     fn net_marking_returns_number_of_tokens_in_place() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_ref = net.add_place(&"Example place".to_string());
 
         let result = net.marking(&place_ref);
@@ -354,7 +358,7 @@ mod net_tests {
 
     #[test]
     fn net_marking_add_token_increases_number_of_tokens_in_place() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_ref = net.add_place(&"Example place".to_string());
 
         assert!(net.add_token(&place_ref).is_ok());
@@ -366,7 +370,7 @@ mod net_tests {
 
     #[test]
     fn net_marking_add_token_multiple_times() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_ref = net.add_place(&"Example place".to_string());
 
         assert!(net.add_token(&place_ref).is_ok());
@@ -382,7 +386,7 @@ mod net_tests {
 
     #[test]
     fn net_marking_remove_token_decreases_number_of_tokens_in_place() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_ref = net.add_place(&"Example place".to_string());
 
         assert!(net.add_token(&place_ref).is_ok());
@@ -396,7 +400,7 @@ mod net_tests {
 
     #[test]
     fn net_marking_remove_token_returns_err_if_place_empty() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_ref = net.add_place(&"Example place".to_string());
 
         assert!(net.remove_token(&place_ref).is_err());
@@ -404,7 +408,7 @@ mod net_tests {
 
     #[test]
     fn net_marking_vector_three_empty_places() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_1 = net.add_place(&"P1".to_string());
         let place_2 = net.add_place(&"P2".to_string());
         let place_3 = net.add_place(&"P3".to_string());
@@ -417,7 +421,7 @@ mod net_tests {
 
     #[test]
     fn net_marking_vector_two_places() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_1 = net.add_place(&"P1".to_string());
         let place_2 = net.add_place(&"P2".to_string());
 
@@ -438,7 +442,7 @@ mod net_tests {
 
     #[test]
     fn net_add_arc_place_transition_simple() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_ref = net.add_place(&"Example place".to_string());
         let transition_ref = net.add_transition(&"Example transition".to_string());
 
@@ -448,7 +452,7 @@ mod net_tests {
 
     #[test]
     fn net_add_arc_transition_place_simple() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_ref = net.add_place(&"Example place".to_string());
         let transition_ref = net.add_transition(&"Example transition".to_string());
 
@@ -458,7 +462,7 @@ mod net_tests {
 
     #[test]
     fn net_add_place_transition_form_self_loop() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_ref = net.add_place(&"Example place".to_string());
         let transition_ref = net.add_transition(&"Example transition".to_string());
 
@@ -470,7 +474,7 @@ mod net_tests {
 
     #[test]
     fn net_add_place_transition_form_chain() {
-        let mut net = PetriNet::default();
+        let mut net = PetriNet::new();
         let place_1 = net.add_place(&"P1".to_string());
         let place_2 = net.add_place(&"P2".to_string());
         let place_3 = net.add_place(&"P3".to_string());
