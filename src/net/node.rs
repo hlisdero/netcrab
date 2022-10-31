@@ -33,16 +33,19 @@ impl Place {
     pub fn add_token(&mut self, tokens_to_add: usize) -> Result<(), &str> {
         self.marking = match self.marking.checked_add(tokens_to_add) {
             Some(value) => value,
-            None => return Err("Overflow when adding token"),
+            None => return Err("Overflow when adding tokens to this place"),
         };
         Ok(())
     }
 
-    pub fn remove_token(&mut self) -> Result<(), &str> {
-        if self.is_empty() {
-            return Err("Cannot remove token from empty place");
+    pub fn remove_token(&mut self, tokens_to_remove: usize) -> Result<(), &str> {
+        if self.marking() < tokens_to_remove {
+            return Err("Cannot remove more tokens than available at this place");
         }
-        self.marking -= 1;
+        self.marking = match self.marking.checked_sub(tokens_to_remove) {
+            Some(value) => value,
+            None => return Err("Overflow when removing tokens from this place"),
+        };
         Ok(())
     }
 }
@@ -149,7 +152,7 @@ mod place_tests {
         let mut place = Place::default();
 
         assert!(place.add_token(1).is_ok());
-        let result = place.remove_token();
+        let result = place.remove_token(1);
 
         assert!(result.is_ok());
         assert!(place.is_empty());
@@ -158,7 +161,7 @@ mod place_tests {
     #[test]
     fn place_remove_token_returns_err_if_empty() {
         let mut place = Place::default();
-        let result = place.remove_token();
+        let result = place.remove_token(1);
 
         assert!(result.is_err());
         assert!(place.is_empty());
@@ -169,10 +172,7 @@ mod place_tests {
         let mut place = Place::default();
 
         assert!(place.add_token(10).is_ok());
-
-        for _ in 0..7 {
-            assert!(place.remove_token().is_ok());
-        }
+        assert!(place.remove_token(7).is_ok());
 
         assert!(!place.is_empty());
         assert_eq!(place.marking(), 3);

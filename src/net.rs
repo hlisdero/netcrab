@@ -176,9 +176,13 @@ impl PetriNet {
     /// # Errors
     ///
     /// If the `PlaceRef` is invalid, then an error is returned.
-    pub fn remove_token(&mut self, place_ref: &PlaceRef) -> Result<(), &str> {
+    pub fn remove_token(
+        &mut self,
+        place_ref: &PlaceRef,
+        tokens_to_remove: usize,
+    ) -> Result<(), &str> {
         let place = self.get_place(place_ref)?;
-        place.remove_token()
+        place.remove_token(tokens_to_remove)
     }
 
     fn get_place(&mut self, place_ref: &PlaceRef) -> Result<&mut Place, &str> {
@@ -386,7 +390,7 @@ mod net_tests {
         let place_ref = net.add_place(&"Example place".to_string());
 
         assert!(net.add_token(&place_ref, 2).is_ok());
-        assert!(net.remove_token(&place_ref).is_ok());
+        assert!(net.remove_token(&place_ref, 1).is_ok());
 
         let result = net.marking(&place_ref);
         assert!(result.is_ok());
@@ -398,7 +402,7 @@ mod net_tests {
         let mut net = PetriNet::new();
         let place_ref = net.add_place(&"Example place".to_string());
 
-        assert!(net.remove_token(&place_ref).is_err());
+        assert!(net.remove_token(&place_ref, 1).is_err());
     }
 
     #[test]
