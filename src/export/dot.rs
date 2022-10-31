@@ -36,7 +36,7 @@ impl PetriNet {
         self.write_dot_places(writer)?;
         self.write_dot_transitions(writer)?;
         self.write_dot_arcs(writer)?;
-        writer.write_all("}".as_bytes())?;
+        writer.write_all("}\n".as_bytes())?;
         Ok(())
     }
 
@@ -116,6 +116,120 @@ impl PetriNet {
             0 => String::new(),
             1..=MAX_TOKENS_AS_DOT => "•".repeat(marking),
             _ => marking.to_string(),
+        }
+    }
+}
+
+#[cfg(test)]
+mod dot_tests {
+    use super::*;
+    use std::collections::HashSet;
+
+    #[test]
+    fn dot_string_empty_net() {
+        let net = PetriNet::new();
+        let result = net.to_dot_string();
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), "digraph petrinet {\n}\n".to_string());
+    }
+
+    #[test]
+    fn dot_string_only_empty_places_net() {
+        let mut net = PetriNet::new();
+        net.add_place(&"P1".to_string());
+        net.add_place(&"P2".to_string());
+        net.add_place(&"P3".to_string());
+        net.add_place(&"P4".to_string());
+        net.add_place(&"P5".to_string());
+        let result = net.to_dot_string();
+
+        assert!(result.is_ok());
+        let expected_result = "digraph petrinet {\n\
+            P1 [shape=\"circle\" xlabel=\"P1\" label=\"\"];\n\
+            P2 [shape=\"circle\" xlabel=\"P2\" label=\"\"];\n\
+            P3 [shape=\"circle\" xlabel=\"P3\" label=\"\"];\n\
+            P4 [shape=\"circle\" xlabel=\"P4\" label=\"\"];\n\
+            P5 [shape=\"circle\" xlabel=\"P5\" label=\"\"];\n\
+        }\n"
+        .to_string();
+
+        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+    }
+
+    #[test]
+    fn dot_string_marked_places_net() {
+        let mut net = PetriNet::new();
+        let p1 = net.add_place(&"P1".to_string());
+        let p2 = net.add_place(&"P2".to_string());
+        let p3 = net.add_place(&"P3".to_string());
+        let p4 = net.add_place(&"P4".to_string());
+        let p5 = net.add_place(&"P5".to_string());
+
+        for _ in 0..5 {
+            assert!(net.add_token(&p1).is_ok());
+        }
+        for _ in 0..6 {
+            assert!(net.add_token(&p2).is_ok());
+        }
+        for _ in 0..3 {
+            assert!(net.add_token(&p3).is_ok());
+        }
+        for _ in 0..2 {
+            assert!(net.add_token(&p4).is_ok());
+        }
+        assert!(net.add_token(&p5).is_ok());
+        let result = net.to_dot_string();
+
+        assert!(result.is_ok());
+        let expected_result = "digraph petrinet {\n\
+            P1 [shape=\"circle\" xlabel=\"P1\" label=\"•••••\"];\n\
+            P2 [shape=\"circle\" xlabel=\"P2\" label=\"6\"];\n\
+            P3 [shape=\"circle\" xlabel=\"P3\" label=\"•••\"];\n\
+            P4 [shape=\"circle\" xlabel=\"P4\" label=\"••\"];\n\
+            P5 [shape=\"circle\" xlabel=\"P5\" label=\"•\"];\n\
+        }\n"
+        .to_string();
+
+        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+    }
+
+    #[test]
+    fn dot_string_only_empty_transitions_net() {
+        let mut net = PetriNet::new();
+        net.add_transition(&"T1".to_string());
+        net.add_transition(&"T2".to_string());
+        net.add_transition(&"T3".to_string());
+        net.add_transition(&"T4".to_string());
+        net.add_transition(&"T5".to_string());
+        let result = net.to_dot_string();
+
+        assert!(result.is_ok());
+        let expected_result = "digraph petrinet {\n\
+            T1 [shape=\"box\" xlabel=\"T1\"];\n\
+            T2 [shape=\"box\" xlabel=\"T2\"];\n\
+            T3 [shape=\"box\" xlabel=\"T3\"];\n\
+            T4 [shape=\"box\" xlabel=\"T4\"];\n\
+            T5 [shape=\"box\" xlabel=\"T5\"];\n\
+        }\n"
+        .to_string();
+
+        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+    }
+
+    fn assert_all_lines_arbitrary_order(left: String, right: String) {
+        let mut expected_lines: HashSet<&str> = HashSet::new();
+
+        for line in right.lines() {
+            expected_lines.insert(line.trim());
+        }
+
+        for line in left.lines() {
+            if !expected_lines.contains(line.trim()) {
+                panic!(
+                    "Line not present in dot output: {}\nExpected output: {}",
+                    line, right
+                );
+            }
         }
     }
 }
