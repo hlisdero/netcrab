@@ -52,6 +52,32 @@ impl PetriNet {
         unconnected_set
     }
 
+    /// Find all edges from places to transitions in the net.
+    /// Return a `HashSet` with the tuples of references as keys.
+    #[must_use]
+    pub fn find_edges_place_transition(&self) -> HashSet<(PlaceRef, TransitionRef)> {
+        let mut edges: HashSet<(PlaceRef, TransitionRef)> = HashSet::new();
+        for (place_ref, place) in &self.places {
+            for transition_ref in place.get_postset() {
+                edges.insert((place_ref.clone(), transition_ref.clone()));
+            }
+        }
+        edges
+    }
+
+    /// Find all edges from transitions to places in the net.
+    /// Return a `HashSet` with the tuples of references as keys.
+    #[must_use]
+    pub fn find_edges_transition_place(&self) -> HashSet<(TransitionRef, PlaceRef)> {
+        let mut edges: HashSet<(TransitionRef, PlaceRef)> = HashSet::new();
+        for (transition_ref, transition) in &self.transitions {
+            for place_ref in transition.get_postset() {
+                edges.insert((transition_ref.clone(), place_ref.clone()));
+            }
+        }
+        edges
+    }
+
     /// Add a place to the net.
     /// If the label already exists, it silently overwrites it.
     pub fn add_place(&mut self, place_label: &str) -> PlaceRef {
@@ -251,6 +277,56 @@ mod net_tests {
         assert!(unconnected_set.contains(&place_1));
         assert!(unconnected_set.contains(&place_2));
         assert!(unconnected_set.contains(&place_3));
+    }
+
+    #[test]
+    fn net_find_edges_place_transition_list_all_edges() {
+        let mut net = PetriNet::default();
+        let place_1 = net.add_place(&"P1".to_string());
+        let place_2 = net.add_place(&"P2".to_string());
+        let place_3 = net.add_place(&"P3".to_string());
+
+        let transition_1 = net.add_transition(&"T1".to_string());
+        let transition_2 = net.add_transition(&"T2".to_string());
+
+        let result = net.add_arc_place_transition(&place_1, &transition_1);
+        assert!(result.is_ok());
+        let result = net.add_arc_transition_place(&transition_1, &place_2);
+        assert!(result.is_ok());
+        let result = net.add_arc_place_transition(&place_2, &transition_2);
+        assert!(result.is_ok());
+        let result = net.add_arc_transition_place(&transition_2, &place_3);
+        assert!(result.is_ok());
+
+        let edges = net.find_edges_place_transition();
+        assert_eq!(edges.len(), 2);
+        assert!(edges.contains(&(place_1, transition_1)));
+        assert!(edges.contains(&(place_2, transition_2)));
+    }
+
+    #[test]
+    fn net_find_edges_transition_place_list_all_edges() {
+        let mut net = PetriNet::default();
+        let place_1 = net.add_place(&"P1".to_string());
+        let place_2 = net.add_place(&"P2".to_string());
+        let place_3 = net.add_place(&"P3".to_string());
+
+        let transition_1 = net.add_transition(&"T1".to_string());
+        let transition_2 = net.add_transition(&"T2".to_string());
+
+        let result = net.add_arc_place_transition(&place_1, &transition_1);
+        assert!(result.is_ok());
+        let result = net.add_arc_transition_place(&transition_1, &place_2);
+        assert!(result.is_ok());
+        let result = net.add_arc_place_transition(&place_2, &transition_2);
+        assert!(result.is_ok());
+        let result = net.add_arc_transition_place(&transition_2, &place_3);
+        assert!(result.is_ok());
+
+        let edges = net.find_edges_transition_place();
+        assert_eq!(edges.len(), 2);
+        assert!(edges.contains(&(transition_1, place_2)));
+        assert!(edges.contains(&(transition_2, place_3)));
     }
 
     #[test]
