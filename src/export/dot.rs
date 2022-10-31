@@ -66,7 +66,10 @@ impl PetriNet {
     {
         for (transition_ref, _) in self.transitions_iter() {
             let label = Self::sanitize_string(transition_ref.as_string());
-            let line = format!("    {} [shape=\"box\" xlabel=\"{}\"];\n", label, label);
+            let line = format!(
+                "    {} [shape=\"box\" xlabel=\"{}\" label=\"\"];\n",
+                label, label
+            );
             writer.write_all(line.as_bytes())?;
         }
         Ok(())
@@ -197,11 +200,11 @@ mod dot_tests {
 
         assert!(result.is_ok());
         let expected_result = "digraph petrinet {\n\
-            T1 [shape=\"box\" xlabel=\"T1\"];\n\
-            T2 [shape=\"box\" xlabel=\"T2\"];\n\
-            T3 [shape=\"box\" xlabel=\"T3\"];\n\
-            T4 [shape=\"box\" xlabel=\"T4\"];\n\
-            T5 [shape=\"box\" xlabel=\"T5\"];\n\
+            T1 [shape=\"box\" xlabel=\"T1\" label=\"\"];\n\
+            T2 [shape=\"box\" xlabel=\"T2\" label=\"\"];\n\
+            T3 [shape=\"box\" xlabel=\"T3\" label=\"\"];\n\
+            T4 [shape=\"box\" xlabel=\"T4\" label=\"\"];\n\
+            T5 [shape=\"box\" xlabel=\"T5\" label=\"\"];\n\
         }\n"
         .to_string();
 
@@ -218,8 +221,8 @@ mod dot_tests {
             P1 [shape=\"circle\" xlabel=\"P1\" label=\"\"];\n\
             P2 [shape=\"circle\" xlabel=\"P2\" label=\"\"];\n\
             P3 [shape=\"circle\" xlabel=\"P3\" label=\"\"];\n\
-            T1 [shape=\"box\" xlabel=\"T1\"];\n\
-            T2 [shape=\"box\" xlabel=\"T2\"];\n\
+            T1 [shape=\"box\" xlabel=\"T1\" label=\"\"];\n\
+            T2 [shape=\"box\" xlabel=\"T2\" label=\"\"];\n\
             P1 -> T1;\n\
             T1 -> P2;\n\
             P2 -> T2;\n\
@@ -238,7 +241,7 @@ mod dot_tests {
         assert!(result.is_ok());
         let expected_result = "digraph petrinet {\n\
             P1 [shape=\"circle\" xlabel=\"P1\" label=\"\"];\n\
-            T1 [shape=\"box\" xlabel=\"T1\"];\n\
+            T1 [shape=\"box\" xlabel=\"T1\" label=\"\"];\n\
             P1 -> T1;\n\
             T1 -> P1;\n\
         }\n"
