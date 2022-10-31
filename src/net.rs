@@ -53,7 +53,7 @@ impl PetriNet {
     }
 
     /// Find all edges from places to transitions in the net.
-    /// Return a `HashSet` with the tuples of references as keys.
+    /// Return a `HashSet` with tuples of references (source, dest).
     #[must_use]
     pub fn find_edges_place_transition(&self) -> HashSet<(PlaceRef, TransitionRef)> {
         let mut edges: HashSet<(PlaceRef, TransitionRef)> = HashSet::new();
@@ -66,7 +66,7 @@ impl PetriNet {
     }
 
     /// Find all edges from transitions to places in the net.
-    /// Return a `HashSet` with the tuples of references as keys.
+    /// Return a `HashSet` with tuples of references (source, dest).
     #[must_use]
     pub fn find_edges_transition_place(&self) -> HashSet<(TransitionRef, PlaceRef)> {
         let mut edges: HashSet<(TransitionRef, PlaceRef)> = HashSet::new();
