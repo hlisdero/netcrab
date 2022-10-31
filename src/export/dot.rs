@@ -216,6 +216,45 @@ mod dot_tests {
         assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
     }
 
+    #[test]
+    fn dot_string_net_with_chain_topology() {
+        let net = create_net_chain_topology();
+        let result = net.to_dot_string();
+
+        assert!(result.is_ok());
+        let expected_result = "digraph petrinet {\n\
+            P1 [shape=\"circle\" xlabel=\"P1\" label=\"\"];\n\
+            P2 [shape=\"circle\" xlabel=\"P2\" label=\"\"];\n\
+            P3 [shape=\"circle\" xlabel=\"P3\" label=\"\"];\n\
+            T1 [shape=\"box\" xlabel=\"T1\"];\n\
+            T2 [shape=\"box\" xlabel=\"T2\"];\n\
+            P1 -> T1;\n\
+            T1 -> P2;\n\
+            P2 -> T2;\n\
+            T2 -> P3;\n\
+        }\n"
+        .to_string();
+
+        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+    }
+
+    #[test]
+    fn dot_string_net_with_loop_topology() {
+        let net = create_net_loop_topology();
+        let result = net.to_dot_string();
+
+        assert!(result.is_ok());
+        let expected_result = "digraph petrinet {\n\
+            P1 [shape=\"circle\" xlabel=\"P1\" label=\"\"];\n\
+            T1 [shape=\"box\" xlabel=\"T1\"];\n\
+            P1 -> T1;\n\
+            T1 -> P1;\n\
+        }\n"
+        .to_string();
+
+        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+    }
+
     fn assert_all_lines_arbitrary_order(left: String, right: String) {
         let mut expected_lines: HashSet<&str> = HashSet::new();
 
@@ -231,5 +270,37 @@ mod dot_tests {
                 );
             }
         }
+    }
+
+    fn create_net_chain_topology() -> PetriNet {
+        let mut net = PetriNet::new();
+        let place_1 = net.add_place(&"P1".to_string());
+        let place_2 = net.add_place(&"P2".to_string());
+        let place_3 = net.add_place(&"P3".to_string());
+
+        let transition_1 = net.add_transition(&"T1".to_string());
+        let transition_2 = net.add_transition(&"T2".to_string());
+
+        let result = net.add_arc_place_transition(&place_1, &transition_1);
+        assert!(result.is_ok());
+        let result = net.add_arc_transition_place(&transition_1, &place_2);
+        assert!(result.is_ok());
+        let result = net.add_arc_place_transition(&place_2, &transition_2);
+        assert!(result.is_ok());
+        let result = net.add_arc_transition_place(&transition_2, &place_3);
+        assert!(result.is_ok());
+        net
+    }
+
+    fn create_net_loop_topology() -> PetriNet {
+        let mut net = PetriNet::new();
+        let place_ref = net.add_place(&"P1".to_string());
+        let transition_ref = net.add_transition(&"T1".to_string());
+
+        let result = net.add_arc_place_transition(&place_ref, &transition_ref);
+        assert!(result.is_ok());
+        let result = net.add_arc_transition_place(&transition_ref, &place_ref);
+        assert!(result.is_ok());
+        net
     }
 }
