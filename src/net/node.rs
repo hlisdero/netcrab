@@ -6,7 +6,6 @@ mod connectable;
 
 #[derive(Default)]
 pub struct Place {
-    pub label: Option<String>,
     marking: usize,
     preset: HashSet<TransitionRef>,
     postset: HashSet<TransitionRef>,
@@ -14,19 +13,13 @@ pub struct Place {
 
 #[derive(Default)]
 pub struct Transition {
-    pub label: Option<String>,
     preset: HashSet<PlaceRef>,
     postset: HashSet<PlaceRef>,
 }
 
 impl Place {
-    pub fn new(label: String) -> Place {
-        Place {
-            label: Some(label),
-            marking: 0,
-            preset: HashSet::new(),
-            postset: HashSet::new(),
-        }
+    pub fn new() -> Place {
+        Place::default()
     }
 
     pub fn is_empty(&self) -> bool {
@@ -55,12 +48,8 @@ impl Place {
 }
 
 impl Transition {
-    pub fn new(label: String) -> Transition {
-        Transition {
-            label: Some(label),
-            preset: HashSet::new(),
-            postset: HashSet::new(),
-        }
+    pub fn new() -> Transition {
+        Transition::default()
     }
 }
 
@@ -109,18 +98,17 @@ mod place_tests {
     use super::*;
 
     #[test]
-    fn place_new_assigns_label() {
-        let label = "label";
-        let place = Place::new(label.to_string());
+    fn place_new_has_empty_preset() {
+        let place = Place::new();
 
-        assert_eq!(place.label, Some(label.to_string()));
+        assert!(place.get_preset().is_empty());
     }
 
     #[test]
-    fn place_default_creates_place_with_no_label() {
-        let place = Place::default();
+    fn place_new_has_empty_postset() {
+        let place = Place::new();
 
-        assert_eq!(place.label, None);
+        assert!(place.get_postset().is_empty());
     }
 
     #[test]
@@ -196,7 +184,7 @@ mod place_tests {
 
     #[test]
     fn place_add_incoming_transition_returns_true_when_success() {
-        let mut place = Place::new("Example place".to_string());
+        let mut place = Place::new();
         let reference = TransitionRef("Example transition".to_string());
 
         assert!(place.add_incoming(reference));
@@ -204,7 +192,7 @@ mod place_tests {
 
     #[test]
     fn place_add_incoming_transition_returns_false_when_already_exists() {
-        let mut place = Place::new("Example place".to_string());
+        let mut place = Place::new();
         let reference = TransitionRef("Example transition".to_string());
 
         assert!(place.add_incoming(reference));
@@ -214,7 +202,7 @@ mod place_tests {
 
     #[test]
     fn place_remove_incoming_transition_returns_true_when_success() {
-        let mut place = Place::new("Example place".to_string());
+        let mut place = Place::new();
         let reference = TransitionRef("Example transition".to_string());
 
         assert!(place.add_incoming(reference));
@@ -224,7 +212,7 @@ mod place_tests {
 
     #[test]
     fn place_remove_incoming_transition_returns_false_when_not_found() {
-        let mut place = Place::new("Example place".to_string());
+        let mut place = Place::new();
         let reference = TransitionRef("Example transition".to_string());
 
         assert!(place.add_incoming(reference));
@@ -238,22 +226,22 @@ mod transition_tests {
     use super::*;
 
     #[test]
-    fn transition_new_assigns_label() {
-        let label = "label";
-        let transition = Transition::new(label.to_string());
+    fn transition_new_has_empty_preset() {
+        let transition = Transition::new();
 
-        assert_eq!(transition.label, Some(label.to_string()));
+        assert!(transition.get_preset().is_empty());
     }
 
     #[test]
-    fn transition_default_creates_transition_with_no_label() {
-        let transition = Transition::default();
-        assert_eq!(transition.label, None);
+    fn transition_new_has_empty_postset() {
+        let transition = Transition::new();
+
+        assert!(transition.get_postset().is_empty());
     }
 
     #[test]
     fn transition_add_incoming_place_returns_true_when_success() {
-        let mut transition = Transition::new("Example transition".to_string());
+        let mut transition = Transition::new();
         let reference = PlaceRef("Example place".to_string());
 
         assert!(transition.add_incoming(reference));
@@ -261,7 +249,7 @@ mod transition_tests {
 
     #[test]
     fn transition_add_incoming_place_returns_false_when_already_exists() {
-        let mut transition = Transition::new("Example transition".to_string());
+        let mut transition = Transition::new();
         let reference = PlaceRef("Example place".to_string());
 
         assert!(transition.add_incoming(reference));
@@ -271,7 +259,7 @@ mod transition_tests {
 
     #[test]
     fn transition_remove_incoming_place_returns_true_when_success() {
-        let mut transition = Transition::new("Example transition".to_string());
+        let mut transition = Transition::new();
         let reference = PlaceRef("Example place".to_string());
 
         assert!(transition.add_incoming(reference));
@@ -281,7 +269,7 @@ mod transition_tests {
 
     #[test]
     fn transition_remove_incoming_place_returns_false_when_not_found() {
-        let mut transition = Transition::new("Example transition".to_string());
+        let mut transition = Transition::new();
         let reference = PlaceRef("Example place".to_string());
 
         assert!(transition.add_incoming(reference));

@@ -82,8 +82,7 @@ impl PetriNet {
     /// If the label already exists, it silently overwrites it.
     pub fn add_place(&mut self, place_label: &str) -> PlaceRef {
         let place_ref = PlaceRef(place_label.to_string());
-        self.places
-            .insert(place_ref.clone(), Place::new(place_label.to_string()));
+        self.places.insert(place_ref.clone(), Place::new());
         place_ref
     }
 
@@ -91,10 +90,8 @@ impl PetriNet {
     /// If the label already exists, it silently overwrites it.
     pub fn add_transition(&mut self, transition_label: &str) -> TransitionRef {
         let transition_ref = TransitionRef(transition_label.to_string());
-        self.transitions.insert(
-            transition_ref.clone(),
-            Transition::new(transition_label.to_string()),
-        );
+        self.transitions
+            .insert(transition_ref.clone(), Transition::new());
         transition_ref
     }
 
