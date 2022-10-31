@@ -1,0 +1,172 @@
+use crate::net::PetriNet;
+use xml::writer::{EmitterConfig, Error as XmlError, EventWriter, Result as XmlResult, XmlEvent};
+
+const XML_PNML_DEFAULT_NAMESPACE: &str = "http://www.pnml.org/version-2009/grammar/pnml";
+const XML_PNML_DEFAULT_GRAMMAR: &str = "http://www.pnml.org/version-2009/grammar/ptnet";
+
+impl PetriNet {
+    /// Convert the net to a string in PNML format and return it.
+    ///
+    /// # Errors
+    ///
+    /// If the writer fails to write the contents of the net, then an error is returned.
+    pub fn to_pnml_string(&self) -> Result<String, XmlError> {
+        let mut writer = Vec::new();
+        self.to_pnml(&mut writer)?;
+        let string = String::from_utf8(writer);
+        match string {
+            Ok(string) => Ok(string),
+            // This error could only be due to a bug, map it to a different error type.
+            // Use the Error class from the xml-rs library as a wrapper
+            Err(_) => Err(XmlError::Io(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Could not convert the string to UTF-8",
+            ))),
+        }
+    }
+
+    /// Convert the net to the PNML format.
+    /// Write the output to a trait object which implements `std::io::Write`.
+    ///
+    /// # Errors
+    ///
+    /// If the writer fails to write the contents of the net, then an error is returned.
+    pub fn to_pnml<T>(&self, writer: &mut T) -> XmlResult<()>
+    where
+        T: std::io::Write,
+    {
+        let mut xml_writer = EmitterConfig::new()
+            .perform_indent(true)
+            .create_writer(writer);
+
+        // Initialize general properties of the XML.
+        xml_writer.write(XmlEvent::start_element("pnml").default_ns(XML_PNML_DEFAULT_NAMESPACE))?;
+        xml_writer.write(
+            XmlEvent::start_element("net")
+                .attr("id", "net0")
+                .attr("type", XML_PNML_DEFAULT_GRAMMAR),
+        )?;
+        xml_writer.write(XmlEvent::start_element("page").attr("id", "page0"))?;
+
+        self.write_pnml_places(&mut xml_writer)?;
+        self.write_pnml_transitions(&mut xml_writer)?;
+        self.write_pnml_arcs(&mut xml_writer)?;
+
+        // Close the tags of the general properties of the XML.
+        xml_writer.write(XmlEvent::end_element())?;
+        xml_writer.write(XmlEvent::end_element())?;
+        xml_writer.write(XmlEvent::end_element())?;
+        Ok(())
+    }
+
+    /// Write the XML elements that define the places
+    /// to an instance of `xml::writer::Writer`.
+    fn write_pnml_places<T>(&self, writer: &mut EventWriter<T>) -> XmlResult<()>
+    where
+        T: std::io::Write,
+    {
+        for (place_ref, place) in self.places_iter() {
+            let place_xml_element =
+                XmlEvent::start_element("place").attr("id", place_ref.as_string());
+            writer.write(place_xml_element)?;
+            Self::label_to_pnml(place_ref.as_string(), writer)?;
+            Self::marking_to_pnml(place.marking(), writer)?;
+            writer.write(XmlEvent::end_element())?;
+        }
+        Ok(())
+    }
+
+    /// Write the XML elements that define the transitions
+    /// to an instance of `xml::writer::Writer`.
+    fn write_pnml_transitions<T>(&self, writer: &mut EventWriter<T>) -> XmlResult<()>
+    where
+        T: std::io::Write,
+    {
+        for (transition_ref, _) in self.transitions_iter() {
+            let transition_xml_element =
+                XmlEvent::start_element("transition").attr("id", transition_ref.as_string());
+            writer.write(transition_xml_element)?;
+            Self::label_to_pnml(transition_ref.as_string(), writer)?;
+            writer.write(XmlEvent::end_element())?;
+        }
+        Ok(())
+    }
+
+    /// Write the XML elements that define the arcs
+    /// to an instance of `xml::writer::Writer`.
+    fn write_pnml_arcs<T>(&self, writer: &mut EventWriter<T>) -> XmlResult<()>
+    where
+        T: std::io::Write,
+    {
+        let arcs = self.find_edges_place_transition();
+        for (place_ref, transition_ref) in arcs {
+            self.write_arc(place_ref.as_string(), transition_ref.as_string(), writer)?;
+        }
+
+        let arcs = self.find_edges_transition_place();
+        for (transition_ref, place_ref) in arcs {
+            self.write_arc(transition_ref.as_string(), place_ref.as_string(), writer)?;
+        }
+
+        Ok(())
+    }
+
+    /// Write a single arc in the net as a XML node
+    /// as required by the PNML standard.
+    fn write_arc<T>(
+        &self,
+        source: &String,
+        dest: &String,
+        xml_writer: &mut EventWriter<T>,
+    ) -> XmlResult<()>
+    where
+        T: std::io::Write,
+    {
+        let arc_label = format!("({}, {})", source, dest);
+        let start_element = XmlEvent::start_element("arc")
+            .attr("source", source)
+            .attr("target", dest)
+            .attr("id", &arc_label);
+        xml_writer.write(start_element)?;
+        Self::label_to_pnml(&arc_label, xml_writer)?;
+        xml_writer.write(XmlEvent::start_element("inscription"))?;
+        xml_writer.write(XmlEvent::start_element("text"))?;
+        // Weights in arcs are not supported for now.
+        xml_writer.write(XmlEvent::Characters(&"1"))?;
+        xml_writer.write(XmlEvent::end_element())?;
+        xml_writer.write(XmlEvent::end_element())?;
+        xml_writer.write(XmlEvent::end_element())?;
+        Ok(())
+    }
+
+    /// Write the label of a place or transition as a XML node
+    /// as required by the PNML standard.
+    fn label_to_pnml<T>(name: &String, xml_writer: &mut EventWriter<T>) -> XmlResult<()>
+    where
+        T: std::io::Write,
+    {
+        xml_writer.write(XmlEvent::start_element("name"))?;
+        xml_writer.write(XmlEvent::start_element("text"))?;
+        xml_writer.write(XmlEvent::Characters(name))?;
+        xml_writer.write(XmlEvent::end_element())?;
+        xml_writer.write(XmlEvent::end_element())?;
+        Ok(())
+    }
+
+    /// Write the marking of a place as a XML node
+    /// as required by the PNML standard.
+    fn marking_to_pnml<T>(marking: usize, xml_writer: &mut EventWriter<T>) -> XmlResult<()>
+    where
+        T: std::io::Write,
+    {
+        if marking == 0 {
+            return Ok(());
+        }
+        xml_writer.write(XmlEvent::start_element("initialMarking"))?;
+        xml_writer.write(XmlEvent::start_element("text"))?;
+        xml_writer.write(XmlEvent::Characters(&marking.to_string()))?;
+        xml_writer.write(XmlEvent::end_element())?;
+        xml_writer.write(XmlEvent::end_element())?;
+        Ok(())
+    }
+}
