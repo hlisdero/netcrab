@@ -74,10 +74,30 @@ impl PetriNet {
 
     /// Write the lines that define the arcs
     /// to a trait object which implements `std::io::Write`.
-    fn write_dot_arcs<T>(&self, _writer: &mut T) -> Result<(), std::io::Error>
+    fn write_dot_arcs<T>(&self, writer: &mut T) -> Result<(), std::io::Error>
     where
         T: std::io::Write,
     {
+        let edges = self.find_edges_place_transition();
+        for (place_ref, transition_ref) in edges {
+            let line = format!(
+                "    {} -> {};\n",
+                place_ref.to_string(),
+                transition_ref.to_string()
+            );
+            writer.write(line.as_bytes())?;
+        }
+
+        let edges = self.find_edges_transition_place();
+        for (transition_ref, place_ref) in edges {
+            let line = format!(
+                "    {} -> {};\n",
+                transition_ref.to_string(),
+                place_ref.to_string()
+            );
+            writer.write(line.as_bytes())?;
+        }
+
         Ok(())
     }
 
