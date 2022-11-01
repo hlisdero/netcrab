@@ -13,8 +13,7 @@ impl PetriNet {
     pub fn to_pnml_string(&self) -> Result<String, XmlError> {
         let mut writer = Vec::new();
         self.to_pnml(&mut writer)?;
-        let string = String::from_utf8(writer);
-        match string {
+        match String::from_utf8(writer) {
             Ok(string) => Ok(string),
             // This error could only be due to a bug, map it to a different error type.
             // Use the Error class from the xml-rs library as a wrapper
@@ -168,5 +167,75 @@ impl PetriNet {
         xml_writer.write(XmlEvent::end_element())?;
         xml_writer.write(XmlEvent::end_element())?;
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod pnml_test {
+    use super::*;
+    use crate::export::test_utils::assert_all_lines_arbitrary_order;
+
+    #[test]
+    fn pnml_string_empty_net() {
+        let net = PetriNet::new();
+        let result = net.to_pnml_string();
+        assert!(result.is_ok());
+        let expected_result = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\
+        <pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n  \
+        <net id=\"net0\" type=\"http://www.pnml.org/version-2009/grammar/ptnet\">\n    \
+        <page id=\"page0\" />\n  \
+        </net>\n\
+        </pnml>"
+            .to_string();
+
+        assert_eq!(result.unwrap(), expected_result);
+    }
+
+    #[test]
+    fn pnml_string_only_empty_places_net() {
+        let mut net = PetriNet::new();
+        net.add_place(&"P1".to_string());
+        net.add_place(&"P2".to_string());
+        net.add_place(&"P3".to_string());
+        net.add_place(&"P4".to_string());
+        net.add_place(&"P5".to_string());
+        let result = net.to_pnml_string();
+
+        assert!(result.is_ok());
+        let expected_result = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\
+        <pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n\
+          <net id=\"net0\" type=\"http://www.pnml.org/version-2009/grammar/ptnet\">\n\
+            <page id=\"page0\">\n\
+              <place id=\"P5\">\n\
+                <name>\n\
+                  <text>P5</text>\n\
+                </name>\n\
+              </place>\n\
+              <place id=\"P3\">\n\
+                <name>\n\
+                  <text>P3</text>\n\
+                </name>\n\
+              </place>\n\
+              <place id=\"P1\">\n\
+                <name>\n\
+                  <text>P1</text>\n\
+                </name>\n\
+              </place>\n\
+              <place id=\"P2\">\n\
+                <name>\n\
+                  <text>P2</text>\n\
+                </name>\n\
+              </place>\n\
+              <place id=\"P4\">\n\
+                <name>\n\
+                  <text>P4</text>\n\
+                </name>\n\
+              </place>\n\
+            </page>\n\
+          </net>\n\
+        </pnml>"
+            .to_string();
+
+        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
     }
 }

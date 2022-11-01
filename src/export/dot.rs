@@ -11,8 +11,7 @@ impl PetriNet {
     pub fn to_dot_string(&self) -> Result<String, std::io::Error> {
         let mut writer = Vec::new();
         self.to_dot(&mut writer)?;
-        let string = String::from_utf8(writer);
-        match string {
+        match String::from_utf8(writer) {
             Ok(string) => Ok(string),
             // This error could only be due to a bug, map it to a different error type.
             Err(_) => Err(std::io::Error::new(
@@ -126,7 +125,7 @@ impl PetriNet {
 #[cfg(test)]
 mod dot_tests {
     use super::*;
-    use std::collections::HashSet;
+    use crate::export::test_utils::assert_all_lines_arbitrary_order;
 
     #[test]
     fn dot_string_empty_net() {
@@ -248,23 +247,6 @@ mod dot_tests {
         .to_string();
 
         assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
-    }
-
-    fn assert_all_lines_arbitrary_order(left: String, right: String) {
-        let mut expected_lines: HashSet<&str> = HashSet::new();
-
-        for line in right.lines() {
-            expected_lines.insert(line.trim());
-        }
-
-        for line in left.lines() {
-            if !expected_lines.contains(line.trim()) {
-                panic!(
-                    "Line not present in dot output: {}\nExpected output: {}",
-                    line, right
-                );
-            }
-        }
     }
 
     fn create_net_chain_topology() -> PetriNet {
