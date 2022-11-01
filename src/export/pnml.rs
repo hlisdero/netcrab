@@ -174,6 +174,7 @@ impl PetriNet {
 mod pnml_test {
     use super::*;
     use crate::export::test_utils::assert_all_lines_arbitrary_order;
+    use crate::net_creator::*;
 
     #[test]
     fn pnml_string_empty_net() {
@@ -300,6 +301,173 @@ mod pnml_test {
                   <text>1</text>\n\
                 </initialMarking>\n\
               </place>\n\
+            </page>\n\
+          </net>\n\
+        </pnml>"
+            .to_string();
+
+        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+    }
+
+    #[test]
+    fn pnml_string_only_empty_transitions_net() {
+        let mut net = PetriNet::new();
+        net.add_transition(&"T1".to_string());
+        net.add_transition(&"T2".to_string());
+        net.add_transition(&"T3".to_string());
+        net.add_transition(&"T4".to_string());
+        net.add_transition(&"T5".to_string());
+        let result = net.to_pnml_string();
+
+        assert!(result.is_ok());
+        let expected_result = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\
+        <pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n\
+          <net id=\"net0\" type=\"http://www.pnml.org/version-2009/grammar/ptnet\">\n\
+            <page id=\"page0\">\n\
+              <transition id=\"T1\">\n\
+                <name>\n\
+                  <text>T1</text>\n\
+                </name>\n\
+              </transition>\n\
+              <transition id=\"T2\">\n\
+                <name>\n\
+                  <text>T2</text>\n\
+                </name>\n\
+              </transition>\n\
+              <transition id=\"T3\">\n\
+                <name>\n\
+                  <text>T3</text>\n\
+                </name>\n\
+              </transition>\n\
+              <transition id=\"T4\">\n\
+                <name>\n\
+                  <text>T4</text>\n\
+                </name>\n\
+              </transition>\n\
+              <transition id=\"T5\">\n\
+                <name>\n\
+                  <text>T5</text>\n\
+                </name>\n\
+              </transition>\n\
+            </page>\n\
+          </net>\n\
+        </pnml>"
+            .to_string();
+
+        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+    }
+
+    #[test]
+    fn pnml_string_net_with_chain_topology() {
+        let net = create_net_chain_topology();
+        let result = net.to_pnml_string();
+
+        assert!(result.is_ok());
+        let expected_result = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\
+        <pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n\
+          <net id=\"net0\" type=\"http://www.pnml.org/version-2009/grammar/ptnet\">\n\
+            <page id=\"page0\">\n\
+              <place id=\"P1\">\n\
+                <name>\n\
+                  <text>P1</text>\n\
+                </name>\n\
+              </place>\n\
+              <place id=\"P2\">\n\
+                <name>\n\
+                  <text>P2</text>\n\
+                </name>\n\
+              </place>\n\
+              <place id=\"P3\">\n\
+                <name>\n\
+                  <text>P3</text>\n\
+                </name>\n\
+              </place>\n\
+              <transition id=\"T1\">\n\
+                <name>\n\
+                  <text>T1</text>\n\
+                </name>\n\
+              </transition>\n\
+              <transition id=\"T2\">\n\
+                <name>\n\
+                  <text>T2</text>\n\
+                </name>\n\
+              </transition>\n\
+              <arc source=\"P1\" target=\"T1\" id=\"(P1, T1)\">\n\
+                <name>\n\
+                  <text>(P1, T1)</text>\n\
+                </name>\n\
+                <inscription>\n\
+                  <text>1</text>\n\
+                </inscription>\n\
+              </arc>\n\
+              <arc source=\"P2\" target=\"T2\" id=\"(P2, T2)\">\n\
+                <name>\n\
+                  <text>(P2, T2)</text>\n\
+                </name>\n\
+                <inscription>\n\
+                  <text>1</text>\n\
+                </inscription>\n\
+              </arc>\n\
+              <arc source=\"T1\" target=\"P2\" id=\"(T1, P2)\">\n\
+                <name>\n\
+                  <text>(T1, P2)</text>\n\
+                </name>\n\
+                <inscription>\n\
+                  <text>1</text>\n\
+                </inscription>\n\
+              </arc>\n\
+              <arc source=\"T2\" target=\"P3\" id=\"(T2, P3)\">\n\
+                <name>\n\
+                  <text>(T2, P3)</text>\n\
+                </name>\n\
+                <inscription>\n\
+                  <text>1</text>\n\
+                </inscription>\n\
+              </arc>\n\
+            </page>\n\
+          </net>\n\
+        </pnml>"
+            .to_string();
+
+        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+    }
+
+    #[test]
+    fn pnml_string_net_with_loop_topology() {
+        let net = create_net_loop_topology();
+        let result = net.to_pnml_string();
+
+        assert!(result.is_ok());
+        let expected_result = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\
+        <pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n\
+          <net id=\"net0\" type=\"http://www.pnml.org/version-2009/grammar/ptnet\">\n\
+            <page id=\"page0\">\n\
+              <place id=\"P1\">\n\
+                <name>\n\
+                  <text>P1</text>\n\
+                </name>\n\
+              </place>\n\
+              <transition id=\"T1\">\n\
+                <name>\n\
+                  <text>T1</text>\n\
+                </name>\n\
+              </transition>\n\
+              <arc source=\"P1\" target=\"T1\" id=\"(P1, T1)\">\n\
+                <name>\n\
+                  <text>(P1, T1)</text>\n\
+                </name>\n\
+                <inscription>\n\
+                  <text>1</text>\n\
+                </inscription>\n\
+              </arc>\n\
+              <arc source=\"T1\" target=\"P1\" id=\"(T1, P1)\">\n\
+                <name>\n\
+                  <text>(T1, P1)</text>\n\
+                </name>\n\
+                <inscription>\n\
+                  <text>1</text>\n\
+                </inscription>\n\
+              </arc>\n\
             </page>\n\
           </net>\n\
         </pnml>"
