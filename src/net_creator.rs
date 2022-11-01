@@ -1,7 +1,7 @@
 //! Module with simple functions to create nets
 //!
 //! This could be extended to a struct with a custom format
-//! for the place labels and transitions label.
+//! for the place labels and transition labels.
 use crate::net::{PetriNet, PlaceRef, TransitionRef};
 
 fn place_label_from_index(index: usize) -> String {
