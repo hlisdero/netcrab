@@ -206,16 +206,6 @@ mod pnml_test {
         <pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n\
           <net id=\"net0\" type=\"http://www.pnml.org/version-2009/grammar/ptnet\">\n\
             <page id=\"page0\">\n\
-              <place id=\"P5\">\n\
-                <name>\n\
-                  <text>P5</text>\n\
-                </name>\n\
-              </place>\n\
-              <place id=\"P3\">\n\
-                <name>\n\
-                  <text>P3</text>\n\
-                </name>\n\
-              </place>\n\
               <place id=\"P1\">\n\
                 <name>\n\
                   <text>P1</text>\n\
@@ -226,10 +216,89 @@ mod pnml_test {
                   <text>P2</text>\n\
                 </name>\n\
               </place>\n\
+              <place id=\"P3\">\n\
+                <name>\n\
+                  <text>P3</text>\n\
+                </name>\n\
+              </place>\n\
               <place id=\"P4\">\n\
                 <name>\n\
                   <text>P4</text>\n\
                 </name>\n\
+              </place>\n\
+              <place id=\"P5\">\n\
+                <name>\n\
+                  <text>P5</text>\n\
+                </name>\n\
+              </place>\n\
+            </page>\n\
+          </net>\n\
+        </pnml>"
+            .to_string();
+
+        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+    }
+
+    #[test]
+    fn pnml_string_marked_places_net() {
+        let mut net = PetriNet::new();
+        let p1 = net.add_place(&"P1".to_string());
+        let p2 = net.add_place(&"P2".to_string());
+        let p3 = net.add_place(&"P3".to_string());
+        let p4 = net.add_place(&"P4".to_string());
+        let p5 = net.add_place(&"P5".to_string());
+
+        assert!(net.add_token(&p1, 5).is_ok());
+        assert!(net.add_token(&p2, 6).is_ok());
+        assert!(net.add_token(&p3, 3).is_ok());
+        assert!(net.add_token(&p4, 2).is_ok());
+        assert!(net.add_token(&p5, 1).is_ok());
+        let result = net.to_pnml_string();
+
+        assert!(result.is_ok());
+        let expected_result = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\
+        <pnml xmlns=\"http://www.pnml.org/version-2009/grammar/pnml\">\n\
+          <net id=\"net0\" type=\"http://www.pnml.org/version-2009/grammar/ptnet\">\n\
+            <page id=\"page0\">\n\
+              <place id=\"P1\">\n\
+                <name>\n\
+                  <text>P1</text>\n\
+                </name>\n\
+                <initialMarking>\n\
+                  <text>5</text>\n\
+                </initialMarking>\n\
+              </place>\n\
+              <place id=\"P2\">\n\
+                <name>\n\
+                  <text>P2</text>\n\
+                </name>\n\
+                <initialMarking>\n\
+                  <text>6</text>\n\
+                </initialMarking>\n\
+              </place>\n\
+              <place id=\"P3\">\n\
+                <name>\n\
+                  <text>P3</text>\n\
+                </name>\n\
+                <initialMarking>\n\
+                  <text>3</text>\n\
+                </initialMarking>\n\
+              </place>\n\
+              <place id=\"P4\">\n\
+                <name>\n\
+                  <text>P4</text>\n\
+                </name>\n\
+                <initialMarking>\n\
+                  <text>2</text>\n\
+                </initialMarking>\n\
+              </place>\n\
+              <place id=\"P5\">\n\
+                <name>\n\
+                  <text>P5</text>\n\
+                </name>\n\
+                <initialMarking>\n\
+                  <text>1</text>\n\
+                </initialMarking>\n\
               </place>\n\
             </page>\n\
           </net>\n\
