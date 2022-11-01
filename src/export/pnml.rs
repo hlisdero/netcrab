@@ -359,7 +359,7 @@ mod pnml_test {
 
     #[test]
     fn pnml_string_net_with_chain_topology() {
-        let net = create_net_chain_topology();
+        let net = create_net_chain_topology(3);
         let result = net.to_pnml_string();
 
         assert!(result.is_ok());

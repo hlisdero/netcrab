@@ -138,12 +138,7 @@ mod dot_tests {
 
     #[test]
     fn dot_string_only_empty_places_net() {
-        let mut net = PetriNet::new();
-        net.add_place(&"P1".to_string());
-        net.add_place(&"P2".to_string());
-        net.add_place(&"P3".to_string());
-        net.add_place(&"P4".to_string());
-        net.add_place(&"P5".to_string());
+        let net = create_basic_unconnected_net(5, 0);
         let result = net.to_dot_string();
 
         assert!(result.is_ok());
@@ -190,12 +185,7 @@ mod dot_tests {
 
     #[test]
     fn dot_string_only_empty_transitions_net() {
-        let mut net = PetriNet::new();
-        net.add_transition(&"T1".to_string());
-        net.add_transition(&"T2".to_string());
-        net.add_transition(&"T3".to_string());
-        net.add_transition(&"T4".to_string());
-        net.add_transition(&"T5".to_string());
+        let net = create_basic_unconnected_net(0, 5);
         let result = net.to_dot_string();
 
         assert!(result.is_ok());
@@ -213,7 +203,7 @@ mod dot_tests {
 
     #[test]
     fn dot_string_net_with_chain_topology() {
-        let net = create_net_chain_topology();
+        let net = create_net_chain_topology(3);
         let result = net.to_dot_string();
 
         assert!(result.is_ok());

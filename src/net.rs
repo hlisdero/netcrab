@@ -1,5 +1,5 @@
 use crate::net::node::{ConnectableNode, Place, Transition};
-use crate::net::node_ref::{PlaceRef, TransitionRef};
+pub use crate::net::node_ref::{PlaceRef, TransitionRef};
 use std::collections::{HashMap, HashSet};
 
 mod net_iter;
