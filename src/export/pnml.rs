@@ -171,7 +171,7 @@ impl PetriNet {
 }
 
 #[cfg(test)]
-mod pnml_test {
+mod pnml_tests {
     use super::*;
     use crate::export::test_utils::assert_all_lines_arbitrary_order;
     use crate::net_creator::*;

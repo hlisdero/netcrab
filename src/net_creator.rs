@@ -65,7 +65,7 @@ pub fn create_net_loop_topology() -> PetriNet {
 }
 
 #[cfg(test)]
-mod net_creator_test {
+mod net_creator_tests {
     use super::*;
 
     #[test]
