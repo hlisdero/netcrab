@@ -125,7 +125,7 @@ impl PetriNet {
 #[cfg(test)]
 mod dot_tests {
     use super::*;
-    use crate::export::test_utils::assert_eq_lines_trim_whitespace;
+    use crate::export::test_export_examples::*;
     use crate::net_creator::*;
 
     #[test]
@@ -133,7 +133,7 @@ mod dot_tests {
         let net = PetriNet::new();
         let result = net.to_dot_string();
         assert!(result.is_ok());
-        assert_eq!(result.unwrap(), "digraph petrinet {\n}\n".to_string());
+        assert_eq!(result.unwrap(), DOT_STRING_EMPTY_NET);
     }
 
     #[test]
@@ -142,16 +142,7 @@ mod dot_tests {
         let result = net.to_dot_string();
 
         assert!(result.is_ok());
-        let expected_result = "digraph petrinet {\n\
-            P1 [shape=\"circle\" xlabel=\"P1\" label=\"\"];\n\
-            P2 [shape=\"circle\" xlabel=\"P2\" label=\"\"];\n\
-            P3 [shape=\"circle\" xlabel=\"P3\" label=\"\"];\n\
-            P4 [shape=\"circle\" xlabel=\"P4\" label=\"\"];\n\
-            P5 [shape=\"circle\" xlabel=\"P5\" label=\"\"];\n\
-        }\n"
-        .to_string();
-
-        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
+        assert_eq!(result.unwrap(), DOT_STRING_ONLY_EMPTY_PLACES_NET);
     }
 
     #[test]
@@ -171,16 +162,7 @@ mod dot_tests {
         let result = net.to_dot_string();
 
         assert!(result.is_ok());
-        let expected_result = "digraph petrinet {\n\
-            P1 [shape=\"circle\" xlabel=\"P1\" label=\"•••••\"];\n\
-            P2 [shape=\"circle\" xlabel=\"P2\" label=\"6\"];\n\
-            P3 [shape=\"circle\" xlabel=\"P3\" label=\"•••\"];\n\
-            P4 [shape=\"circle\" xlabel=\"P4\" label=\"••\"];\n\
-            P5 [shape=\"circle\" xlabel=\"P5\" label=\"•\"];\n\
-        }\n"
-        .to_string();
-
-        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
+        assert_eq!(result.unwrap(), DOT_STRING_MARKED_PLACES_NET);
     }
 
     #[test]
@@ -189,16 +171,7 @@ mod dot_tests {
         let result = net.to_dot_string();
 
         assert!(result.is_ok());
-        let expected_result = "digraph petrinet {\n\
-            T1 [shape=\"box\" xlabel=\"T1\" label=\"\"];\n\
-            T2 [shape=\"box\" xlabel=\"T2\" label=\"\"];\n\
-            T3 [shape=\"box\" xlabel=\"T3\" label=\"\"];\n\
-            T4 [shape=\"box\" xlabel=\"T4\" label=\"\"];\n\
-            T5 [shape=\"box\" xlabel=\"T5\" label=\"\"];\n\
-        }\n"
-        .to_string();
-
-        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
+        assert_eq!(result.unwrap(), DOT_STRING_ONLY_EMPTY_TRANSITIONS_NET);
     }
 
     #[test]
@@ -207,20 +180,7 @@ mod dot_tests {
         let result = net.to_dot_string();
 
         assert!(result.is_ok());
-        let expected_result = "digraph petrinet {\n\
-            P1 [shape=\"circle\" xlabel=\"P1\" label=\"\"];\n\
-            P2 [shape=\"circle\" xlabel=\"P2\" label=\"\"];\n\
-            P3 [shape=\"circle\" xlabel=\"P3\" label=\"\"];\n\
-            T1 [shape=\"box\" xlabel=\"T1\" label=\"\"];\n\
-            T2 [shape=\"box\" xlabel=\"T2\" label=\"\"];\n\
-            P1 -> T1;\n\
-            P2 -> T2;\n\
-            T1 -> P2;\n\
-            T2 -> P3;\n\
-        }\n"
-        .to_string();
-
-        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
+        assert_eq!(result.unwrap(), DOT_STRING_NET_WITH_CHAIN_TOPOLOPY);
     }
 
     #[test]
@@ -229,14 +189,6 @@ mod dot_tests {
         let result = net.to_dot_string();
 
         assert!(result.is_ok());
-        let expected_result = "digraph petrinet {\n\
-            P1 [shape=\"circle\" xlabel=\"P1\" label=\"\"];\n\
-            T1 [shape=\"box\" xlabel=\"T1\" label=\"\"];\n\
-            P1 -> T1;\n\
-            T1 -> P1;\n\
-        }\n"
-        .to_string();
-
-        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
+        assert_eq!(result.unwrap(), DOT_STRING_NET_WITH_LOOP_TOPOLOGY);
     }
 }
