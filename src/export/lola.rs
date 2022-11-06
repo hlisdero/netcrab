@@ -140,6 +140,8 @@ impl PetriNet {
 #[cfg(test)]
 mod lola_tests {
     use super::*;
+    use crate::export::test_export_examples::*;
+    use crate::net_creator::*;
 
     #[test]
     fn lola_string_empty_net() {
@@ -147,5 +149,61 @@ mod lola_tests {
         let result = net.to_lola_string();
         assert!(result.is_ok());
         assert_eq!(result.unwrap(), String::new());
+    }
+
+    #[test]
+    fn lola_string_only_empty_places_net() {
+        let net = create_basic_unconnected_net(5, 0);
+        let result = net.to_lola_string();
+
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), LOLA_STRING_ONLY_EMPTY_PLACES_NET);
+    }
+
+    #[test]
+    fn lola_string_marked_places_net() {
+        let mut net = PetriNet::new();
+        let p1 = net.add_place(&"P1".to_string());
+        let p2 = net.add_place(&"P2".to_string());
+        let p3 = net.add_place(&"P3".to_string());
+        let p4 = net.add_place(&"P4".to_string());
+        let p5 = net.add_place(&"P5".to_string());
+
+        assert!(net.add_token(&p1, 5).is_ok());
+        assert!(net.add_token(&p2, 6).is_ok());
+        assert!(net.add_token(&p3, 3).is_ok());
+        assert!(net.add_token(&p4, 2).is_ok());
+        assert!(net.add_token(&p5, 1).is_ok());
+        let result = net.to_lola_string();
+
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap().as_str(), LOLA_STRING_MARKED_PLACES_NET);
+    }
+
+    #[test]
+    fn lola_string_only_empty_transitions_net() {
+        let net = create_basic_unconnected_net(0, 5);
+        let result = net.to_lola_string();
+
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), LOLA_STRING_ONLY_EMPTY_TRANSITIONS_NET,);
+    }
+
+    #[test]
+    fn lola_string_net_with_chain_topology() {
+        let net = create_net_chain_topology(3);
+        let result = net.to_lola_string();
+
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), LOLA_STRING_NET_WITH_CHAIN_TOPOLOPY);
+    }
+
+    #[test]
+    fn lola_string_net_with_loop_topology() {
+        let net = create_net_loop_topology();
+        let result = net.to_lola_string();
+
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), LOLA_STRING_NET_WITH_LOOP_TOPOLOGY);
     }
 }

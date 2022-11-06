@@ -1,0 +1,66 @@
+pub const LOLA_STRING_ONLY_EMPTY_PLACES_NET: &str = "\
+PLACE
+    P1,
+    P2,
+    P3,
+    P4,
+    P5;
+
+MARKING
+";
+
+pub const LOLA_STRING_MARKED_PLACES_NET: &str = "\
+PLACE
+    P1,
+    P2,
+    P3,
+    P4,
+    P5;
+
+MARKING
+    P1 : 5,
+    P2 : 6,
+    P3 : 3,
+    P4 : 2,
+    P5 : 1;
+
+";
+
+pub const LOLA_STRING_ONLY_EMPTY_TRANSITIONS_NET: &str = "\
+TRANSITION T1
+TRANSITION T2
+TRANSITION T3
+TRANSITION T4
+TRANSITION T5
+";
+
+pub const LOLA_STRING_NET_WITH_CHAIN_TOPOLOPY: &str = "\
+PLACE
+    P1,
+    P2,
+    P3;
+
+MARKING
+TRANSITION T1
+  CONSUME
+    P1 : 1;
+  PRODUCE
+    P2 : 1;
+TRANSITION T2
+  CONSUME
+    P2 : 1;
+  PRODUCE
+    P3 : 1;
+";
+
+pub const LOLA_STRING_NET_WITH_LOOP_TOPOLOGY: &str = "\
+PLACE
+    P1;
+
+MARKING
+TRANSITION T1
+  CONSUME
+    P1 : 1;
+  PRODUCE
+    P1 : 1;
+";
