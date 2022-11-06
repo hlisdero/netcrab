@@ -1,6 +1,6 @@
 pub use crate::net::node::{ConnectableNode, Place, Transition};
 pub use crate::net::node_ref::{PlaceRef, TransitionRef};
-use std::collections::{BTreeMap, HashSet};
+use std::collections::{BTreeMap, BTreeSet};
 
 mod net_iter;
 mod node;
@@ -44,10 +44,10 @@ impl PetriNet {
     }
 
     /// Find unconnected places in the net.
-    /// Return a `HashSet` with the place references as keys.
+    /// Return a `BTreeSet` with the place references as keys.
     #[must_use]
-    pub fn find_unconnected_places(&self) -> HashSet<PlaceRef> {
-        let mut unconnected_set: HashSet<PlaceRef> = HashSet::new();
+    pub fn find_unconnected_places(&self) -> BTreeSet<PlaceRef> {
+        let mut unconnected_set: BTreeSet<PlaceRef> = BTreeSet::new();
         for (place_ref, place) in &self.places {
             if place.get_preset().is_empty() && place.get_postset().is_empty() {
                 unconnected_set.insert(place_ref.clone());
@@ -57,10 +57,10 @@ impl PetriNet {
     }
 
     /// Find all arcs from places to transitions in the net.
-    /// Return a `HashSet` with tuples of references (source, dest).
+    /// Return a `BTreeSet` with tuples of references (source, dest).
     #[must_use]
-    pub fn find_arcs_place_transition(&self) -> HashSet<(PlaceRef, TransitionRef)> {
-        let mut arcs: HashSet<(PlaceRef, TransitionRef)> = HashSet::new();
+    pub fn find_arcs_place_transition(&self) -> BTreeSet<(PlaceRef, TransitionRef)> {
+        let mut arcs: BTreeSet<(PlaceRef, TransitionRef)> = BTreeSet::new();
         for (place_ref, place) in &self.places {
             for transition_ref in place.get_postset() {
                 arcs.insert((place_ref.clone(), transition_ref.clone()));
@@ -70,10 +70,10 @@ impl PetriNet {
     }
 
     /// Find all arcs from transitions to places in the net.
-    /// Return a `HashSet` with tuples of references (source, dest).
+    /// Return a `BTreeSet` with tuples of references (source, dest).
     #[must_use]
-    pub fn find_arcs_transition_place(&self) -> HashSet<(TransitionRef, PlaceRef)> {
-        let mut arcs: HashSet<(TransitionRef, PlaceRef)> = HashSet::new();
+    pub fn find_arcs_transition_place(&self) -> BTreeSet<(TransitionRef, PlaceRef)> {
+        let mut arcs: BTreeSet<(TransitionRef, PlaceRef)> = BTreeSet::new();
         for (transition_ref, transition) in &self.transitions {
             for place_ref in transition.get_postset() {
                 arcs.insert((transition_ref.clone(), place_ref.clone()));
