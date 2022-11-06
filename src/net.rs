@@ -186,10 +186,10 @@ impl PetriNet {
     }
 
     fn get_place(&mut self, place_ref: &PlaceRef) -> Result<&mut Place, &str> {
-        match self.places.get_mut(place_ref) {
-            Some(place) => Ok(place),
-            None => Err("Place reference is invalid. It is not present in the net."),
-        }
+        let Some(place) = self.places.get_mut(place_ref) else {
+            return Err("Place reference is invalid. It is not present in the net.")
+        };
+        Ok(place)
     }
 
     fn get_place_transition_pair(
@@ -197,14 +197,12 @@ impl PetriNet {
         place_ref: &PlaceRef,
         transition_ref: &TransitionRef,
     ) -> Result<(&mut Place, &mut Transition), &str> {
-        let place = match self.places.get_mut(place_ref) {
-            Some(place) => place,
-            None => return Err("Place reference is invalid. It is not present in the net."),
+        let Some(place) = self.places.get_mut(place_ref) else {
+            return Err("Place reference is invalid. It is not present in the net.")
         };
 
-        let transition = match self.transitions.get_mut(transition_ref) {
-            Some(transition) => transition,
-            None => return Err("Transition reference is invalid. It is not present in the net."),
+        let Some(transition) = self.transitions.get_mut(transition_ref) else {
+            return Err("Transition reference is invalid. It is not present in the net.")
         };
 
         Ok((place, transition))
