@@ -1,5 +1,5 @@
 use crate::net::{ConnectableNode, PetriNet, PlaceRef};
-use std::collections::HashSet;
+use std::collections::BTreeSet;
 
 impl PetriNet {
     /// Convert the net to a string in the format accepted by the LoLA model checker and return it.
@@ -109,7 +109,7 @@ impl PetriNet {
     // that define tokens from which places are consumed and produced when the transition is fired.
     // The result is written to a trait object which implements `std::io::Write`.
     fn write_transition_arcs<T>(
-        set: &HashSet<PlaceRef>,
+        set: &BTreeSet<PlaceRef>,
         header: &str,
         writer: &mut T,
     ) -> Result<(), std::io::Error>

@@ -1,7 +1,7 @@
-#[derive(Clone, Eq, Hash, PartialEq)]
+#[derive(Clone, Eq, Hash, PartialEq, PartialOrd, Ord)]
 pub struct PlaceRef(pub String);
 
-#[derive(Clone, Eq, Hash, PartialEq)]
+#[derive(Clone, Eq, Hash, PartialEq, PartialOrd, Ord)]
 pub struct TransitionRef(pub String);
 
 impl PlaceRef {

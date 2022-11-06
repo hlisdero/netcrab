@@ -1,20 +1,20 @@
 pub use crate::net::node::connectable::ConnectableNode;
 use crate::net::node_ref::{PlaceRef, TransitionRef};
-use std::collections::HashSet;
+use std::collections::BTreeSet;
 
 mod connectable;
 
 #[derive(Default)]
 pub struct Place {
     marking: usize,
-    preset: HashSet<TransitionRef>,
-    postset: HashSet<TransitionRef>,
+    preset: BTreeSet<TransitionRef>,
+    postset: BTreeSet<TransitionRef>,
 }
 
 #[derive(Default)]
 pub struct Transition {
-    preset: HashSet<PlaceRef>,
-    postset: HashSet<PlaceRef>,
+    preset: BTreeSet<PlaceRef>,
+    postset: BTreeSet<PlaceRef>,
 }
 
 impl Place {
@@ -59,19 +59,19 @@ impl Transition {
 impl ConnectableNode for Place {
     type RefType = TransitionRef;
 
-    fn get_preset(&self) -> &HashSet<Self::RefType> {
+    fn get_preset(&self) -> &BTreeSet<Self::RefType> {
         &self.preset
     }
 
-    fn get_postset(&self) -> &HashSet<Self::RefType> {
+    fn get_postset(&self) -> &BTreeSet<Self::RefType> {
         &self.postset
     }
 
-    fn get_preset_mut(&mut self) -> &mut HashSet<Self::RefType> {
+    fn get_preset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
         &mut self.preset
     }
 
-    fn get_postset_mut(&mut self) -> &mut HashSet<Self::RefType> {
+    fn get_postset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
         &mut self.postset
     }
 }
@@ -79,19 +79,19 @@ impl ConnectableNode for Place {
 impl ConnectableNode for Transition {
     type RefType = PlaceRef;
 
-    fn get_preset(&self) -> &HashSet<Self::RefType> {
+    fn get_preset(&self) -> &BTreeSet<Self::RefType> {
         &self.preset
     }
 
-    fn get_postset(&self) -> &HashSet<Self::RefType> {
+    fn get_postset(&self) -> &BTreeSet<Self::RefType> {
         &self.postset
     }
 
-    fn get_preset_mut(&mut self) -> &mut HashSet<Self::RefType> {
+    fn get_preset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
         &mut self.preset
     }
 
-    fn get_postset_mut(&mut self) -> &mut HashSet<Self::RefType> {
+    fn get_postset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
         &mut self.postset
     }
 }

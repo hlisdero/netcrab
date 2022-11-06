@@ -1,6 +1,6 @@
 pub use crate::net::node::{ConnectableNode, Place, Transition};
 pub use crate::net::node_ref::{PlaceRef, TransitionRef};
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeMap, HashSet};
 
 mod net_iter;
 mod node;
@@ -8,8 +8,8 @@ mod node_ref;
 
 #[derive(Default)]
 pub struct PetriNet {
-    places: HashMap<PlaceRef, Place>,
-    transitions: HashMap<TransitionRef, Transition>,
+    places: BTreeMap<PlaceRef, Place>,
+    transitions: BTreeMap<TransitionRef, Transition>,
 }
 
 impl PetriNet {
@@ -152,9 +152,9 @@ impl PetriNet {
     }
 
     /// Get the marking vector for the net.
-    /// Returns a `HashMap` with the place references as the keys and the number of tokens as values.
-    pub fn marking_vector(&mut self) -> HashMap<PlaceRef, usize> {
-        let mut marking_vector: HashMap<PlaceRef, usize> = HashMap::new();
+    /// Returns a `BTreeMap` with the place references as the keys and the number of tokens as values.
+    pub fn marking_vector(&mut self) -> BTreeMap<PlaceRef, usize> {
+        let mut marking_vector: BTreeMap<PlaceRef, usize> = BTreeMap::new();
         for (key, value) in &self.places {
             marking_vector.insert(key.clone(), value.marking());
         }

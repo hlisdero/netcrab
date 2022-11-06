@@ -1,7 +1,7 @@
 use crate::net::node::{Place, Transition};
 use crate::net::node_ref::{PlaceRef, TransitionRef};
 use crate::net::PetriNet;
-use std::collections::hash_map::Iter;
+use std::collections::btree_map::Iter;
 
 impl PetriNet {
     /// Return an iterator over the place references and their corresponding places.
