@@ -125,7 +125,7 @@ impl PetriNet {
 #[cfg(test)]
 mod dot_tests {
     use super::*;
-    use crate::export::test_utils::assert_all_lines_arbitrary_order;
+    use crate::export::test_utils::assert_eq_lines_trim_whitespace;
     use crate::net_creator::*;
 
     #[test]
@@ -151,7 +151,7 @@ mod dot_tests {
         }\n"
         .to_string();
 
-        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
     }
 
     #[test]
@@ -180,7 +180,7 @@ mod dot_tests {
         }\n"
         .to_string();
 
-        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
     }
 
     #[test]
@@ -198,7 +198,7 @@ mod dot_tests {
         }\n"
         .to_string();
 
-        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
     }
 
     #[test]
@@ -214,13 +214,13 @@ mod dot_tests {
             T1 [shape=\"box\" xlabel=\"T1\" label=\"\"];\n\
             T2 [shape=\"box\" xlabel=\"T2\" label=\"\"];\n\
             P1 -> T1;\n\
-            T1 -> P2;\n\
             P2 -> T2;\n\
+            T1 -> P2;\n\
             T2 -> P3;\n\
         }\n"
         .to_string();
 
-        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
     }
 
     #[test]
@@ -237,6 +237,6 @@ mod dot_tests {
         }\n"
         .to_string();
 
-        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
     }
 }

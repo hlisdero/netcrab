@@ -173,7 +173,7 @@ impl PetriNet {
 #[cfg(test)]
 mod pnml_tests {
     use super::*;
-    use crate::export::test_utils::assert_all_lines_arbitrary_order;
+    use crate::export::test_utils::assert_eq_lines_trim_whitespace;
     use crate::net_creator::*;
 
     #[test]
@@ -237,7 +237,7 @@ mod pnml_tests {
         </pnml>"
             .to_string();
 
-        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
     }
 
     #[test]
@@ -306,7 +306,7 @@ mod pnml_tests {
         </pnml>"
             .to_string();
 
-        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
     }
 
     #[test]
@@ -354,7 +354,7 @@ mod pnml_tests {
         </pnml>"
             .to_string();
 
-        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
     }
 
     #[test]
@@ -429,7 +429,7 @@ mod pnml_tests {
         </pnml>"
             .to_string();
 
-        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
     }
 
     #[test]
@@ -473,6 +473,6 @@ mod pnml_tests {
         </pnml>"
             .to_string();
 
-        assert_all_lines_arbitrary_order(result.unwrap(), expected_result);
+        assert_eq_lines_trim_whitespace(result.unwrap(), expected_result);
     }
 }
