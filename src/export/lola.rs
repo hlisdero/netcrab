@@ -95,10 +95,6 @@ impl PetriNet {
     where
         T: std::io::Write,
     {
-        if self.get_cardinality_transitions() == 0 {
-            return Ok(());
-        }
-
         for (transition_ref, transition) in self.transitions_iter() {
             let header_line = format!("TRANSITION {}\n", transition_ref.as_string());
             writer.write(header_line.as_bytes())?;
@@ -138,5 +134,18 @@ impl PetriNet {
             writer.write(line.as_bytes())?;
         }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod lola_tests {
+    use super::*;
+
+    #[test]
+    fn lola_string_empty_net() {
+        let net = PetriNet::new();
+        let result = net.to_lola_string();
+        assert!(result.is_ok());
+        assert_eq!(result.unwrap(), String::new());
     }
 }
