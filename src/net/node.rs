@@ -1,8 +1,10 @@
-pub use crate::net::node::connectable::ConnectableNode;
+pub use crate::net::node::postset_connectable::PostsetConnectable;
+pub use crate::net::node::preset_connectable::PresetConnectable;
 use crate::net::node_ref::{PlaceRef, TransitionRef};
 use std::collections::BTreeSet;
 
-mod connectable;
+mod postset_connectable;
+mod preset_connectable;
 
 #[derive(Default)]
 pub struct Place {
@@ -70,19 +72,23 @@ impl Transition {
     }
 }
 
-impl ConnectableNode for Place {
+impl PresetConnectable for Place {
     type RefType = TransitionRef;
 
     fn get_preset(&self) -> &BTreeSet<Self::RefType> {
         &self.preset
     }
 
-    fn get_postset(&self) -> &BTreeSet<Self::RefType> {
-        &self.postset
-    }
-
     fn get_preset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
         &mut self.preset
+    }
+}
+
+impl PostsetConnectable for Place {
+    type RefType = TransitionRef;
+
+    fn get_postset(&self) -> &BTreeSet<Self::RefType> {
+        &self.postset
     }
 
     fn get_postset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
@@ -90,19 +96,23 @@ impl ConnectableNode for Place {
     }
 }
 
-impl ConnectableNode for Transition {
+impl PresetConnectable for Transition {
     type RefType = PlaceRef;
 
     fn get_preset(&self) -> &BTreeSet<Self::RefType> {
         &self.preset
     }
 
-    fn get_postset(&self) -> &BTreeSet<Self::RefType> {
-        &self.postset
-    }
-
     fn get_preset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
         &mut self.preset
+    }
+}
+
+impl PostsetConnectable for Transition {
+    type RefType = PlaceRef;
+
+    fn get_postset(&self) -> &BTreeSet<Self::RefType> {
+        &self.postset
     }
 
     fn get_postset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {

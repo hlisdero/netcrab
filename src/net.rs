@@ -1,4 +1,4 @@
-pub use crate::net::node::{ConnectableNode, Place, Transition};
+pub use crate::net::node::{Place, PostsetConnectable, PresetConnectable, Transition};
 pub use crate::net::node_ref::{PlaceRef, TransitionRef};
 use std::collections::{BTreeMap, BTreeSet};
 
