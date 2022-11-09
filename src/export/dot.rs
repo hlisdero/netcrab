@@ -108,7 +108,7 @@ impl PetriNet {
     ///
     /// Using escape sequences it is possible to achieve special behavior.
     /// [More info](https://graphviz.org/docs/attr-types/escString/)
-    fn sanitize_string(string: &String) -> String {
+    fn sanitize_string(string: &str) -> String {
         string.replace('\n', "").replace('\"', "\\\"")
     }
 

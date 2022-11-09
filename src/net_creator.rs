@@ -12,6 +12,10 @@ fn transition_label_from_index(index: usize) -> String {
     format!("T{}", index)
 }
 
+/// Create a new Petri net with no arcs
+/// and `number_of_places` places
+/// and `number_of_transitions` transitions.
+#[must_use]
 pub fn create_basic_unconnected_net(
     number_of_places: usize,
     number_of_transitions: usize,
@@ -28,20 +32,23 @@ pub fn create_basic_unconnected_net(
     net
 }
 
+/// Create a new Petri net where the places and the transition form a simple chain.
+/// The net contains `length` places and `length - 1` transitions.
+#[must_use]
 pub fn create_net_chain_topology(length: usize) -> PetriNet {
     if length == 0 {
         return PetriNet::new();
     }
     let mut net = create_basic_unconnected_net(length, length - 1);
 
-    for i in 1..=length - 1 {
+    for i in 1..length {
         let place_ref = PlaceRef(place_label_from_index(i));
         let transition_ref = TransitionRef(transition_label_from_index(i));
         net.add_arc_place_transition(&place_ref, &transition_ref)
             .expect("Failed while creating a net with chain topology");
     }
 
-    for i in 1..=length - 1 {
+    for i in 1..length {
         let transition_ref = TransitionRef(transition_label_from_index(i));
         let place_ref = PlaceRef(place_label_from_index(i + 1));
         net.add_arc_transition_place(&transition_ref, &place_ref)
@@ -51,10 +58,12 @@ pub fn create_net_chain_topology(length: usize) -> PetriNet {
     net
 }
 
+/// Create a new Petri net with one place and one transition forming a loop.
+#[must_use]
 pub fn create_net_loop_topology() -> PetriNet {
     let mut net = PetriNet::new();
-    let place_ref = net.add_place(&"P1".to_string());
-    let transition_ref = net.add_transition(&"T1".to_string());
+    let place_ref = net.add_place("P1");
+    let transition_ref = net.add_transition("T1");
 
     net.add_arc_place_transition(&place_ref, &transition_ref)
         .expect("Failed while trying to create a simple net with a loop topology");

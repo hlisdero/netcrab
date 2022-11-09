@@ -5,12 +5,14 @@ pub struct PlaceRef(pub String);
 pub struct TransitionRef(pub String);
 
 impl PlaceRef {
+    #[must_use]
     pub fn as_string(&self) -> &String {
         &self.0
     }
 }
 
 impl TransitionRef {
+    #[must_use]
     pub fn as_string(&self) -> &String {
         &self.0
     }

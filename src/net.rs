@@ -13,6 +13,8 @@ pub struct PetriNet {
 }
 
 impl PetriNet {
+    /// Create an empty Petri net.
+    #[must_use]
     pub fn new() -> PetriNet {
         PetriNet::default()
     }

@@ -2,7 +2,7 @@ use crate::net::{ConnectableNode, PetriNet, PlaceRef};
 use std::collections::BTreeSet;
 
 impl PetriNet {
-    /// Convert the net to a string in the format accepted by the LoLA model checker and return it.
+    /// Convert the net to a string in the format accepted by the `LoLA` model checker and return it.
     ///
     /// # Errors
     ///
@@ -20,7 +20,7 @@ impl PetriNet {
         }
     }
 
-    /// Convert the net to the format accepted by the LoLA model checker.
+    /// Convert the net to the format accepted by the `LoLA` model checker.
     /// Write the output to a trait object which implements `std::io::Write`.
     ///
     /// # Errors
@@ -45,7 +45,7 @@ impl PetriNet {
         if self.get_cardinality_places() == 0 {
             return Ok(());
         }
-        writer.write("PLACE\n".as_bytes())?;
+        writer.write_all("PLACE\n".as_bytes())?;
 
         let last_index = self.get_cardinality_places() - 1;
         for (i, (place_ref, _)) in self.places_iter().enumerate() {
@@ -55,7 +55,7 @@ impl PetriNet {
             } else {
                 format!("    {},\n", place_ref.as_string())
             };
-            writer.write(line.as_bytes())?;
+            writer.write_all(line.as_bytes())?;
         }
         Ok(())
     }
@@ -69,7 +69,7 @@ impl PetriNet {
         if self.get_cardinality_places() == 0 {
             return Ok(());
         }
-        writer.write("MARKING\n".as_bytes())?;
+        writer.write_all("MARKING\n".as_bytes())?;
 
         let last_index = self.get_cardinality_places() - 1;
         for (i, (place_ref, place)) in self.places_iter().enumerate() {
@@ -84,7 +84,7 @@ impl PetriNet {
             } else {
                 format!("    {} : {},\n", place_ref.as_string(), marking)
             };
-            writer.write(line.as_bytes())?;
+            writer.write_all(line.as_bytes())?;
         }
         Ok(())
     }
@@ -97,7 +97,7 @@ impl PetriNet {
     {
         for (transition_ref, transition) in self.transitions_iter() {
             let header_line = format!("TRANSITION {}\n", transition_ref.as_string());
-            writer.write(header_line.as_bytes())?;
+            writer.write_all(header_line.as_bytes())?;
 
             Self::write_transition_arcs(transition.get_preset(), "CONSUME", writer)?;
             Self::write_transition_arcs(transition.get_postset(), "PRODUCE", writer)?;
@@ -120,7 +120,7 @@ impl PetriNet {
             return Ok(());
         }
         let header_line = format!("  {}\n", header);
-        writer.write(header_line.as_bytes())?;
+        writer.write_all(header_line.as_bytes())?;
 
         let last_index = set.len() - 1;
         for (i, place_ref) in set.iter().enumerate() {
@@ -131,7 +131,7 @@ impl PetriNet {
             } else {
                 format!("    {} : {},\n", place_ref.as_string(), 1)
             };
-            writer.write(line.as_bytes())?;
+            writer.write_all(line.as_bytes())?;
         }
         Ok(())
     }

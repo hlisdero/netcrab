@@ -99,12 +99,12 @@ impl PetriNet {
     {
         let arcs = self.find_arcs_place_transition();
         for (place_ref, transition_ref) in arcs {
-            self.write_arc(place_ref.as_string(), transition_ref.as_string(), writer)?;
+            Self::write_arc(place_ref.as_string(), transition_ref.as_string(), writer)?;
         }
 
         let arcs = self.find_arcs_transition_place();
         for (transition_ref, place_ref) in arcs {
-            self.write_arc(transition_ref.as_string(), place_ref.as_string(), writer)?;
+            Self::write_arc(transition_ref.as_string(), place_ref.as_string(), writer)?;
         }
 
         Ok(())
@@ -113,7 +113,6 @@ impl PetriNet {
     /// Write a single arc in the net as a XML node
     /// as required by the PNML standard.
     fn write_arc<T>(
-        &self,
         source: &String,
         dest: &String,
         xml_writer: &mut EventWriter<T>,
@@ -131,7 +130,7 @@ impl PetriNet {
         xml_writer.write(XmlEvent::start_element("inscription"))?;
         xml_writer.write(XmlEvent::start_element("text"))?;
         // Weights in arcs are not supported for now.
-        xml_writer.write(XmlEvent::Characters(&"1"))?;
+        xml_writer.write(XmlEvent::Characters("1"))?;
         xml_writer.write(XmlEvent::end_element())?;
         xml_writer.write(XmlEvent::end_element())?;
         xml_writer.write(XmlEvent::end_element())?;
@@ -140,7 +139,7 @@ impl PetriNet {
 
     /// Write the label of a place or transition as a XML node
     /// as required by the PNML standard.
-    fn label_to_pnml<T>(name: &String, xml_writer: &mut EventWriter<T>) -> XmlResult<()>
+    fn label_to_pnml<T>(name: &str, xml_writer: &mut EventWriter<T>) -> XmlResult<()>
     where
         T: std::io::Write,
     {

@@ -18,18 +18,26 @@ pub struct Transition {
 }
 
 impl Place {
+    #[must_use]
     pub fn new() -> Place {
         Place::default()
     }
 
+    #[must_use]
     pub fn is_empty(&self) -> bool {
         self.marking == 0
     }
 
+    #[must_use]
     pub fn marking(&self) -> usize {
         self.marking
     }
 
+    /// Add `tokens_to_add` tokens to the place.
+    ///
+    /// # Errors
+    ///
+    /// If the addition causes an overflow, then an error is returned.
     pub fn add_token(&mut self, tokens_to_add: usize) -> Result<(), &str> {
         self.marking = match self.marking.checked_add(tokens_to_add) {
             Some(value) => value,
@@ -38,6 +46,11 @@ impl Place {
         Ok(())
     }
 
+    /// Remove `tokens_to_remove` tokens from the place.
+    ///
+    /// # Errors
+    ///
+    /// If the subtraction causes an overflow, then an error is returned.
     pub fn remove_token(&mut self, tokens_to_remove: usize) -> Result<(), &str> {
         if self.marking() < tokens_to_remove {
             return Err("Cannot remove more tokens than available at this place");
@@ -51,6 +64,7 @@ impl Place {
 }
 
 impl Transition {
+    #[must_use]
     pub fn new() -> Transition {
         Transition::default()
     }
