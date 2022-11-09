@@ -6,14 +6,14 @@ pub struct TransitionRef(pub String);
 
 impl PlaceRef {
     #[must_use]
-    pub fn as_string(&self) -> &String {
+    pub const fn as_string(&self) -> &String {
         &self.0
     }
 }
 
 impl TransitionRef {
     #[must_use]
-    pub fn as_string(&self) -> &String {
+    pub const fn as_string(&self) -> &String {
         &self.0
     }
 }

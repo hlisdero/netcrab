@@ -10,14 +10,16 @@ impl PetriNet {
     pub fn to_lola_string(&self) -> Result<String, std::io::Error> {
         let mut writer = Vec::new();
         self.to_lola(&mut writer)?;
-        match String::from_utf8(writer) {
-            Ok(string) => Ok(string),
+        String::from_utf8(writer).map_or_else(
             // This error could only be due to a bug, map it to a different error type.
-            Err(_) => Err(std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "Could not convert the string to UTF-8",
-            )),
-        }
+            |_| {
+                Err(std::io::Error::new(
+                    std::io::ErrorKind::Other,
+                    "Could not convert the string to UTF-8",
+                ))
+            },
+            Ok,
+        )
     }
 
     /// Convert the net to the format accepted by the `LoLA` model checker.
@@ -45,7 +47,7 @@ impl PetriNet {
         if self.get_cardinality_places() == 0 {
             return Ok(());
         }
-        writer.write_all("PLACE\n".as_bytes())?;
+        writer.write_all(b"PLACE\n")?;
 
         let last_index = self.get_cardinality_places() - 1;
         for (i, (place_ref, _)) in self.places_iter().enumerate() {
@@ -69,7 +71,7 @@ impl PetriNet {
         if self.get_cardinality_places() == 0 {
             return Ok(());
         }
-        writer.write_all("MARKING\n".as_bytes())?;
+        writer.write_all(b"MARKING\n")?;
 
         let last_index = self.get_cardinality_places() - 1;
         for (i, (place_ref, place)) in self.places_iter().enumerate() {

@@ -21,17 +21,17 @@ pub struct Transition {
 
 impl Place {
     #[must_use]
-    pub fn new() -> Place {
-        Place::default()
+    pub fn new() -> Self {
+        Self::default()
     }
 
     #[must_use]
-    pub fn is_empty(&self) -> bool {
+    pub const fn is_empty(&self) -> bool {
         self.marking == 0
     }
 
     #[must_use]
-    pub fn marking(&self) -> usize {
+    pub const fn marking(&self) -> usize {
         self.marking
     }
 
@@ -67,8 +67,8 @@ impl Place {
 
 impl Transition {
     #[must_use]
-    pub fn new() -> Transition {
-        Transition::default()
+    pub fn new() -> Self {
+        Self::default()
     }
 }
 

@@ -13,15 +13,17 @@ impl PetriNet {
     pub fn to_pnml_string(&self) -> Result<String, XmlError> {
         let mut writer = Vec::new();
         self.to_pnml(&mut writer)?;
-        match String::from_utf8(writer) {
-            Ok(string) => Ok(string),
+        String::from_utf8(writer).map_or_else(
             // This error could only be due to a bug, map it to a different error type.
             // Use the Error class from the xml-rs library as a wrapper
-            Err(_) => Err(XmlError::Io(std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "Could not convert the string to UTF-8",
-            ))),
-        }
+            |_| {
+                Err(XmlError::Io(std::io::Error::new(
+                    std::io::ErrorKind::Other,
+                    "Could not convert the string to UTF-8",
+                )))
+            },
+            Ok,
+        )
     }
 
     /// Convert the net to the PNML format.

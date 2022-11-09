@@ -15,8 +15,8 @@ pub struct PetriNet {
 impl PetriNet {
     /// Create an empty Petri net.
     #[must_use]
-    pub fn new() -> PetriNet {
-        PetriNet::default()
+    pub fn new() -> Self {
+        Self::default()
     }
 
     /// Get the number of places in the net.
@@ -210,7 +210,7 @@ impl PetriNet {
         Ok((place, transition))
     }
 
-    fn check_arc_insertion(
+    const fn check_arc_insertion(
         inserted_incoming: bool,
         inserted_outgoing: bool,
     ) -> Result<(), &'static str> {

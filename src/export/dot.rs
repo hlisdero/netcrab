@@ -11,14 +11,16 @@ impl PetriNet {
     pub fn to_dot_string(&self) -> Result<String, std::io::Error> {
         let mut writer = Vec::new();
         self.to_dot(&mut writer)?;
-        match String::from_utf8(writer) {
-            Ok(string) => Ok(string),
+        String::from_utf8(writer).map_or_else(
             // This error could only be due to a bug, map it to a different error type.
-            Err(_) => Err(std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "Could not convert the string to UTF-8",
-            )),
-        }
+            |_| {
+                Err(std::io::Error::new(
+                    std::io::ErrorKind::Other,
+                    "Could not convert the string to UTF-8",
+                ))
+            },
+            Ok,
+        )
     }
 
     /// Convert the net to the dot format.
@@ -31,11 +33,11 @@ impl PetriNet {
     where
         T: std::io::Write,
     {
-        writer.write_all("digraph petrinet {\n".as_bytes())?;
+        writer.write_all(b"digraph petrinet {\n")?;
         self.write_dot_places(writer)?;
         self.write_dot_transitions(writer)?;
         self.write_dot_arcs(writer)?;
-        writer.write_all("}\n".as_bytes())?;
+        writer.write_all(b"}\n")?;
         Ok(())
     }
 
