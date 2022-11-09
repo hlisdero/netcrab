@@ -1,6 +1,6 @@
-use crate::net::node::{Place, Transition};
-use crate::net::node_ref::{PlaceRef, TransitionRef};
-use crate::net::PetriNet;
+use crate::petri_net::node::{Place, Transition};
+use crate::petri_net::node_ref::{PlaceRef, TransitionRef};
+use crate::petri_net::PetriNet;
 use std::collections::btree_map::Iter;
 
 impl PetriNet {

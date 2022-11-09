@@ -1,6 +1,6 @@
-pub use crate::net::node::postset_connectable::PostsetConnectable;
-pub use crate::net::node::preset_connectable::PresetConnectable;
-use crate::net::node_ref::{PlaceRef, TransitionRef};
+pub use crate::petri_net::node::postset_connectable::PostsetConnectable;
+pub use crate::petri_net::node::preset_connectable::PresetConnectable;
+use crate::petri_net::node_ref::{PlaceRef, TransitionRef};
 use std::collections::BTreeSet;
 
 mod postset_connectable;

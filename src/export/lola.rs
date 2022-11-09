@@ -1,4 +1,4 @@
-use crate::net::{PetriNet, PlaceRef, PostsetConnectable, PresetConnectable};
+use crate::petri_net::{PetriNet, PlaceRef, PostsetConnectable, PresetConnectable};
 use std::collections::BTreeSet;
 
 impl PetriNet {

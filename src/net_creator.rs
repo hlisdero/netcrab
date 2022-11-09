@@ -2,7 +2,7 @@
 //!
 //! This could be extended to a struct with a custom format
 //! for the place labels and transition labels.
-use crate::net::{PetriNet, PlaceRef, TransitionRef};
+use crate::petri_net::{PetriNet, PlaceRef, TransitionRef};
 
 fn place_label_from_index(index: usize) -> String {
     format!("P{}", index)

@@ -1,5 +1,5 @@
-pub use crate::net::node::{Place, PostsetConnectable, PresetConnectable, Transition};
-pub use crate::net::node_ref::{PlaceRef, TransitionRef};
+pub use crate::petri_net::node::{Place, PostsetConnectable, PresetConnectable, Transition};
+pub use crate::petri_net::node_ref::{PlaceRef, TransitionRef};
 use std::collections::{BTreeMap, BTreeSet};
 
 mod net_iter;

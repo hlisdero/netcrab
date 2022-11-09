@@ -1,4 +1,4 @@
-use crate::net::PetriNet;
+use crate::petri_net::PetriNet;
 use xml::writer::{EmitterConfig, Error as XmlError, EventWriter, Result as XmlResult, XmlEvent};
 
 const XML_PNML_DEFAULT_NAMESPACE: &str = "http://www.pnml.org/version-2009/grammar/pnml";

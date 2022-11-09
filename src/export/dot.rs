@@ -1,4 +1,4 @@
-use crate::net::PetriNet;
+use crate::petri_net::PetriNet;
 
 const MAX_TOKENS_AS_DOT: usize = 5;
 
