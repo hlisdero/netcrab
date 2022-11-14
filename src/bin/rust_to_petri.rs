@@ -26,7 +26,7 @@ struct CliArgs {
     #[arg(short, long, value_enum)]
     output_format: String,
 
-    /// If present, dumps pretty printer MIR (Mid-level IR) into the given file
+    /// If present or set to true, dump pretty printer MIR (Mid-level IR) into the given file
     #[arg(long, default_value_t = false)]
     mir_dump: bool,
 }
