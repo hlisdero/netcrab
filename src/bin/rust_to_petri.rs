@@ -1,8 +1,9 @@
-use anyhow::Result;
+use anyhow::{Context, Result};
 use clap::{Parser, ValueEnum};
 use log::info;
+use std::fs::File;
 
-#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
 enum OutputFormat {
     /// Petri Net Markup Language - <https://www.pnml.org/>
     Pnml,
@@ -24,7 +25,7 @@ struct CliArgs {
 
     /// The format for the output
     #[arg(short, long, value_enum)]
-    output_format: String,
+    output_format: OutputFormat,
 
     /// If present or set to true, dump pretty printer MIR (Mid-level IR) into the given file
     #[arg(long, default_value_t = false)]
@@ -36,6 +37,9 @@ fn main() -> Result<()> {
 
     info!("Parsing arguments");
     let args = CliArgs::parse();
+    info!("Opening file");
+    let _file = File::open(&args.path)
+        .with_context(|| format!("Could not open file `{}`", args.path.display()))?;
 
     println!("CLI args: {:?}", args);
 
