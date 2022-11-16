@@ -84,8 +84,8 @@ _Note: References can be cloned. One may have as many references to a node or tr
 
 ### Built With
 
-- Rust > 1.65
-- cargo
+- [Rust](https://www.rust-lang.org/) > 1.65
+- [cargo](https://doc.rust-lang.org/cargo/)
 - [xml-rs](https://docs.rs/xml-rs/latest/xml/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
