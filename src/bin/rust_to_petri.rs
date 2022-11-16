@@ -25,7 +25,7 @@ struct CliArgs {
 
     /// The format for the output
     #[arg(short, long, value_enum)]
-    output_format: OutputFormat,
+    output_format: Vec<OutputFormat>,
 
     /// If present or set to true, dump pretty printer MIR (Mid-level IR) into the given file
     #[arg(long, default_value_t = false)]
