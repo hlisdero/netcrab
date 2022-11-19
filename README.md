@@ -176,7 +176,7 @@ Project Link: [https://github.com/hlisdero/netcrab](https://github.com/hlisdero/
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Based on the original work from [https://github.com/Skasselbard/PetriToStar](https://github.com/Skasselbard/PetriToStar)
+Based on the original work by Tom Meyer found in <https://github.com/Skasselbard/PetriToStar>
 
 This `README.md` is based on the awesome template provided by [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 
