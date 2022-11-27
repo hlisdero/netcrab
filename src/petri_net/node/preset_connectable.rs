@@ -13,11 +13,13 @@ pub trait PresetConnectable {
     fn get_preset_mut(&mut self) -> &mut BTreeSet<Self::RefType>;
 
     /// Add an incoming node, update the preset accordingly.
+    #[inline]
     fn add_incoming(&mut self, reference: Self::RefType) -> bool {
         self.get_preset_mut().insert(reference)
     }
 
     /// Remove an incoming node, update the preset accordingly.
+    #[inline]
     fn remove_incoming(&mut self, reference: &Self::RefType) -> bool {
         self.get_preset_mut().remove(reference)
     }

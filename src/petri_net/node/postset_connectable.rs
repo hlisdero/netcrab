@@ -13,11 +13,13 @@ pub trait PostsetConnectable {
     fn get_postset_mut(&mut self) -> &mut BTreeSet<Self::RefType>;
 
     /// Add an outgoing node, update the postset accordingly.
+    #[inline]
     fn add_outgoing(&mut self, reference: Self::RefType) -> bool {
         self.get_postset_mut().insert(reference)
     }
 
     /// Remove an outgoing node, update the postset accordingly.
+    #[inline]
     fn remove_outgoing(&mut self, reference: &Self::RefType) -> bool {
         self.get_postset_mut().remove(reference)
     }
