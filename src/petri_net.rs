@@ -172,6 +172,7 @@ impl PetriNet {
     /// # Errors
     ///
     /// If the `PlaceRef` is invalid, then an error is returned.
+    /// If the addition causes an overflow, then an error is returned.
     pub fn add_token(&mut self, place_ref: &PlaceRef, tokens_to_add: usize) -> Result<(), &str> {
         let place = self.get_place(place_ref)?;
         place.add_token(tokens_to_add)
@@ -182,6 +183,7 @@ impl PetriNet {
     /// # Errors
     ///
     /// If the `PlaceRef` is invalid, then an error is returned.
+    /// If the subtraction causes an overflow, then an error is returned.
     pub fn remove_token(
         &mut self,
         place_ref: &PlaceRef,
