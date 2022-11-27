@@ -6,6 +6,7 @@ pub struct TransitionRef(pub String);
 
 impl PlaceRef {
     /// Convert the reference to the underlying `String`.
+    #[inline]
     #[must_use]
     pub const fn as_string(&self) -> &String {
         &self.0
@@ -14,6 +15,7 @@ impl PlaceRef {
 
 impl TransitionRef {
     /// Convert the reference to the underlying `String`.
+    #[inline]
     #[must_use]
     pub const fn as_string(&self) -> &String {
         &self.0

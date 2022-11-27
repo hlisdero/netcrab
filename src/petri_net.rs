@@ -20,12 +20,14 @@ impl PetriNet {
     }
 
     /// Get the number of places in the net.
+    #[inline]
     #[must_use]
     pub fn get_cardinality_places(&self) -> usize {
         self.places.len()
     }
 
     /// Get the number of transitions in the net.
+    #[inline]
     #[must_use]
     pub fn get_cardinality_transitions(&self) -> usize {
         self.transitions.len()
@@ -33,6 +35,7 @@ impl PetriNet {
 
     /// Check if the place reference is valid for this net,
     /// i.e. if the referenced place still exists in the net.
+    #[inline]
     #[must_use]
     pub fn check_place_ref(&self, place_ref: &PlaceRef) -> bool {
         self.places.contains_key(place_ref)
@@ -40,6 +43,7 @@ impl PetriNet {
 
     /// Check if the transition reference is valid for this net,
     /// i.e. if the referenced transition still exists in the net.
+    #[inline]
     #[must_use]
     pub fn check_transition_ref(&self, transition_ref: &TransitionRef) -> bool {
         self.transitions.contains_key(transition_ref)

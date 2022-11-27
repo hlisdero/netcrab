@@ -27,12 +27,14 @@ impl Place {
     }
 
     /// Check whether the place has zero tokens.
+    #[inline]
     #[must_use]
     pub const fn is_empty(&self) -> bool {
         self.marking == 0
     }
 
     /// Get the number of tokens at the given place.
+    #[inline]
     #[must_use]
     pub const fn marking(&self) -> usize {
         self.marking
