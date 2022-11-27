@@ -1,5 +1,5 @@
 use crate::petri_net::PetriNet;
-use xml::writer::{EmitterConfig, Error as XmlError, EventWriter, Result as XmlResult, XmlEvent};
+use xml::writer::{EmitterConfig, EventWriter, Result as XmlResult, XmlEvent};
 
 const XML_PNML_DEFAULT_NAMESPACE: &str = "http://www.pnml.org/version-2009/grammar/pnml";
 const XML_PNML_DEFAULT_GRAMMAR: &str = "http://www.pnml.org/version-2009/grammar/ptnet";
@@ -10,17 +10,19 @@ impl PetriNet {
     /// # Errors
     ///
     /// If the writer fails to write the contents of the net, then an error is returned.
-    pub fn to_pnml_string(&self) -> Result<String, XmlError> {
+    pub fn to_pnml_string(&self) -> Result<String, std::io::Error> {
         let mut writer = Vec::new();
-        self.to_pnml(&mut writer)?;
-        String::from_utf8(writer).map_or(
-            // This error could only be due to a bug, map it to a different error type.
-            // Use the Error class from the xml-rs library as a wrapper
-            Err(XmlError::Io(std::io::Error::new(
+        self.to_pnml(&mut writer).map_err(|_|
+            std::io::Error::new(
+            std::io::ErrorKind::Other,
+            "Could not convert the net to PNML",
+        ))?;
+        String::from_utf8(writer).map_err(|_| 
+            // This error could only be due to a bug, map it to a more standard error type.
+            std::io::Error::new(
                 std::io::ErrorKind::Other,
                 "Could not convert the string to UTF-8",
-            ))),
-            Ok,
+            )
         )
     }
 

@@ -11,13 +11,12 @@ impl PetriNet {
     pub fn to_dot_string(&self) -> Result<String, std::io::Error> {
         let mut writer = Vec::new();
         self.to_dot(&mut writer)?;
-        String::from_utf8(writer).map_or(
-            // This error could only be due to a bug, map it to a different error type.
-            Err(std::io::Error::new(
+        String::from_utf8(writer).map_err(|_| 
+            // This error could only be due to a bug, map it to a more standard error type.
+            std::io::Error::new(
                 std::io::ErrorKind::Other,
                 "Could not convert the string to UTF-8",
-            )),
-            Ok,
+            )
         )
     }
 
