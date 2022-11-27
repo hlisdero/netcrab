@@ -12,18 +12,13 @@ impl PetriNet {
     /// If the writer fails to write the contents of the net, then an error is returned.
     pub fn to_pnml_string(&self) -> Result<String, std::io::Error> {
         let mut writer = Vec::new();
-        self.to_pnml(&mut writer).map_err(|_|
-            std::io::Error::new(
-            std::io::ErrorKind::Other,
-            "Could not convert the net to PNML",
-        ))?;
-        String::from_utf8(writer).map_err(|_| 
+        self.to_pnml(&mut writer)?;
+        String::from_utf8(writer).map_err(|_|
             // This error could only be due to a bug, map it to a more standard error type.
             std::io::Error::new(
                 std::io::ErrorKind::Other,
                 "Could not convert the string to UTF-8",
-            )
-        )
+            ))
     }
 
     /// Convert the net to the PNML format.
@@ -32,7 +27,26 @@ impl PetriNet {
     /// # Errors
     ///
     /// If the writer fails to write the contents of the net, then an error is returned.
-    pub fn to_pnml<T>(&self, writer: &mut T) -> XmlResult<()>
+    pub fn to_pnml<T>(&self, writer: &mut T) -> Result<(), std::io::Error>
+    where
+        T: std::io::Write,
+    {
+        self.write_pnml(writer).map_err(|_| {
+            // Map the XML error of the library to a more standard error type
+            // to stay consistent with the other export formats.
+            std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Could not convert the net to PNML",
+            )
+        })
+    }
+
+    /// Write the net to the PNML format.
+    ///
+    /// # Errors
+    ///
+    /// If the XML writer fails to write the contents of the net, then an XML error is returned.
+    fn write_pnml<T>(&self, writer: &mut T) -> XmlResult<()>
     where
         T: std::io::Write,
     {
