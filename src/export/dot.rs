@@ -44,7 +44,7 @@ impl PetriNet {
         T: std::io::Write,
     {
         for (place_ref, place) in self.places_iter() {
-            let label = Self::sanitize_string(place_ref);
+            let label = Self::sanitize_string(place_ref.as_string());
             let marking = Self::marking_to_string(place.marking());
             let line =
                 format!("    {label} [shape=\"circle\" xlabel=\"{label}\" label=\"{marking}\"];\n");
@@ -60,7 +60,7 @@ impl PetriNet {
         T: std::io::Write,
     {
         for (transition_ref, _) in self.transitions_iter() {
-            let label = Self::sanitize_string(transition_ref);
+            let label = Self::sanitize_string(transition_ref.as_string());
             let line = format!("    {label} [shape=\"box\" xlabel=\"{label}\" label=\"\"];\n");
             writer.write_all(line.as_bytes())?;
         }
@@ -77,8 +77,8 @@ impl PetriNet {
         for (place_ref, transition_ref) in arcs {
             let line = format!(
                 "    {} -> {};\n",
-                Self::sanitize_string(place_ref),
-                Self::sanitize_string(transition_ref)
+                Self::sanitize_string(place_ref.as_string()),
+                Self::sanitize_string(transition_ref.as_string())
             );
             writer.write_all(line.as_bytes())?;
         }
@@ -87,8 +87,8 @@ impl PetriNet {
         for (transition_ref, place_ref) in arcs {
             let line = format!(
                 "    {} -> {};\n",
-                Self::sanitize_string(transition_ref),
-                Self::sanitize_string(place_ref),
+                Self::sanitize_string(transition_ref.as_string()),
+                Self::sanitize_string(place_ref.as_string()),
             );
             writer.write_all(line.as_bytes())?;
         }

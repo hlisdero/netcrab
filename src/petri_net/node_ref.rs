@@ -4,18 +4,20 @@ pub struct PlaceRef(String);
 #[derive(Clone, Eq, PartialEq, PartialOrd, Ord)]
 pub struct TransitionRef(String);
 
-impl std::ops::Deref for PlaceRef {
-    type Target = String;
-
-    fn deref(&self) -> &Self::Target {
+impl PlaceRef {
+    /// Convert the reference to the underlying `String`.
+    #[inline]
+    #[must_use]
+    pub const fn as_string(&self) -> &String {
         &self.0
     }
 }
 
-impl std::ops::Deref for TransitionRef {
-    type Target = String;
-
-    fn deref(&self) -> &Self::Target {
+impl TransitionRef {
+    /// Convert the reference to the underlying `String`.
+    #[inline]
+    #[must_use]
+    pub const fn as_string(&self) -> &String {
         &self.0
     }
 }
@@ -61,17 +63,17 @@ mod net_tests {
     use super::*;
 
     #[test]
-    fn place_ref_deref_returns_the_inner_string() {
+    fn place_ref_as_string_returns_the_inner_string() {
         let place_ref = PlaceRef::from("Example reference");
 
-        assert_eq!(*place_ref, "Example reference");
+        assert_eq!(place_ref.as_string(), "Example reference");
     }
 
     #[test]
-    fn transition_ref_deref_returns_the_inner_string() {
+    fn transition_ref_as_string_returns_the_inner_string() {
         let transition_ref = TransitionRef::from("Example reference");
 
-        assert_eq!(*transition_ref, "Example reference");
+        assert_eq!(transition_ref.as_string(), "Example reference");
     }
 
     #[test]
