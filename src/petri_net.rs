@@ -159,10 +159,10 @@ impl PetriNet {
 
     /// Get the marking vector for the net.
     /// Returns a `BTreeMap` with the place references as the keys and the number of tokens as values.
-    pub fn marking_vector(&mut self) -> BTreeMap<PlaceRef, usize> {
-        let mut marking_vector: BTreeMap<PlaceRef, usize> = BTreeMap::new();
+    pub fn marking_vector(&mut self) -> BTreeMap<&PlaceRef, usize> {
+        let mut marking_vector: BTreeMap<&PlaceRef, usize> = BTreeMap::new();
         for (key, value) in &self.places {
-            marking_vector.insert(key.clone(), value.marking());
+            marking_vector.insert(key, value.marking());
         }
         marking_vector
     }
