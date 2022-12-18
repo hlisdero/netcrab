@@ -81,10 +81,9 @@ impl PetriNet {
         T: std::io::Write,
     {
         for (place_ref, place) in self.places_iter() {
-            let place_xml_element =
-                XmlEvent::start_element("place").attr("id", place_ref.as_string());
+            let place_xml_element = XmlEvent::start_element("place").attr("id", place_ref);
             writer.write(place_xml_element)?;
-            Self::label_to_pnml(place_ref.as_string(), writer)?;
+            Self::label_to_pnml(place_ref, writer)?;
             Self::marking_to_pnml(place.marking(), writer)?;
             writer.write(XmlEvent::end_element())?;
         }
@@ -99,9 +98,9 @@ impl PetriNet {
     {
         for (transition_ref, _) in self.transitions_iter() {
             let transition_xml_element =
-                XmlEvent::start_element("transition").attr("id", transition_ref.as_string());
+                XmlEvent::start_element("transition").attr("id", transition_ref);
             writer.write(transition_xml_element)?;
-            Self::label_to_pnml(transition_ref.as_string(), writer)?;
+            Self::label_to_pnml(transition_ref, writer)?;
             writer.write(XmlEvent::end_element())?;
         }
         Ok(())
@@ -115,12 +114,12 @@ impl PetriNet {
     {
         let arcs = self.find_arcs_place_transition();
         for (place_ref, transition_ref) in arcs {
-            Self::write_arc(place_ref.as_string(), transition_ref.as_string(), writer)?;
+            Self::write_arc(&place_ref, &transition_ref, writer)?;
         }
 
         let arcs = self.find_arcs_transition_place();
         for (transition_ref, place_ref) in arcs {
-            Self::write_arc(transition_ref.as_string(), place_ref.as_string(), writer)?;
+            Self::write_arc(&transition_ref, &place_ref, writer)?;
         }
 
         Ok(())
