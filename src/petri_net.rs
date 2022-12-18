@@ -65,11 +65,11 @@ impl PetriNet {
     /// Find all arcs from places to transitions in the net.
     /// Return a `BTreeSet` with tuples of references (source, dest).
     #[must_use]
-    pub fn find_arcs_place_transition(&self) -> BTreeSet<(PlaceRef, TransitionRef)> {
-        let mut arcs: BTreeSet<(PlaceRef, TransitionRef)> = BTreeSet::new();
+    pub fn find_arcs_place_transition(&self) -> BTreeSet<(&PlaceRef, &TransitionRef)> {
+        let mut arcs: BTreeSet<(&PlaceRef, &TransitionRef)> = BTreeSet::new();
         for (place_ref, place) in &self.places {
             for transition_ref in place.get_postset() {
-                arcs.insert((place_ref.clone(), transition_ref.clone()));
+                arcs.insert((place_ref, transition_ref));
             }
         }
         arcs
@@ -78,11 +78,11 @@ impl PetriNet {
     /// Find all arcs from transitions to places in the net.
     /// Return a `BTreeSet` with tuples of references (source, dest).
     #[must_use]
-    pub fn find_arcs_transition_place(&self) -> BTreeSet<(TransitionRef, PlaceRef)> {
-        let mut arcs: BTreeSet<(TransitionRef, PlaceRef)> = BTreeSet::new();
+    pub fn find_arcs_transition_place(&self) -> BTreeSet<(&TransitionRef, &PlaceRef)> {
+        let mut arcs: BTreeSet<(&TransitionRef, &PlaceRef)> = BTreeSet::new();
         for (transition_ref, transition) in &self.transitions {
             for place_ref in transition.get_postset() {
-                arcs.insert((transition_ref.clone(), place_ref.clone()));
+                arcs.insert((transition_ref, place_ref));
             }
         }
         arcs
@@ -311,8 +311,8 @@ mod net_tests {
 
         let arcs = net.find_arcs_place_transition();
         assert_eq!(arcs.len(), 2);
-        assert!(arcs.contains(&(place_1, transition_1)));
-        assert!(arcs.contains(&(place_2, transition_2)));
+        assert!(arcs.contains(&(&place_1, &transition_1)));
+        assert!(arcs.contains(&(&place_2, &transition_2)));
     }
 
     #[test]
@@ -336,8 +336,8 @@ mod net_tests {
 
         let arcs = net.find_arcs_transition_place();
         assert_eq!(arcs.len(), 2);
-        assert!(arcs.contains(&(transition_1, place_2)));
-        assert!(arcs.contains(&(transition_2, place_3)));
+        assert!(arcs.contains(&(&transition_1, &place_2)));
+        assert!(arcs.contains(&(&transition_2, &place_3)));
     }
 
     #[test]

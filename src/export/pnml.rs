@@ -114,12 +114,12 @@ impl PetriNet {
     {
         let arcs = self.find_arcs_place_transition();
         for (place_ref, transition_ref) in arcs {
-            Self::write_arc(&place_ref, &transition_ref, writer)?;
+            Self::write_arc(place_ref, transition_ref, writer)?;
         }
 
         let arcs = self.find_arcs_transition_place();
         for (transition_ref, place_ref) in arcs {
-            Self::write_arc(&transition_ref, &place_ref, writer)?;
+            Self::write_arc(transition_ref, place_ref, writer)?;
         }
 
         Ok(())

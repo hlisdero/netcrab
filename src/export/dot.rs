@@ -77,8 +77,8 @@ impl PetriNet {
         for (place_ref, transition_ref) in arcs {
             let line = format!(
                 "    {} -> {};\n",
-                Self::sanitize_string(&place_ref),
-                Self::sanitize_string(&transition_ref)
+                Self::sanitize_string(place_ref),
+                Self::sanitize_string(transition_ref)
             );
             writer.write_all(line.as_bytes())?;
         }
@@ -87,8 +87,8 @@ impl PetriNet {
         for (transition_ref, place_ref) in arcs {
             let line = format!(
                 "    {} -> {};\n",
-                Self::sanitize_string(&transition_ref),
-                Self::sanitize_string(&place_ref),
+                Self::sanitize_string(transition_ref),
+                Self::sanitize_string(place_ref),
             );
             writer.write_all(line.as_bytes())?;
         }
