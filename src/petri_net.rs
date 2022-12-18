@@ -52,11 +52,11 @@ impl PetriNet {
     /// Find unconnected places in the net.
     /// Return a `BTreeSet` with the place references as keys.
     #[must_use]
-    pub fn find_unconnected_places(&self) -> BTreeSet<PlaceRef> {
-        let mut unconnected_set: BTreeSet<PlaceRef> = BTreeSet::new();
+    pub fn find_unconnected_places(&self) -> BTreeSet<&PlaceRef> {
+        let mut unconnected_set: BTreeSet<&PlaceRef> = BTreeSet::new();
         for (place_ref, place) in &self.places {
             if place.get_preset().is_empty() && place.get_postset().is_empty() {
-                unconnected_set.insert(place_ref.clone());
+                unconnected_set.insert(place_ref);
             }
         }
         unconnected_set
