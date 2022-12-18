@@ -44,15 +44,15 @@ pub fn create_net_chain_topology(length: usize) -> PetriNet {
     let mut net = create_basic_unconnected_net(length, length - 1);
 
     for i in 1..length {
-        let place_ref = PlaceRef(place_label_from_index(i));
-        let transition_ref = TransitionRef(transition_label_from_index(i));
+        let place_ref = PlaceRef::from(place_label_from_index(i));
+        let transition_ref = TransitionRef::from(transition_label_from_index(i));
         net.add_arc_place_transition(&place_ref, &transition_ref)
             .expect("Failed while creating a net with chain topology");
     }
 
     for i in 1..length {
-        let transition_ref = TransitionRef(transition_label_from_index(i));
-        let place_ref = PlaceRef(place_label_from_index(i + 1));
+        let transition_ref = TransitionRef::from(transition_label_from_index(i));
+        let place_ref = PlaceRef::from(place_label_from_index(i + 1));
         net.add_arc_transition_place(&transition_ref, &place_ref)
             .expect("Failed while creating a net with chain topology");
     }
