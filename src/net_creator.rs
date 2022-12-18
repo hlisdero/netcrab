@@ -4,14 +4,16 @@
 //! for the place labels and transition labels.
 use crate::petri_net::{PetriNet, PlaceRef, TransitionRef};
 
-#[inline]
-fn place_label_from_index(index: usize) -> String {
-    format!("P{index}")
+macro_rules! place_label_from_index {
+    ($index:expr) => {
+        format!("P{}", $index)
+    };
 }
 
-#[inline]
-fn transition_label_from_index(index: usize) -> String {
-    format!("T{index}")
+macro_rules! transition_label_from_index {
+    ($index:expr) => {
+        format!("T{}", $index)
+    };
 }
 
 /// Create a new Petri net with no arcs
@@ -25,10 +27,10 @@ pub fn create_basic_unconnected_net(
     let mut net = PetriNet::new();
 
     for i in 1..=number_of_places {
-        net.add_place(&place_label_from_index(i));
+        net.add_place(&place_label_from_index!(i));
     }
     for i in 1..=number_of_transitions {
-        net.add_transition(&transition_label_from_index(i));
+        net.add_transition(&transition_label_from_index!(i));
     }
 
     net
@@ -44,15 +46,15 @@ pub fn create_net_chain_topology(length: usize) -> PetriNet {
     let mut net = create_basic_unconnected_net(length, length - 1);
 
     for i in 1..length {
-        let place_ref = PlaceRef::from(place_label_from_index(i));
-        let transition_ref = TransitionRef::from(transition_label_from_index(i));
+        let place_ref = PlaceRef::from(place_label_from_index!(i));
+        let transition_ref = TransitionRef::from(transition_label_from_index!(i));
         net.add_arc_place_transition(&place_ref, &transition_ref)
             .expect("Failed while creating a net with chain topology");
     }
 
     for i in 1..length {
-        let transition_ref = TransitionRef::from(transition_label_from_index(i));
-        let place_ref = PlaceRef::from(place_label_from_index(i + 1));
+        let transition_ref = TransitionRef::from(transition_label_from_index!(i));
+        let place_ref = PlaceRef::from(place_label_from_index!(i + 1));
         net.add_arc_transition_place(&transition_ref, &place_ref)
             .expect("Failed while creating a net with chain topology");
     }
