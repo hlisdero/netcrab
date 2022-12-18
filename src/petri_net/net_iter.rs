@@ -30,10 +30,10 @@ mod net_iter_tests {
     #[test]
     fn net_places_iter_visits_all_places() {
         let mut net = PetriNet::default();
-        net.add_place(&"P1".to_string());
-        net.add_place(&"P2".to_string());
-        net.add_place(&"P3".to_string());
-        net.add_place(&"P4".to_string());
+        net.add_place("P1");
+        net.add_place("P2");
+        net.add_place("P3");
+        net.add_place("P4");
         assert_eq!(net.places_iter().count(), 4);
     }
 
@@ -46,10 +46,10 @@ mod net_iter_tests {
     #[test]
     fn net_transitions_iter_visits_all_transitions() {
         let mut net = PetriNet::default();
-        net.add_transition(&"T1".to_string());
-        net.add_transition(&"T2".to_string());
-        net.add_transition(&"T3".to_string());
-        net.add_transition(&"T4".to_string());
+        net.add_transition("T1");
+        net.add_transition("T2");
+        net.add_transition("T3");
+        net.add_transition("T4");
         assert_eq!(net.transitions_iter().count(), 4);
     }
 }

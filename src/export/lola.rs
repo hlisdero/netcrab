@@ -161,11 +161,11 @@ mod lola_tests {
     #[test]
     fn lola_string_marked_places_net() {
         let mut net = PetriNet::new();
-        let p1 = net.add_place(&"P1".to_string());
-        let p2 = net.add_place(&"P2".to_string());
-        let p3 = net.add_place(&"P3".to_string());
-        let p4 = net.add_place(&"P4".to_string());
-        let p5 = net.add_place(&"P5".to_string());
+        let p1 = net.add_place("P1");
+        let p2 = net.add_place("P2");
+        let p3 = net.add_place("P3");
+        let p4 = net.add_place("P4");
+        let p5 = net.add_place("P5");
 
         assert!(net.add_token(&p1, 5).is_ok());
         assert!(net.add_token(&p2, 6).is_ok());

@@ -130,8 +130,8 @@ Creating a custom Petri net with a single place and a single transition forming 
 use netcrab::net::PetriNet;
 
 let mut net = PetriNet::new();
-let place_ref = net.add_place(&"Example place".to_string());
-let transition_ref = net.add_transition(&"Example transition".to_string());
+let place_ref = net.add_place("Example place");
+let transition_ref = net.add_transition("Example transition");
 
 let result = net.add_arc_place_transition(&place_ref, &transition_ref);
 assert!(result.is_ok());
