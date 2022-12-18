@@ -6,12 +6,12 @@ use crate::petri_net::{PetriNet, PlaceRef, TransitionRef};
 
 #[inline]
 fn place_label_from_index(index: usize) -> String {
-    format!("P{}", index)
+    format!("P{index}")
 }
 
 #[inline]
 fn transition_label_from_index(index: usize) -> String {
-    format!("T{}", index)
+    format!("T{index}")
 }
 
 /// Create a new Petri net with no arcs

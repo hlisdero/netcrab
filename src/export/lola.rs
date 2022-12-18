@@ -49,9 +49,9 @@ impl PetriNet {
         for (i, (place_ref, _)) in self.places_iter().enumerate() {
             let line = if i == last_index {
                 // Last place line has a semicolon and an empty line.
-                format!("    {};\n\n", place_ref.as_string())
+                format!("    {place_ref};\n\n")
             } else {
-                format!("    {},\n", place_ref.as_string())
+                format!("    {place_ref},\n")
             };
             writer.write_all(line.as_bytes())?;
         }
@@ -78,9 +78,9 @@ impl PetriNet {
 
             let line = if i == last_index {
                 // Last marking line has a semicolon and an empty line.
-                format!("    {} : {};\n\n", place_ref.as_string(), marking)
+                format!("    {place_ref} : {marking};\n\n")
             } else {
-                format!("    {} : {},\n", place_ref.as_string(), marking)
+                format!("    {place_ref} : {marking},\n")
             };
             writer.write_all(line.as_bytes())?;
         }
@@ -94,7 +94,7 @@ impl PetriNet {
         T: std::io::Write,
     {
         for (transition_ref, transition) in self.transitions_iter() {
-            let header_line = format!("TRANSITION {}\n", transition_ref.as_string());
+            let header_line = format!("TRANSITION {transition_ref}\n");
             writer.write_all(header_line.as_bytes())?;
 
             Self::write_transition_arcs(transition.get_preset(), "CONSUME", writer)?;
@@ -117,17 +117,17 @@ impl PetriNet {
         if set.is_empty() {
             return Ok(());
         }
-        let header_line = format!("  {}\n", header);
+        let header_line = format!("  {header}\n");
         writer.write_all(header_line.as_bytes())?;
 
         let last_index = set.len() - 1;
         for (i, place_ref) in set.iter().enumerate() {
-            // Multiplicity is always 1 for now.
+            // Edge multiplicity is always 1 for now.
             let line = if i == last_index {
                 // Last line has a semicolon and an empty line.
-                format!("    {} : {};\n", place_ref.as_string(), 1)
+                format!("    {place_ref} : 1;\n")
             } else {
-                format!("    {} : {},\n", place_ref.as_string(), 1)
+                format!("    {place_ref} : 1,\n")
             };
             writer.write_all(line.as_bytes())?;
         }

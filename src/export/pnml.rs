@@ -136,7 +136,7 @@ impl PetriNet {
     where
         T: std::io::Write,
     {
-        let arc_label = format!("({}, {})", source, dest);
+        let arc_label = format!("({source}, {dest})");
         let start_element = XmlEvent::start_element("arc")
             .attr("source", source)
             .attr("target", dest)

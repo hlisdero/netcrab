@@ -22,6 +22,18 @@ impl TransitionRef {
     }
 }
 
+impl std::fmt::Display for PlaceRef {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
+impl std::fmt::Display for TransitionRef {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
 #[cfg(test)]
 mod net_tests {
     use super::*;
@@ -38,5 +50,19 @@ mod net_tests {
         let transition_ref = TransitionRef("Example reference".to_string());
 
         assert_eq!(transition_ref.as_string(), "Example reference");
+    }
+
+    #[test]
+    fn place_ref_display_trait_prints_the_inner_string() {
+        let place_ref = PlaceRef("Example reference".to_string());
+
+        assert_eq!(format!("{place_ref}"), "Example reference");
+    }
+
+    #[test]
+    fn transition_ref_display_trait_prints_the_inner_string() {
+        let transition_ref = TransitionRef("Example reference".to_string());
+
+        assert_eq!(format!("{transition_ref}"), "Example reference");
     }
 }

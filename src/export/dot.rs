@@ -46,10 +46,8 @@ impl PetriNet {
         for (place_ref, place) in self.places_iter() {
             let label = Self::sanitize_string(place_ref.as_string());
             let marking = Self::marking_to_string(place.marking());
-            let line = format!(
-                "    {} [shape=\"circle\" xlabel=\"{}\" label=\"{}\"];\n",
-                label, label, marking
-            );
+            let line =
+                format!("    {label} [shape=\"circle\" xlabel=\"{label}\" label=\"{marking}\"];\n");
             writer.write_all(line.as_bytes())?;
         }
         Ok(())
@@ -63,10 +61,7 @@ impl PetriNet {
     {
         for (transition_ref, _) in self.transitions_iter() {
             let label = Self::sanitize_string(transition_ref.as_string());
-            let line = format!(
-                "    {} [shape=\"box\" xlabel=\"{}\" label=\"\"];\n",
-                label, label
-            );
+            let line = format!("    {label} [shape=\"box\" xlabel=\"{label}\" label=\"\"];\n");
             writer.write_all(line.as_bytes())?;
         }
         Ok(())
