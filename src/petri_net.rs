@@ -117,7 +117,7 @@ impl PetriNet {
         place_ref: &PlaceRef,
         transition_ref: &TransitionRef,
     ) -> Result<(), &str> {
-        let (place, transition) = self.get_place_transition_pair(place_ref, transition_ref)?;
+        let (place, transition) = self.get_place_transition_pair_mut(place_ref, transition_ref)?;
         // We prefer to clone the references here, since the add operations technically do not need it,
         // but we just want to borrow the references from the user for this operation.
         let inserted_outgoing = place.add_outgoing(transition_ref.clone());
@@ -138,7 +138,7 @@ impl PetriNet {
         transition_ref: &TransitionRef,
         place_ref: &PlaceRef,
     ) -> Result<(), &str> {
-        let (place, transition) = self.get_place_transition_pair(place_ref, transition_ref)?;
+        let (place, transition) = self.get_place_transition_pair_mut(place_ref, transition_ref)?;
         // We prefer to clone the references here, since the add operations technically do not need it,
         // but we just want to borrow the references from the user for this operation.
         let inserted_outgoing = transition.add_outgoing(place_ref.clone());
@@ -152,7 +152,7 @@ impl PetriNet {
     /// # Errors
     ///
     /// If the `PlaceRef` is invalid, then an error is returned.
-    pub fn marking(&mut self, place_ref: &PlaceRef) -> Result<usize, &str> {
+    pub fn marking(&self, place_ref: &PlaceRef) -> Result<usize, &str> {
         let place = self.get_place(place_ref)?;
         Ok(place.marking())
     }
@@ -174,7 +174,7 @@ impl PetriNet {
     /// If the `PlaceRef` is invalid, then an error is returned.
     /// If the addition causes an overflow, then an error is returned.
     pub fn add_token(&mut self, place_ref: &PlaceRef, tokens_to_add: usize) -> Result<(), &str> {
-        let place = self.get_place(place_ref)?;
+        let place = self.get_place_mut(place_ref)?;
         place.add_token(tokens_to_add)
     }
 
@@ -189,18 +189,25 @@ impl PetriNet {
         place_ref: &PlaceRef,
         tokens_to_remove: usize,
     ) -> Result<(), &str> {
-        let place = self.get_place(place_ref)?;
+        let place = self.get_place_mut(place_ref)?;
         place.remove_token(tokens_to_remove)
     }
 
-    fn get_place(&mut self, place_ref: &PlaceRef) -> Result<&mut Place, &str> {
+    fn get_place(&self, place_ref: &PlaceRef) -> Result<&Place, &str> {
+        let Some(place) = self.places.get(place_ref) else {
+            return Err("Place reference is invalid. It is not present in the net.")
+        };
+        Ok(place)
+    }
+
+    fn get_place_mut(&mut self, place_ref: &PlaceRef) -> Result<&mut Place, &str> {
         let Some(place) = self.places.get_mut(place_ref) else {
             return Err("Place reference is invalid. It is not present in the net.")
         };
         Ok(place)
     }
 
-    fn get_place_transition_pair(
+    fn get_place_transition_pair_mut(
         &mut self,
         place_ref: &PlaceRef,
         transition_ref: &TransitionRef,
