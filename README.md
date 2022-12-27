@@ -24,7 +24,7 @@
 <h3 align="center">netcrab</h3>
 
   <p align="center">
-    A tool suite for creating, visualizing and analyzing Petri nets made in Rust
+    A simple library for creating and exporting Petri nets made in Rust
     <br />
     <a href="https://github.com/hlisdero/netcrab"><strong>Explore the docs »</strong></a>
     <br />
@@ -162,7 +162,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the terms of both the MIT license and the Apache License (Version 2.0). See [LICENSE-MIT](./LICENSE-MIT), [LICENSE-APACHE](./LICENSE-APACHE) for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
