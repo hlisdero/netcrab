@@ -68,7 +68,7 @@
 
 ### Petri net implementation
 
-The main implementation is found in `net.rs`. It uses two `BTreeMap` to store the places and transitions. References to places and transitions are named `PlaceRef` and `TransitionRef` respectively. These types are a wrapper around `String`. Places and transitions are labelled with `String`. These must be unique in the net.
+The main implementation is found in `petri_net.rs`. It uses two `BTreeMap` to store the places and transitions. References to places and transitions are named `PlaceRef` and `TransitionRef` respectively. These types are a wrapper around `String`. Places and transitions are labelled with `String`. These must be unique in the net.
 
 References to the places and transitions are returned when adding them to the net. These references can later be used to add arcs and to access the markings.
 
