@@ -237,8 +237,7 @@ mod place_tests {
         let mut place = Place::new();
         let reference = TransitionRef::from("Example transition");
 
-        assert!(place.add_incoming(reference));
-        let reference = TransitionRef::from("Example transition");
+        assert!(place.add_incoming(reference.clone()));
         assert!(!place.add_incoming(reference));
     }
 
@@ -247,8 +246,7 @@ mod place_tests {
         let mut place = Place::new();
         let reference = TransitionRef::from("Example transition");
 
-        assert!(place.add_incoming(reference));
-        let reference = TransitionRef::from("Example transition");
+        assert!(place.add_incoming(reference.clone()));
         assert!(place.remove_incoming(&reference));
     }
 
@@ -294,8 +292,7 @@ mod transition_tests {
         let mut transition = Transition::new();
         let reference = PlaceRef::from("Example place");
 
-        assert!(transition.add_incoming(reference));
-        let reference = PlaceRef::from("Example place");
+        assert!(transition.add_incoming(reference.clone()));
         assert!(!transition.add_incoming(reference));
     }
 
@@ -304,8 +301,7 @@ mod transition_tests {
         let mut transition = Transition::new();
         let reference = PlaceRef::from("Example place");
 
-        assert!(transition.add_incoming(reference));
-        let reference = PlaceRef::from("Example place");
+        assert!(transition.add_incoming(reference.clone()));
         assert!(transition.remove_incoming(&reference));
     }
 

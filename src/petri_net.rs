@@ -89,7 +89,7 @@ impl PetriNet {
     }
 
     /// Add a place to the net.
-    /// If the label already exists, it silently overwrites it.
+    /// The place label need not be unique for the net.
     pub fn add_place(&mut self, place_label: &str) -> PlaceRef {
         let place_ref = PlaceRef::from(place_label);
         self.places.insert(place_ref.clone(), Place::new());
@@ -97,7 +97,7 @@ impl PetriNet {
     }
 
     /// Add a transition to the net.
-    /// If the label already exists, it silently overwrites it.
+    /// The transition label need not be unique for the net.
     pub fn add_transition(&mut self, transition_label: &str) -> TransitionRef {
         let transition_ref = TransitionRef::from(transition_label);
         self.transitions
