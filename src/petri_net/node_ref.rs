@@ -24,7 +24,7 @@ impl PlaceRef {
     /// Convert the reference to the underlying `String`.
     #[inline]
     #[must_use]
-    pub const fn as_string(&self) -> &String {
+    pub const fn label(&self) -> &String {
         &self.label
     }
 }
@@ -33,7 +33,7 @@ impl TransitionRef {
     /// Convert the reference to the underlying `String`.
     #[inline]
     #[must_use]
-    pub const fn as_string(&self) -> &String {
+    pub const fn label(&self) -> &String {
         &self.label
     }
 }
@@ -91,28 +91,28 @@ mod net_tests {
     use super::*;
 
     #[test]
-    fn place_ref_as_string_returns_the_inner_string() {
+    fn place_ref_label_returns_the_label() {
         let place_ref = PlaceRef::from("Example reference");
 
-        assert_eq!(place_ref.as_string(), "Example reference");
+        assert_eq!(place_ref.label(), "Example reference");
     }
 
     #[test]
-    fn transition_ref_as_string_returns_the_inner_string() {
+    fn transition_ref_label_returns_the_label() {
         let transition_ref = TransitionRef::from("Example reference");
 
-        assert_eq!(transition_ref.as_string(), "Example reference");
+        assert_eq!(transition_ref.label(), "Example reference");
     }
 
     #[test]
-    fn place_ref_display_trait_prints_the_inner_string() {
+    fn place_ref_display_trait_prints_the_label() {
         let place_ref = PlaceRef::from("Example reference");
 
         assert_eq!(format!("{place_ref}"), "Example reference");
     }
 
     #[test]
-    fn transition_ref_display_trait_prints_the_inner_string() {
+    fn transition_ref_display_trait_prints_the_label() {
         let transition_ref = TransitionRef::from("Example reference");
 
         assert_eq!(format!("{transition_ref}"), "Example reference");
