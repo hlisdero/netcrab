@@ -151,7 +151,7 @@ mod lola_tests {
 
     #[test]
     fn lola_string_only_empty_places_net() {
-        let net = create_basic_unconnected_net(5, 0);
+        let (net, _, _) = create_basic_unconnected_net(5, 0);
         let result = net.to_lola_string();
 
         assert!(result.is_ok());
@@ -180,7 +180,7 @@ mod lola_tests {
 
     #[test]
     fn lola_string_only_empty_transitions_net() {
-        let net = create_basic_unconnected_net(0, 5);
+        let (net, _, _) = create_basic_unconnected_net(0, 5);
         let result = net.to_lola_string();
 
         assert!(result.is_ok());
@@ -189,7 +189,7 @@ mod lola_tests {
 
     #[test]
     fn lola_string_net_with_chain_topology() {
-        let net = create_net_chain_topology(3);
+        let (net, _, _) = create_net_chain_topology(3);
         let result = net.to_lola_string();
 
         assert!(result.is_ok());
@@ -198,7 +198,7 @@ mod lola_tests {
 
     #[test]
     fn lola_string_net_with_loop_topology() {
-        let net = create_net_loop_topology();
+        let (net, _, _) = create_net_loop_topology();
         let result = net.to_lola_string();
 
         assert!(result.is_ok());
