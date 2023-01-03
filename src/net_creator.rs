@@ -123,6 +123,18 @@ mod net_creator_tests {
     }
 
     #[test]
+    fn create_basic_unconnected_net_has_valid_references() {
+        let (net, place_refs, transition_refs) = create_basic_unconnected_net(8, 14);
+
+        for place_ref in place_refs.iter() {
+            assert!(net.check_place_ref(place_ref));
+        }
+        for transition_ref in transition_refs.iter() {
+            assert!(net.check_transition_ref(transition_ref));
+        }
+    }
+
+    #[test]
     fn create_basic_unconnected_net_has_no_arcs_from_0_to_10() {
         for number_of_places in 0..=10 {
             for number_of_transitions in 0..=10 {
@@ -145,6 +157,18 @@ mod net_creator_tests {
         assert_eq!(net.get_cardinality_transitions(), 2);
         assert_eq!(place_refs.len(), 3);
         assert_eq!(transition_refs.len(), 2);
+    }
+
+    #[test]
+    fn create_net_chain_topology_has_valid_references() {
+        let (net, place_refs, transition_refs) = create_net_chain_topology(3);
+
+        for place_ref in place_refs.iter() {
+            assert!(net.check_place_ref(place_ref));
+        }
+        for transition_ref in transition_refs.iter() {
+            assert!(net.check_transition_ref(transition_ref));
+        }
     }
 
     #[test]
@@ -204,14 +228,20 @@ mod net_creator_tests {
     }
 
     #[test]
-    fn create_net_loop_topology_has_correct_number_of_arcs() {
+    fn create_net_loop_topology_has_valid_references() {
         let (net, place_ref, transition_ref) = create_net_loop_topology();
+
+        assert!(net.check_place_ref(&place_ref));
+        assert!(net.check_transition_ref(&transition_ref));
+    }
+
+    #[test]
+    fn create_net_loop_topology_has_correct_number_of_arcs() {
+        let (net, _, _) = create_net_loop_topology();
         let arcs_1 = net.find_arcs_place_transition();
         let arcs_2 = net.find_arcs_transition_place();
 
         assert_eq!(arcs_1.len(), 1);
         assert_eq!(arcs_2.len(), 1);
-        assert!(net.check_place_ref(&place_ref));
-        assert!(net.check_transition_ref(&transition_ref));
     }
 }
