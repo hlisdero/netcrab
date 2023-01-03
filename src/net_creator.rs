@@ -34,7 +34,7 @@ pub fn create_basic_unconnected_net(
     }
     for i in 1..=number_of_transitions {
         let transition_ref = net.add_transition(&transition_label_from_index!(i));
-        transition_refs.push(transition_ref)
+        transition_refs.push(transition_ref);
     }
 
     (net, place_refs, transition_refs)
