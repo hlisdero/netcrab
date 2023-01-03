@@ -227,7 +227,7 @@ mod place_tests {
     #[test]
     fn place_add_incoming_transition_returns_true_when_success() {
         let mut place = Place::new();
-        let reference = TransitionRef::from("Example transition");
+        let reference = TransitionRef::new("Example transition");
 
         assert!(place.add_incoming(reference));
     }
@@ -235,7 +235,7 @@ mod place_tests {
     #[test]
     fn place_add_incoming_transition_returns_false_when_already_exists() {
         let mut place = Place::new();
-        let reference = TransitionRef::from("Example transition");
+        let reference = TransitionRef::new("Example transition");
 
         assert!(place.add_incoming(reference.clone()));
         assert!(!place.add_incoming(reference));
@@ -244,7 +244,7 @@ mod place_tests {
     #[test]
     fn place_remove_incoming_transition_returns_true_when_success() {
         let mut place = Place::new();
-        let reference = TransitionRef::from("Example transition");
+        let reference = TransitionRef::new("Example transition");
 
         assert!(place.add_incoming(reference.clone()));
         assert!(place.remove_incoming(&reference));
@@ -253,10 +253,10 @@ mod place_tests {
     #[test]
     fn place_remove_incoming_transition_returns_false_when_not_found() {
         let mut place = Place::new();
-        let reference = TransitionRef::from("Example transition");
+        let reference = TransitionRef::new("Example transition");
 
         assert!(place.add_incoming(reference));
-        let reference = TransitionRef::from("Example not found");
+        let reference = TransitionRef::new("Example not found");
         assert!(!place.remove_incoming(&reference));
     }
 }
@@ -282,7 +282,7 @@ mod transition_tests {
     #[test]
     fn transition_add_incoming_place_returns_true_when_success() {
         let mut transition = Transition::new();
-        let reference = PlaceRef::from("Example place");
+        let reference = PlaceRef::new("Example place");
 
         assert!(transition.add_incoming(reference));
     }
@@ -290,7 +290,7 @@ mod transition_tests {
     #[test]
     fn transition_add_incoming_place_returns_false_when_already_exists() {
         let mut transition = Transition::new();
-        let reference = PlaceRef::from("Example place");
+        let reference = PlaceRef::new("Example place");
 
         assert!(transition.add_incoming(reference.clone()));
         assert!(!transition.add_incoming(reference));
@@ -299,7 +299,7 @@ mod transition_tests {
     #[test]
     fn transition_remove_incoming_place_returns_true_when_success() {
         let mut transition = Transition::new();
-        let reference = PlaceRef::from("Example place");
+        let reference = PlaceRef::new("Example place");
 
         assert!(transition.add_incoming(reference.clone()));
         assert!(transition.remove_incoming(&reference));
@@ -308,10 +308,10 @@ mod transition_tests {
     #[test]
     fn transition_remove_incoming_place_returns_false_when_not_found() {
         let mut transition = Transition::new();
-        let reference = PlaceRef::from("Example place");
+        let reference = PlaceRef::new("Example place");
 
         assert!(transition.add_incoming(reference));
-        let reference = PlaceRef::from("Example not found");
+        let reference = PlaceRef::new("Example not found");
         assert!(!transition.remove_incoming(&reference));
     }
 }

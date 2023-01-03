@@ -21,7 +21,16 @@ pub struct TransitionRef {
 }
 
 impl PlaceRef {
-    /// Convert the reference to the underlying `String`.
+    /// Creates a new place reference with a randomly generated UUID.
+    #[must_use]
+    pub fn new(place_label: &str) -> Self {
+        Self {
+            label: place_label.to_string(),
+            uuid: Uuid::new_v4(),
+        }
+    }
+
+    /// Returns the place label for this reference.
     #[inline]
     #[must_use]
     pub const fn label(&self) -> &String {
@@ -30,7 +39,16 @@ impl PlaceRef {
 }
 
 impl TransitionRef {
-    /// Convert the reference to the underlying `String`.
+    /// Creates a new transition reference with a randomly generated UUID.
+    #[must_use]
+    pub fn new(transition_label: &str) -> Self {
+        Self {
+            label: transition_label.to_string(),
+            uuid: Uuid::new_v4(),
+        }
+    }
+
+    /// Returns the transition label for this reference.
     #[inline]
     #[must_use]
     pub const fn label(&self) -> &String {
@@ -50,101 +68,91 @@ impl std::fmt::Display for TransitionRef {
     }
 }
 
-impl From<String> for PlaceRef {
-    fn from(value: String) -> Self {
-        Self {
-            uuid: Uuid::new_v4(),
-            label: value,
-        }
-    }
-}
-
-impl From<String> for TransitionRef {
-    fn from(value: String) -> Self {
-        Self {
-            uuid: Uuid::new_v4(),
-            label: value,
-        }
-    }
-}
-
-impl From<&str> for PlaceRef {
-    fn from(value: &str) -> Self {
-        Self {
-            uuid: Uuid::new_v4(),
-            label: value.to_string(),
-        }
-    }
-}
-
-impl From<&str> for TransitionRef {
-    fn from(value: &str) -> Self {
-        Self {
-            uuid: Uuid::new_v4(),
-            label: value.to_string(),
-        }
-    }
-}
-
 #[cfg(test)]
 mod net_tests {
     use super::*;
 
     #[test]
+    fn place_ref_new_sets_label() {
+        let place_ref = PlaceRef::new("Example reference");
+
+        assert_eq!(place_ref.label, "Example reference");
+    }
+
+    #[test]
+    fn transition_ref_new_sets_label() {
+        let transition_ref = TransitionRef::new("Example reference");
+
+        assert_eq!(transition_ref.label, "Example reference");
+    }
+
+    #[test]
+    fn place_ref_new_sets_uuid_not_nil() {
+        let place_ref = PlaceRef::new("Example reference");
+
+        assert_ne!(
+            place_ref.uuid,
+            Uuid::parse_str("00000000-0000-0000-0000-000000000000").unwrap()
+        );
+    }
+
+    #[test]
+    fn transition_ref_new_sets_uuid_not_nil() {
+        let transition_ref = TransitionRef::new("Example reference");
+
+        assert_ne!(
+            transition_ref.uuid,
+            Uuid::parse_str("00000000-0000-0000-0000-000000000000").unwrap()
+        );
+    }
+
+    #[test]
+    fn place_ref_new_sets_a_different_uuid_every_time() {
+        let ref_1 = PlaceRef::new("Example reference");
+        let ref_2 = PlaceRef::new("Example reference");
+        let ref_3 = PlaceRef::new("Example reference");
+
+        assert_ne!(ref_1.uuid, ref_2.uuid);
+        assert_ne!(ref_2.uuid, ref_3.uuid);
+        assert_ne!(ref_3.uuid, ref_1.uuid);
+    }
+
+    #[test]
+    fn transition_ref_new_sets_a_different_uuid_every_time() {
+        let ref_1 = TransitionRef::new("Example reference");
+        let ref_2 = TransitionRef::new("Example reference");
+        let ref_3 = TransitionRef::new("Example reference");
+
+        assert_ne!(ref_1.uuid, ref_2.uuid);
+        assert_ne!(ref_2.uuid, ref_3.uuid);
+        assert_ne!(ref_3.uuid, ref_1.uuid);
+    }
+
+    #[test]
     fn place_ref_label_returns_the_label() {
-        let place_ref = PlaceRef::from("Example reference");
+        let place_ref = PlaceRef::new("Example reference");
 
         assert_eq!(place_ref.label(), "Example reference");
     }
 
     #[test]
     fn transition_ref_label_returns_the_label() {
-        let transition_ref = TransitionRef::from("Example reference");
+        let transition_ref = TransitionRef::new("Example reference");
 
         assert_eq!(transition_ref.label(), "Example reference");
     }
 
     #[test]
     fn place_ref_display_trait_prints_the_label() {
-        let place_ref = PlaceRef::from("Example reference");
+        let place_ref = PlaceRef::new("Example reference");
 
         assert_eq!(format!("{place_ref}"), "Example reference");
     }
 
     #[test]
     fn transition_ref_display_trait_prints_the_label() {
-        let transition_ref = TransitionRef::from("Example reference");
+        let transition_ref = TransitionRef::new("Example reference");
 
         assert_eq!(format!("{transition_ref}"), "Example reference");
-    }
-
-    #[test]
-    fn place_ref_creates_ref_from_str() {
-        let place_ref = PlaceRef::from("Example reference");
-
-        assert_eq!(place_ref.label, "Example reference");
-    }
-
-    #[test]
-    fn transition_ref_creates_ref_from_str() {
-        let transition_ref = PlaceRef::from("Example reference");
-
-        assert_eq!(transition_ref.label, "Example reference");
-    }
-
-    #[test]
-    fn place_ref_creates_ref_from_string() {
-        let string = String::from("Example reference");
-        let place_ref = PlaceRef::from(string);
-
-        assert_eq!(place_ref.label, "Example reference");
-    }
-
-    #[test]
-    fn transition_ref_creates_ref_from_string() {
-        let string = String::from("Example reference");
-        let transition_ref = PlaceRef::from(string);
-
-        assert_eq!(transition_ref.label, "Example reference");
     }
 }
