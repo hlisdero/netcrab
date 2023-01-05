@@ -1,22 +1,13 @@
-pub use crate::petri_net::node::postset_connectable::PostsetConnectable;
-pub use crate::petri_net::node::preset_connectable::PresetConnectable;
-use crate::petri_net::node_ref::{PlaceRef, TransitionRef};
+use crate::petri_net::node_ref::TransitionRef;
+pub use crate::petri_net::postset_connectable::PostsetConnectable;
+pub use crate::petri_net::preset_connectable::PresetConnectable;
 use std::collections::BTreeSet;
-
-mod postset_connectable;
-mod preset_connectable;
 
 #[derive(Default)]
 pub struct Place {
     marking: usize,
     preset: BTreeSet<TransitionRef>,
     postset: BTreeSet<TransitionRef>,
-}
-
-#[derive(Default)]
-pub struct Transition {
-    preset: BTreeSet<PlaceRef>,
-    postset: BTreeSet<PlaceRef>,
 }
 
 impl Place {
@@ -70,14 +61,6 @@ impl Place {
     }
 }
 
-impl Transition {
-    /// Creates an empty transition without connections.
-    #[must_use]
-    pub fn new() -> Self {
-        Self::default()
-    }
-}
-
 impl PresetConnectable for Place {
     type RefType = TransitionRef;
 
@@ -105,38 +88,6 @@ impl PostsetConnectable for Place {
 
     /// Gets a mutable reference to the set of transitions
     /// to which edges from this place point to.
-    fn get_postset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
-        &mut self.postset
-    }
-}
-
-impl PresetConnectable for Transition {
-    type RefType = PlaceRef;
-
-    /// Gets an immutable reference to the set of places
-    /// whose edges point to this transition.
-    fn get_preset(&self) -> &BTreeSet<Self::RefType> {
-        &self.preset
-    }
-
-    /// Gets a mutable reference to the set of places
-    /// whose edges point to this transition.
-    fn get_preset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
-        &mut self.preset
-    }
-}
-
-impl PostsetConnectable for Transition {
-    type RefType = PlaceRef;
-
-    /// Gets an immutable reference to the set of places
-    /// to which edges from this transition point to.
-    fn get_postset(&self) -> &BTreeSet<Self::RefType> {
-        &self.postset
-    }
-
-    /// Gets a mutable reference to the set of places
-    /// to which edges from this transition point to.
     fn get_postset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
         &mut self.postset
     }
@@ -258,60 +209,5 @@ mod place_tests {
         assert!(place.add_incoming(reference));
         let reference = TransitionRef::new("Example not found");
         assert!(!place.remove_incoming(&reference));
-    }
-}
-
-#[cfg(test)]
-mod transition_tests {
-    use super::*;
-
-    #[test]
-    fn transition_new_has_empty_preset() {
-        let transition = Transition::new();
-
-        assert!(transition.get_preset().is_empty());
-    }
-
-    #[test]
-    fn transition_new_has_empty_postset() {
-        let transition = Transition::new();
-
-        assert!(transition.get_postset().is_empty());
-    }
-
-    #[test]
-    fn transition_add_incoming_place_returns_true_when_success() {
-        let mut transition = Transition::new();
-        let reference = PlaceRef::new("Example place");
-
-        assert!(transition.add_incoming(reference));
-    }
-
-    #[test]
-    fn transition_add_incoming_place_returns_false_when_already_exists() {
-        let mut transition = Transition::new();
-        let reference = PlaceRef::new("Example place");
-
-        assert!(transition.add_incoming(reference.clone()));
-        assert!(!transition.add_incoming(reference));
-    }
-
-    #[test]
-    fn transition_remove_incoming_place_returns_true_when_success() {
-        let mut transition = Transition::new();
-        let reference = PlaceRef::new("Example place");
-
-        assert!(transition.add_incoming(reference.clone()));
-        assert!(transition.remove_incoming(&reference));
-    }
-
-    #[test]
-    fn transition_remove_incoming_place_returns_false_when_not_found() {
-        let mut transition = Transition::new();
-        let reference = PlaceRef::new("Example place");
-
-        assert!(transition.add_incoming(reference));
-        let reference = PlaceRef::new("Example not found");
-        assert!(!transition.remove_incoming(&reference));
     }
 }
