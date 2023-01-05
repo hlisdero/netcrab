@@ -16,7 +16,8 @@ impl Transition {
 
     /// Gets an immutable reference to the set of places
     /// whose edges point to this transition.
-    pub fn get_preset(&self) -> &BTreeSet<PlaceRef> {
+    #[must_use]
+    pub const fn get_preset(&self) -> &BTreeSet<PlaceRef> {
         &self.preset
     }
 
@@ -28,7 +29,8 @@ impl Transition {
 
     /// Gets an immutable reference to the set of places
     /// to which edges from this transition point to.
-    pub fn get_postset(&self) -> &BTreeSet<PlaceRef> {
+    #[must_use]
+    pub const fn get_postset(&self) -> &BTreeSet<PlaceRef> {
         &self.postset
     }
 

@@ -60,7 +60,8 @@ impl Place {
 
     /// Gets an immutable reference to the set of transitions
     /// whose edges point to this place.
-    pub fn get_preset(&self) -> &BTreeSet<TransitionRef> {
+    #[must_use]
+    pub const fn get_preset(&self) -> &BTreeSet<TransitionRef> {
         &self.preset
     }
 
@@ -72,7 +73,8 @@ impl Place {
 
     /// Gets an immutable reference to the set of transitions
     /// to which edges from this place point to.
-    pub fn get_postset(&self) -> &BTreeSet<TransitionRef> {
+    #[must_use]
+    pub const fn get_postset(&self) -> &BTreeSet<TransitionRef> {
         &self.postset
     }
 
