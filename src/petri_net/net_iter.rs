@@ -1,6 +1,7 @@
-use crate::petri_net::node_ref::{PlaceRef, TransitionRef};
 use crate::petri_net::place::Place;
+use crate::petri_net::place_ref::PlaceRef;
 use crate::petri_net::transition::Transition;
+use crate::petri_net::transition_ref::TransitionRef;
 use crate::petri_net::PetriNet;
 use std::collections::btree_map::Iter;
 

@@ -1,12 +1,14 @@
-pub use crate::petri_net::node_ref::{PlaceRef, TransitionRef};
 pub use crate::petri_net::place::Place;
+pub use crate::petri_net::place_ref::PlaceRef;
 pub use crate::petri_net::transition::Transition;
+pub use crate::petri_net::transition_ref::TransitionRef;
 use std::collections::{BTreeMap, BTreeSet};
 
 mod net_iter;
-mod node_ref;
 mod place;
+mod place_ref;
 mod transition;
+mod transition_ref;
 
 #[derive(Default)]
 pub struct PetriNet {

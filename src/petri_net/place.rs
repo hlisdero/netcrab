@@ -1,4 +1,4 @@
-use crate::petri_net::node_ref::TransitionRef;
+use crate::petri_net::transition_ref::TransitionRef;
 use std::collections::BTreeSet;
 
 #[derive(Default)]

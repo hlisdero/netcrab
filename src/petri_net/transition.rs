@@ -1,4 +1,4 @@
-use crate::petri_net::node_ref::PlaceRef;
+use crate::petri_net::place_ref::PlaceRef;
 use std::collections::BTreeSet;
 
 #[derive(Default)]
