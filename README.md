@@ -3,8 +3,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield-1]][license-mit-url]
-[![Apache License][license-shield-2]][license-apache-url]
+[![Apache License][license-shield]][license-apache-url]
 
 <div align="center">
 <h1 align="center">Netcrab</h1>
@@ -123,7 +122,5 @@ This `README.md` is based on the template provided by [Best-README-Template](htt
 [stars-url]: https://github.com/hlisdero/netcrab/stargazers
 [issues-shield]: https://img.shields.io/github/issues/hlisdero/netcrab.svg
 [issues-url]: https://github.com/hlisdero/netcrab/issues
-[license-shield-1]: https://img.shields.io/github/license/hlisdero/netcrab.svg
-[license-shield-2]: https://img.shields.io/github/license/hlisdero/netcrab.svg
-[license-mit-url]: https://github.com/hlisdero/netcrab/blob/master/LICENSE-MIT
+[license-shield]: https://img.shields.io/github/license/hlisdero/netcrab.svg
 [license-apache-url]: https://github.com/hlisdero/netcrab/blob/master/LICENSE-APACHE
