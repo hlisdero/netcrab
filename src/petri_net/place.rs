@@ -1,6 +1,4 @@
 use crate::petri_net::node_ref::TransitionRef;
-pub use crate::petri_net::postset_connectable::PostsetConnectable;
-pub use crate::petri_net::preset_connectable::PresetConnectable;
 use std::collections::BTreeSet;
 
 #[derive(Default)]
@@ -59,37 +57,49 @@ impl Place {
         };
         Ok(())
     }
-}
-
-impl PresetConnectable for Place {
-    type RefType = TransitionRef;
 
     /// Gets an immutable reference to the set of transitions
     /// whose edges point to this place.
-    fn get_preset(&self) -> &BTreeSet<Self::RefType> {
+    pub fn get_preset(&self) -> &BTreeSet<TransitionRef> {
         &self.preset
     }
 
     /// Gets a mutable reference to the set of transitions
     /// whose edges point to this place.
-    fn get_preset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
+    pub fn get_preset_mut(&mut self) -> &mut BTreeSet<TransitionRef> {
         &mut self.preset
     }
-}
-
-impl PostsetConnectable for Place {
-    type RefType = TransitionRef;
 
     /// Gets an immutable reference to the set of transitions
     /// to which edges from this place point to.
-    fn get_postset(&self) -> &BTreeSet<Self::RefType> {
+    pub fn get_postset(&self) -> &BTreeSet<TransitionRef> {
         &self.postset
     }
 
     /// Gets a mutable reference to the set of transitions
     /// to which edges from this place point to.
-    fn get_postset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
+    pub fn get_postset_mut(&mut self) -> &mut BTreeSet<TransitionRef> {
         &mut self.postset
+    }
+
+    /// Adds an incoming node, update the preset accordingly.
+    pub fn add_incoming(&mut self, reference: TransitionRef) -> bool {
+        self.preset.insert(reference)
+    }
+
+    /// Removes an incoming node, update the preset accordingly.
+    pub fn remove_incoming(&mut self, reference: &TransitionRef) -> bool {
+        self.preset.remove(reference)
+    }
+
+    /// Adds an outgoing node, update the postset accordingly.
+    pub fn add_outgoing(&mut self, reference: TransitionRef) -> bool {
+        self.postset.insert(reference)
+    }
+
+    /// Removes an outgoing node, update the postset accordingly.
+    pub fn remove_outgoing(&mut self, reference: &TransitionRef) -> bool {
+        self.postset.remove(reference)
     }
 }
 

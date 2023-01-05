@@ -1,6 +1,4 @@
 use crate::petri_net::node_ref::PlaceRef;
-use crate::petri_net::postset_connectable::PostsetConnectable;
-use crate::petri_net::preset_connectable::PresetConnectable;
 use std::collections::BTreeSet;
 
 #[derive(Default)]
@@ -15,37 +13,49 @@ impl Transition {
     pub fn new() -> Self {
         Self::default()
     }
-}
-
-impl PresetConnectable for Transition {
-    type RefType = PlaceRef;
 
     /// Gets an immutable reference to the set of places
     /// whose edges point to this transition.
-    fn get_preset(&self) -> &BTreeSet<Self::RefType> {
+    pub fn get_preset(&self) -> &BTreeSet<PlaceRef> {
         &self.preset
     }
 
     /// Gets a mutable reference to the set of places
     /// whose edges point to this transition.
-    fn get_preset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
+    pub fn get_preset_mut(&mut self) -> &mut BTreeSet<PlaceRef> {
         &mut self.preset
     }
-}
-
-impl PostsetConnectable for Transition {
-    type RefType = PlaceRef;
 
     /// Gets an immutable reference to the set of places
     /// to which edges from this transition point to.
-    fn get_postset(&self) -> &BTreeSet<Self::RefType> {
+    pub fn get_postset(&self) -> &BTreeSet<PlaceRef> {
         &self.postset
     }
 
     /// Gets a mutable reference to the set of places
     /// to which edges from this transition point to.
-    fn get_postset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
+    pub fn get_postset_mut(&mut self) -> &mut BTreeSet<PlaceRef> {
         &mut self.postset
+    }
+
+    /// Adds an incoming `Place`, update the preset accordingly.
+    pub fn add_incoming(&mut self, reference: PlaceRef) -> bool {
+        self.preset.insert(reference)
+    }
+
+    /// Removes an incoming `Place`, update the preset accordingly.
+    pub fn remove_incoming(&mut self, reference: &PlaceRef) -> bool {
+        self.preset.remove(reference)
+    }
+
+    /// Adds an outgoing `Place`, update the postset accordingly.
+    pub fn add_outgoing(&mut self, reference: PlaceRef) -> bool {
+        self.postset.insert(reference)
+    }
+
+    /// Removes an outgoing `Place`, update the postset accordingly.
+    pub fn remove_outgoing(&mut self, reference: &PlaceRef) -> bool {
+        self.postset.remove(reference)
     }
 }
 
