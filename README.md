@@ -3,7 +3,8 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![MIT License][license-shield]][license-mit-url]
+[![Apache License][license-shield]][license-apache-url]
 
 <div align="center">
 <h1 align="center">Netcrab</h1>
@@ -114,13 +115,14 @@ This `README.md` is based on the template provided by [Best-README-Template](htt
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/hlisdero/netcrab.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/hlisdero/netcrab.svg
 [contributors-url]: https://github.com/hlisdero/netcrab/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/hlisdero/netcrab.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/hlisdero/netcrab.svg
 [forks-url]: https://github.com/hlisdero/netcrab/network/members
-[stars-shield]: https://img.shields.io/github/stars/hlisdero/netcrab.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/hlisdero/netcrab.svg
 [stars-url]: https://github.com/hlisdero/netcrab/stargazers
-[issues-shield]: https://img.shields.io/github/issues/hlisdero/netcrab.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/hlisdero/netcrab.svg
 [issues-url]: https://github.com/hlisdero/netcrab/issues
-[license-shield]: https://img.shields.io/github/license/hlisdero/netcrab.svg?style=for-the-badge
-[license-url]: https://github.com/hlisdero/netcrab/blob/master/LICENSE.txt
+[license-shield]: https://img.shields.io/github/license/hlisdero/netcrab.svg
+[license-mit-url]: https://github.com/hlisdero/netcrab/blob/master/LICENSE-MIT
+[license-apache-url]: https://github.com/hlisdero/netcrab/blob/master/LICENSE-APACHE
