@@ -1,78 +1,30 @@
-<a name="readme-top"></a>
-
 <!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
-<!-- PROJECT LOGO -->
-<br />
 <div align="center">
-  <a href="https://github.com/hlisdero/netcrab">
-    <img src="images/logo.png" alt="Logo" width="655" height="431">
-  </a>
-  
-<h3 align="center">netcrab</h3>
+<h1 align="center">Netcrab</h1>
 
-  <p align="center">
-    A simple library for creating and exporting Petri nets made in Rust
-    <br />
-    <a href="https://github.com/hlisdero/netcrab"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/hlisdero/netcrab">View Demo</a>
-    ·
-    <a href="https://github.com/hlisdero/netcrab/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/hlisdero/netcrab/issues">Request Feature</a>
-  </p>
+## A simple library for creating and exporting Petri nets made in Rust
+
+<img align="center" width="655" height="431" src="images/logo.png">
+
+[Report Bug or Request a Feature](https://github.com/hlisdero/netcrab/issues)
+
 </div>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
 ### Petri net implementation
 
-The main implementation is found in `petri_net.rs`. It uses two `BTreeMap` to store the places and transitions. References to places and transitions are named `PlaceRef` and `TransitionRef` respectively. These types are a wrapper around `String`. Places and transitions are labelled with `String`. These must be unique in the net.
+The main implementation is found in `petri_net.rs`. It uses two `BTreeMap` to store the places and transitions. References to places and transitions are named `PlaceRef` and `TransitionRef` respectively. Places and transitions are labelled with `String`. The net keeps the places in order, which allows the iterators to be deterministic.
 
 References to the places and transitions are returned when adding them to the net. These references can later be used to add arcs and to access the markings.
 
-_Note: References can be cloned. One may have as many references to a node or transition as desired._
+_Note: References can be cloned. One may have as many references to a place or transition as desired._
 
 ### Supported export formats
 
@@ -80,17 +32,12 @@ _Note: References can be cloned. One may have as many references to a node or tr
 - LoLA - A Low Level Petri Net Analyzer [https://theo.informatik.uni-rostock.de/theo-forschung/tools/lola/](https://theo.informatik.uni-rostock.de/theo-forschung/tools/lola/)
 - DOT (graph description language) [https://en.wikipedia.org/wiki/DOT\_(graph_description_language)](<https://en.wikipedia.org/wiki/DOT_(graph_description_language)>)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ### Built With
 
 - [Rust](https://www.rust-lang.org/) > 1.65
 - [cargo](https://doc.rust-lang.org/cargo/)
 - [xml-rs](https://docs.rs/xml-rs/latest/xml/)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- GETTING STARTED -->
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
@@ -119,9 +66,6 @@ To get a local copy up and running follow these simple example steps.
    cargo test
    ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- USAGE EXAMPLES -->
 ## Usage
 
 Creating a custom Petri net with a single place and a single transition forming a loop:
@@ -139,11 +83,8 @@ let result = net.add_arc_transition_place(&transition_ref, &place_ref);
 assert!(result.is_ok());
 ```
 
-_For more examples, please refer to the unit tests in each module_
+_Note: For more examples, please refer to the unit tests in each module._
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -157,30 +98,19 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- LICENSE -->
 ## License
 
 Distributed under the terms of both the MIT license and the Apache License (Version 2.0). See [LICENSE-MIT](./LICENSE-MIT), [LICENSE-APACHE](./LICENSE-APACHE) for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTACT -->
 ## Contact
 
 Project Link: [https://github.com/hlisdero/netcrab](https://github.com/hlisdero/netcrab)
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
 Based on the original work by Tom Meyer found in <https://github.com/Skasselbard/PetriToStar>
 
-This `README.md` is based on the awesome template provided by [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+This `README.md` is based on the template provided by [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
