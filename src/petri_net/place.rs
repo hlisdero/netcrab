@@ -82,22 +82,22 @@ impl Place {
         &mut self.postset
     }
 
-    /// Adds an incoming node, update the preset accordingly.
+    /// Adds an incoming `Transition`, update the preset accordingly.
     pub fn add_incoming(&mut self, reference: TransitionRef) -> bool {
         self.preset.insert(reference)
     }
 
-    /// Removes an incoming node, update the preset accordingly.
+    /// Removes an incoming `Transition`, update the preset accordingly.
     pub fn remove_incoming(&mut self, reference: &TransitionRef) -> bool {
         self.preset.remove(reference)
     }
 
-    /// Adds an outgoing node, update the postset accordingly.
+    /// Adds an outgoing `Transition`, update the postset accordingly.
     pub fn add_outgoing(&mut self, reference: TransitionRef) -> bool {
         self.postset.insert(reference)
     }
 
-    /// Removes an outgoing node, update the postset accordingly.
+    /// Removes an outgoing `Transition`, update the postset accordingly.
     pub fn remove_outgoing(&mut self, reference: &TransitionRef) -> bool {
         self.postset.remove(reference)
     }
