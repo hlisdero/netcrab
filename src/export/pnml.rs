@@ -5,7 +5,7 @@ const XML_PNML_DEFAULT_NAMESPACE: &str = "http://www.pnml.org/version-2009/gramm
 const XML_PNML_DEFAULT_GRAMMAR: &str = "http://www.pnml.org/version-2009/grammar/ptnet";
 
 impl PetriNet {
-    /// Convert the net to a string in PNML format and return it.
+    /// Converts the net to a string in PNML format and returns it.
     ///
     /// # Errors
     ///
@@ -21,8 +21,8 @@ impl PetriNet {
             ))
     }
 
-    /// Convert the net to the PNML format.
-    /// Write the output to a trait object which implements `std::io::Write`.
+    /// Converts the net to the PNML format.
+    /// Writes the output to a trait object which implements `std::io::Write`.
     ///
     /// # Errors
     ///
@@ -41,7 +41,7 @@ impl PetriNet {
         })
     }
 
-    /// Write the net to the PNML format.
+    /// Writes the net to the PNML format.
     ///
     /// # Errors
     ///
@@ -74,7 +74,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Write the XML elements that define the places
+    /// Writes the XML elements that define the places
     /// to an instance of `xml::writer::Writer`.
     fn write_pnml_places<T>(&self, writer: &mut EventWriter<T>) -> XmlResult<()>
     where
@@ -90,7 +90,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Write the XML elements that define the transitions
+    /// Writes the XML elements that define the transitions
     /// to an instance of `xml::writer::Writer`.
     fn write_pnml_transitions<T>(&self, writer: &mut EventWriter<T>) -> XmlResult<()>
     where
@@ -106,7 +106,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Write the XML elements that define the arcs
+    /// Writes the XML elements that define the arcs
     /// to an instance of `xml::writer::Writer`.
     fn write_pnml_arcs<T>(&self, writer: &mut EventWriter<T>) -> XmlResult<()>
     where
@@ -125,7 +125,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Write a single arc in the net as a XML node
+    /// Writes a single arc in the net as a XML node
     /// as required by the PNML standard.
     fn write_arc<T>(
         source: &String,
@@ -152,7 +152,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Write the label of a place or transition as a XML node
+    /// Writes the label of a place or transition as a XML node
     /// as required by the PNML standard.
     fn label_to_pnml<T>(name: &str, xml_writer: &mut EventWriter<T>) -> XmlResult<()>
     where
@@ -166,7 +166,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Write the marking of a place as a XML node
+    /// Writes the marking of a place as a XML node
     /// as required by the PNML standard.
     fn marking_to_pnml<T>(marking: usize, xml_writer: &mut EventWriter<T>) -> XmlResult<()>
     where

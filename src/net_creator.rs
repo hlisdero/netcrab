@@ -1,7 +1,8 @@
 //! Module with simple functions to create nets
 //!
 //! This could be extended to a struct with a custom format
-//! for the place labels and transition labels.
+//! for the place labels and transition labels
+
 use crate::petri_net::{PetriNet, PlaceRef, TransitionRef};
 
 macro_rules! place_label_from_index {
@@ -16,9 +17,8 @@ macro_rules! transition_label_from_index {
     };
 }
 
-/// Create a new Petri net with no arcs
-/// and `number_of_places` places
-/// and `number_of_transitions` transitions.
+/// Creates a new Petri net with no arcs and `number_of_places` places and `number_of_transitions` transitions.
+/// Returns the net, a vector with all place references and a vector with all transition references.
 #[must_use]
 pub fn create_basic_unconnected_net(
     number_of_places: usize,
@@ -40,8 +40,9 @@ pub fn create_basic_unconnected_net(
     (net, place_refs, transition_refs)
 }
 
-/// Create a new Petri net where the places and the transition form a simple chain.
+/// Creates a new Petri net where the places and the transition form a simple chain.
 /// The net contains `length` places and `length - 1` transitions.
+/// Returns the net, a vector with all place references and a vector with all transition references.
 #[must_use]
 pub fn create_net_chain_topology(length: usize) -> (PetriNet, Vec<PlaceRef>, Vec<TransitionRef>) {
     if length == 0 {
@@ -66,7 +67,8 @@ pub fn create_net_chain_topology(length: usize) -> (PetriNet, Vec<PlaceRef>, Vec
     (net, place_refs, transition_refs)
 }
 
-/// Create a new Petri net with one place and one transition forming a loop.
+/// Creates a new Petri net with one place and one transition forming a loop.
+/// Returns the net, the single place reference and the single transition reference.
 #[must_use]
 pub fn create_net_loop_topology() -> (PetriNet, PlaceRef, TransitionRef) {
     let mut net = PetriNet::new();

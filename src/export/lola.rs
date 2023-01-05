@@ -2,7 +2,7 @@ use crate::petri_net::{PetriNet, PlaceRef, PostsetConnectable, PresetConnectable
 use std::collections::BTreeSet;
 
 impl PetriNet {
-    /// Convert the net to a string in the format accepted by the `LoLA` model checker and return it.
+    /// Converts the net to a string in the format accepted by the `LoLA` model checker and returns it.
     ///
     /// # Errors
     ///
@@ -18,8 +18,8 @@ impl PetriNet {
             ))
     }
 
-    /// Convert the net to the format accepted by the `LoLA` model checker.
-    /// Write the output to a trait object which implements `std::io::Write`.
+    /// Converts the net to the format accepted by the `LoLA` model checker.
+    /// Writes the output to a trait object which implements `std::io::Write`.
     ///
     /// # Errors
     ///
@@ -34,7 +34,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Write the lines that define the places
+    /// Writes the lines that define the places
     /// to a trait object which implements `std::io::Write`.
     fn write_lola_places<T>(&self, writer: &mut T) -> Result<(), std::io::Error>
     where
@@ -58,7 +58,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Write the lines that define the initial marking
+    /// Writes the lines that define the initial marking
     /// to a trait object which implements `std::io::Write`.
     fn write_lola_initial_marking<T>(&self, writer: &mut T) -> Result<(), std::io::Error>
     where
@@ -87,7 +87,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Write the lines that define the transitions
+    /// Writes the lines that define the transitions
     /// to a trait object which implements `std::io::Write`.
     fn write_lola_transitions<T>(&self, writer: &mut T) -> Result<(), std::io::Error>
     where
@@ -103,7 +103,7 @@ impl PetriNet {
         Ok(())
     }
 
-    // Write the lines corresponding to either the preset or the postset of a given transition
+    // Writes the lines corresponding to either the preset or the postset of a given transition
     // that define tokens from which places are consumed and produced when the transition is fired.
     // The result is written to a trait object which implements `std::io::Write`.
     fn write_transition_arcs<T>(

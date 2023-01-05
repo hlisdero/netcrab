@@ -13,27 +13,27 @@ pub struct PetriNet {
 }
 
 impl PetriNet {
-    /// Create an empty Petri net.
+    /// Creates an empty Petri net.
     #[must_use]
     pub fn new() -> Self {
         Self::default()
     }
 
-    /// Get the number of places in the net.
+    /// Gets the number of places in the net.
     #[inline]
     #[must_use]
     pub fn get_cardinality_places(&self) -> usize {
         self.places.len()
     }
 
-    /// Get the number of transitions in the net.
+    /// Gets the number of transitions in the net.
     #[inline]
     #[must_use]
     pub fn get_cardinality_transitions(&self) -> usize {
         self.transitions.len()
     }
 
-    /// Check if the place reference is valid for this net,
+    /// Checks if the place reference is valid for this net,
     /// i.e. if the referenced place still exists in the net.
     #[inline]
     #[must_use]
@@ -41,7 +41,7 @@ impl PetriNet {
         self.places.contains_key(place_ref)
     }
 
-    /// Check if the transition reference is valid for this net,
+    /// Checks if the transition reference is valid for this net,
     /// i.e. if the referenced transition still exists in the net.
     #[inline]
     #[must_use]
@@ -49,8 +49,8 @@ impl PetriNet {
         self.transitions.contains_key(transition_ref)
     }
 
-    /// Find unconnected places in the net.
-    /// Return a `BTreeSet` with the place references as keys.
+    /// Finds unconnected places in the net.
+    /// Returns a `BTreeSet` with the place references as keys.
     #[must_use]
     pub fn find_unconnected_places(&self) -> BTreeSet<PlaceRef> {
         let mut unconnected_set: BTreeSet<PlaceRef> = BTreeSet::new();
@@ -62,8 +62,8 @@ impl PetriNet {
         unconnected_set
     }
 
-    /// Find all arcs from places to transitions in the net.
-    /// Return a `BTreeSet` with tuples of references (source, dest).
+    /// Finds all arcs from places to transitions in the net.
+    /// Returns a `BTreeSet` with tuples of references (source, dest).
     #[must_use]
     pub fn find_arcs_place_transition(&self) -> BTreeSet<(PlaceRef, TransitionRef)> {
         let mut arcs: BTreeSet<(PlaceRef, TransitionRef)> = BTreeSet::new();
@@ -75,8 +75,8 @@ impl PetriNet {
         arcs
     }
 
-    /// Find all arcs from transitions to places in the net.
-    /// Return a `BTreeSet` with tuples of references (source, dest).
+    /// Finds all arcs from transitions to places in the net.
+    /// Returns a `BTreeSet` with tuples of references (source, dest).
     #[must_use]
     pub fn find_arcs_transition_place(&self) -> BTreeSet<(TransitionRef, PlaceRef)> {
         let mut arcs: BTreeSet<(TransitionRef, PlaceRef)> = BTreeSet::new();
@@ -88,7 +88,7 @@ impl PetriNet {
         arcs
     }
 
-    /// Add a place to the net.
+    /// Adds a place to the net.
     /// The place label need not be unique for the net.
     pub fn add_place(&mut self, place_label: &str) -> PlaceRef {
         let place_ref = PlaceRef::new(place_label);
@@ -96,7 +96,7 @@ impl PetriNet {
         place_ref
     }
 
-    /// Add a transition to the net.
+    /// Adds a transition to the net.
     /// The transition label need not be unique for the net.
     pub fn add_transition(&mut self, transition_label: &str) -> TransitionRef {
         let transition_ref = TransitionRef::new(transition_label);
@@ -105,7 +105,7 @@ impl PetriNet {
         transition_ref
     }
 
-    /// Add an arc from a place to a transition with multiplicity one.
+    /// Adds an arc from a place to a transition with multiplicity one.
     ///
     /// # Errors
     ///
@@ -126,7 +126,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Add an arc from a transition to a place with multiplicity one.
+    /// Adds an arc from a transition to a place with multiplicity one.
     ///
     /// # Errors
     ///
@@ -147,7 +147,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Get number of tokens in a place in the net.
+    /// Gets the number of tokens in a place in the net.
     ///
     /// # Errors
     ///
@@ -157,7 +157,7 @@ impl PetriNet {
         Ok(place.marking())
     }
 
-    /// Get the marking vector for the net.
+    /// Gets the marking vector for the net, i.e, the number of tokens for every place in the net.
     /// Returns a `BTreeMap` with the place references as the keys and the number of tokens as values.
     pub fn marking_vector(&mut self) -> BTreeMap<PlaceRef, usize> {
         let mut marking_vector: BTreeMap<PlaceRef, usize> = BTreeMap::new();
@@ -167,7 +167,7 @@ impl PetriNet {
         marking_vector
     }
 
-    /// Add one token to a place in the net.
+    /// Adds `tokens_to_add` tokens to a place in the net.
     ///
     /// # Errors
     ///
@@ -178,7 +178,7 @@ impl PetriNet {
         place.add_token(tokens_to_add)
     }
 
-    /// Remove one token from a place in the net.
+    /// Removes `tokens_to_remove` tokens from a place in the net.
     ///
     /// # Errors
     ///

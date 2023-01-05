@@ -3,7 +3,7 @@ use crate::petri_net::PetriNet;
 const MAX_TOKENS_AS_DOT: usize = 5;
 
 impl PetriNet {
-    /// Convert the net to a string in DOT format and return it.
+    /// Converts the net to a string in DOT format and returns it.
     ///
     /// # Errors
     ///
@@ -19,8 +19,8 @@ impl PetriNet {
             ))
     }
 
-    /// Convert the net to the dot format.
-    /// Write the output to a trait object which implements `std::io::Write`.
+    /// Converts the net to the dot format.
+    /// Writes the output to a trait object which implements `std::io::Write`.
     ///
     /// # Errors
     ///
@@ -37,7 +37,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Write the lines that define the places
+    /// Writes the lines that define the places
     /// to a trait object which implements `std::io::Write`.
     fn write_dot_places<T>(&self, writer: &mut T) -> Result<(), std::io::Error>
     where
@@ -53,7 +53,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Write the lines that define the transitions
+    /// Writes the lines that define the transitions
     /// to a trait object which implements `std::io::Write`.
     fn write_dot_transitions<T>(&self, writer: &mut T) -> Result<(), std::io::Error>
     where
@@ -67,7 +67,7 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Write the lines that define the arcs
+    /// Writes the lines that define the arcs
     /// to a trait object which implements `std::io::Write`.
     fn write_dot_arcs<T>(&self, writer: &mut T) -> Result<(), std::io::Error>
     where
@@ -96,8 +96,8 @@ impl PetriNet {
         Ok(())
     }
 
-    /// Convert the label if present to a valid `String`.
-    /// Remove newlines and quotes from the label.
+    /// Converts the label if present to a valid `String`.
+    /// Removes newlines and quotes from the label.
     ///
     /// Using escape sequences it is possible to achieve special behavior.
     /// [More info](https://graphviz.org/docs/attr-types/escString/)

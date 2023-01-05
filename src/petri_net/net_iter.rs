@@ -4,14 +4,14 @@ use crate::petri_net::PetriNet;
 use std::collections::btree_map::Iter;
 
 impl PetriNet {
-    /// Return an iterator over the place references and their corresponding places.
-    /// The places are visited in arbitrary order.
+    /// Returns an iterator over the place references and their corresponding places.
+    /// The places are visited in alphabetical order.
     pub fn places_iter(&self) -> Iter<PlaceRef, Place> {
         self.places.iter()
     }
 
-    /// Return an iterator over the transition references and their corresponding transitions.
-    /// The transitions are visited in arbitrary order.
+    /// Returns an iterator over the transition references and their corresponding transitions.
+    /// The transitions are visited in alphabetical order.
     pub fn transitions_iter(&self) -> Iter<TransitionRef, Transition> {
         self.transitions.iter()
     }

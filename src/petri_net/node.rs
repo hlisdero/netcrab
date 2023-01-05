@@ -20,27 +20,27 @@ pub struct Transition {
 }
 
 impl Place {
-    /// Create an empty place without tokens nor connections.
+    /// Creates an empty place without tokens nor connections.
     #[must_use]
     pub fn new() -> Self {
         Self::default()
     }
 
-    /// Check whether the place has zero tokens.
+    /// Checks whether the place has zero tokens.
     #[inline]
     #[must_use]
     pub const fn is_empty(&self) -> bool {
         self.marking == 0
     }
 
-    /// Get the number of tokens at the given place.
+    /// Gets the number of tokens at the given place.
     #[inline]
     #[must_use]
     pub const fn marking(&self) -> usize {
         self.marking
     }
 
-    /// Add `tokens_to_add` tokens to the place.
+    /// Adds `tokens_to_add` tokens to the place.
     ///
     /// # Errors
     ///
@@ -53,7 +53,7 @@ impl Place {
         Ok(())
     }
 
-    /// Remove `tokens_to_remove` tokens from the place.
+    /// Removes `tokens_to_remove` tokens from the place.
     ///
     /// # Errors
     ///
@@ -71,7 +71,7 @@ impl Place {
 }
 
 impl Transition {
-    /// Create an empty transition without connections.
+    /// Creates an empty transition without connections.
     #[must_use]
     pub fn new() -> Self {
         Self::default()
@@ -81,13 +81,13 @@ impl Transition {
 impl PresetConnectable for Place {
     type RefType = TransitionRef;
 
-    /// Get an immutable reference to the set of transitions
+    /// Gets an immutable reference to the set of transitions
     /// whose edges point to this place.
     fn get_preset(&self) -> &BTreeSet<Self::RefType> {
         &self.preset
     }
 
-    /// Get a mutable reference to the set of transitions
+    /// Gets a mutable reference to the set of transitions
     /// whose edges point to this place.
     fn get_preset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
         &mut self.preset
@@ -97,13 +97,13 @@ impl PresetConnectable for Place {
 impl PostsetConnectable for Place {
     type RefType = TransitionRef;
 
-    /// Get an immutable reference to the set of transitions
+    /// Gets an immutable reference to the set of transitions
     /// to which edges from this place point to.
     fn get_postset(&self) -> &BTreeSet<Self::RefType> {
         &self.postset
     }
 
-    /// Get a mutable reference to the set of transitions
+    /// Gets a mutable reference to the set of transitions
     /// to which edges from this place point to.
     fn get_postset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
         &mut self.postset
@@ -113,13 +113,13 @@ impl PostsetConnectable for Place {
 impl PresetConnectable for Transition {
     type RefType = PlaceRef;
 
-    /// Get an immutable reference to the set of places
+    /// Gets an immutable reference to the set of places
     /// whose edges point to this transition.
     fn get_preset(&self) -> &BTreeSet<Self::RefType> {
         &self.preset
     }
 
-    /// Get a mutable reference to the set of places
+    /// Gets a mutable reference to the set of places
     /// whose edges point to this transition.
     fn get_preset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
         &mut self.preset
@@ -129,13 +129,13 @@ impl PresetConnectable for Transition {
 impl PostsetConnectable for Transition {
     type RefType = PlaceRef;
 
-    /// Get an immutable reference to the set of places
+    /// Gets an immutable reference to the set of places
     /// to which edges from this transition point to.
     fn get_postset(&self) -> &BTreeSet<Self::RefType> {
         &self.postset
     }
 
-    /// Get a mutable reference to the set of places
+    /// Gets a mutable reference to the set of places
     /// to which edges from this transition point to.
     fn get_postset_mut(&mut self) -> &mut BTreeSet<Self::RefType> {
         &mut self.postset
