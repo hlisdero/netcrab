@@ -27,11 +27,11 @@ pub const DOT_STRING_MARKED_PLACES_NET: &str = r#"digraph petrinet {
 "#;
 
 pub const DOT_STRING_ONLY_EMPTY_TRANSITIONS_NET: &str = r#"digraph petrinet {
-    T1 [shape="box" xlabel="T1" label=""];
-    T2 [shape="box" xlabel="T2" label=""];
-    T3 [shape="box" xlabel="T3" label=""];
-    T4 [shape="box" xlabel="T4" label=""];
-    T5 [shape="box" xlabel="T5" label=""];
+    T1 [shape="box" xlabel="" label="T1"];
+    T2 [shape="box" xlabel="" label="T2"];
+    T3 [shape="box" xlabel="" label="T3"];
+    T4 [shape="box" xlabel="" label="T4"];
+    T5 [shape="box" xlabel="" label="T5"];
 }
 "#;
 
@@ -39,8 +39,8 @@ pub const DOT_STRING_NET_WITH_CHAIN_TOPOLOPY: &str = r#"digraph petrinet {
     P1 [shape="circle" xlabel="P1" label=""];
     P2 [shape="circle" xlabel="P2" label=""];
     P3 [shape="circle" xlabel="P3" label=""];
-    T1 [shape="box" xlabel="T1" label=""];
-    T2 [shape="box" xlabel="T2" label=""];
+    T1 [shape="box" xlabel="" label="T1"];
+    T2 [shape="box" xlabel="" label="T2"];
     P1 -> T1;
     P2 -> T2;
     T1 -> P2;
@@ -50,7 +50,7 @@ pub const DOT_STRING_NET_WITH_CHAIN_TOPOLOPY: &str = r#"digraph petrinet {
 
 pub const DOT_STRING_NET_WITH_LOOP_TOPOLOGY: &str = r#"digraph petrinet {
     P1 [shape="circle" xlabel="P1" label=""];
-    T1 [shape="box" xlabel="T1" label=""];
+    T1 [shape="box" xlabel="" label="T1"];
     P1 -> T1;
     T1 -> P1;
 }

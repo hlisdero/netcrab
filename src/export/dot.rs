@@ -61,7 +61,7 @@ impl PetriNet {
     {
         for (transition_ref, _) in self.transitions_iter() {
             let label = Self::sanitize_string(transition_ref.label());
-            let line = format!("    {label} [shape=\"box\" xlabel=\"{label}\" label=\"\"];\n");
+            let line = format!("    {label} [shape=\"box\" xlabel=\"\" label=\"{label}\"];\n");
             writer.write_all(line.as_bytes())?;
         }
         Ok(())
