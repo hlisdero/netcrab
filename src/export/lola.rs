@@ -72,9 +72,6 @@ impl PetriNet {
         let last_index = self.get_cardinality_places() - 1;
         for (i, (place_ref, place)) in self.places_iter().enumerate() {
             let marking = place.marking();
-            if marking == 0 {
-                continue;
-            }
 
             let line = if i == last_index {
                 // Last marking line has a semicolon and an empty line.

@@ -64,6 +64,12 @@ pub const LOLA_STRING_ONLY_EMPTY_PLACES_NET: &str = r#"PLACE
     P5;
 
 MARKING
+    P1 : 0,
+    P2 : 0,
+    P3 : 0,
+    P4 : 0,
+    P5 : 0;
+
 "#;
 
 pub const LOLA_STRING_MARKED_PLACES_NET: &str = r#"PLACE
@@ -95,6 +101,10 @@ pub const LOLA_STRING_NET_WITH_CHAIN_TOPOLOPY: &str = r#"PLACE
     P3;
 
 MARKING
+    P1 : 0,
+    P2 : 0,
+    P3 : 0;
+
 TRANSITION T1
   CONSUME
     P1 : 1;
@@ -111,6 +121,8 @@ pub const LOLA_STRING_NET_WITH_LOOP_TOPOLOGY: &str = r#"PLACE
     P1;
 
 MARKING
+    P1 : 0;
+
 TRANSITION T1
   CONSUME
     P1 : 1;
