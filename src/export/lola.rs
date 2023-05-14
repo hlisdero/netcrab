@@ -111,7 +111,10 @@ impl PetriNet {
     where
         T: std::io::Write,
     {
+        // The format requires us to close the header with a semicolon if empty
         if set.is_empty() {
+            let header_line = format!("  {header};\n");
+            writer.write_all(header_line.as_bytes())?;
             return Ok(());
         }
         let header_line = format!("  {header}\n");
