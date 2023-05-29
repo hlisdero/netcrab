@@ -1,7 +1,7 @@
 [package]
 name = "netcrab"
-version = "0.1.0"
-description = "A tool suite for creating, visualizing and analyzing Petri nets"
+version = "1.0.0"
+description = "A simple library for creating and exporting Petri nets"
 repository = "https://github.com/hlisdero/netcrab/"
 homepage = "https://github.com/hlisdero/netcrab/"
 authors = ["Horacio Lisdero Scaffino <hlisdero@users.noreply.github.com>"]
