@@ -20,7 +20,7 @@
 
 ### Petri net implementation
 
-The main implementation is found in `petri_net.rs`. It uses two `BTreeMap` to store the places and transitions. References to places and transitions are named `PlaceRef` and `TransitionRef` respectively. Places and transitions are labelled with `String`. The net keeps the places in order, which allows the iterators to be deterministic.
+The main implementation is found in `petri_net.rs`. It uses two `BTreeMap` to store the places and transitions. References to places and transitions are named `PlaceRef` and `TransitionRef` respectively. Places and transitions are labeled with `String`. The net keeps the places in order, which allows the iterators to be deterministic.
 
 References to the places and transitions are returned when adding them to the net. These references can later be used to add arcs and to access the markings.
 
@@ -87,7 +87,7 @@ _Note: For more examples, please refer to the unit tests in each module._
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what makes the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
@@ -108,7 +108,7 @@ Project Link: [https://github.com/hlisdero/netcrab](https://github.com/hlisdero/
 
 ## Acknowledgments
 
-Based on the original work by Tom Meyer found in <https://github.com/Skasselbard/PetriToStar>
+Based on the original work by Tom Meyer found in <https://github.com/Skasselbard/PetriToStar>.
 
 This `README.md` is based on the template provided by [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 
