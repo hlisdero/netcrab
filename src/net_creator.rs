@@ -43,9 +43,9 @@ pub fn create_basic_unconnected_net(
 /// Creates a new Petri net where the places and the transition form a simple chain.
 /// The net contains `length` places and `length - 1` transitions.
 /// Returns the net, a vector with all place references and a vector with all transition references.
-/// 
+///
 /// # Panics
-/// 
+///
 /// Panics if arcs cannot be added.
 #[must_use]
 pub fn create_net_chain_topology(length: usize) -> (PetriNet, Vec<PlaceRef>, Vec<TransitionRef>) {
@@ -73,9 +73,9 @@ pub fn create_net_chain_topology(length: usize) -> (PetriNet, Vec<PlaceRef>, Vec
 
 /// Creates a new Petri net with one place and one transition forming a loop.
 /// Returns the net, the single place reference and the single transition reference.
-/// 
+///
 /// # Panics
-/// 
+///
 /// Panics if arcs cannot be added.
 #[must_use]
 pub fn create_net_loop_topology() -> (PetriNet, PlaceRef, TransitionRef) {
