@@ -12,8 +12,7 @@ impl PetriNet {
         self.to_lola(&mut writer)?;
         String::from_utf8(writer).map_err(|_|
             // This error could only be due to a bug, map it to a more standard error type.
-            std::io::Error::new(
-                std::io::ErrorKind::Other,
+            std::io::Error::other(
                 "Could not convert the string to UTF-8",
             ))
     }

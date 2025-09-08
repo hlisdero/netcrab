@@ -8,13 +8,13 @@ use std::collections::btree_map::Iter;
 impl PetriNet {
     /// Returns an iterator over the place references and their corresponding places.
     /// The places are visited in alphabetical order.
-    pub fn places_iter(&self) -> Iter<PlaceRef, Place> {
+    pub fn places_iter(&self) -> Iter<'_, PlaceRef, Place> {
         self.places.iter()
     }
 
     /// Returns an iterator over the transition references and their corresponding transitions.
     /// The transitions are visited in alphabetical order.
-    pub fn transitions_iter(&self) -> Iter<TransitionRef, Transition> {
+    pub fn transitions_iter(&self) -> Iter<'_, TransitionRef, Transition> {
         self.transitions.iter()
     }
 }

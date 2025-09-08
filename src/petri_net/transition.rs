@@ -23,7 +23,7 @@ impl Transition {
 
     /// Gets a mutable reference to the set of places
     /// whose edges point to this transition.
-    pub fn get_preset_mut(&mut self) -> &mut BTreeSet<PlaceRef> {
+    pub const fn get_preset_mut(&mut self) -> &mut BTreeSet<PlaceRef> {
         &mut self.preset
     }
 
@@ -36,7 +36,7 @@ impl Transition {
 
     /// Gets a mutable reference to the set of places
     /// to which edges from this transition point to.
-    pub fn get_postset_mut(&mut self) -> &mut BTreeSet<PlaceRef> {
+    pub const fn get_postset_mut(&mut self) -> &mut BTreeSet<PlaceRef> {
         &mut self.postset
     }
 

@@ -34,7 +34,7 @@ impl Place {
     /// # Errors
     ///
     /// If the addition causes an overflow, then an error is returned.
-    pub fn add_token(&mut self, tokens_to_add: usize) -> Result<(), &str> {
+    pub const fn add_token(&mut self, tokens_to_add: usize) -> Result<(), &str> {
         self.marking = match self.marking.checked_add(tokens_to_add) {
             Some(value) => value,
             None => return Err("Overflow when adding tokens to this place"),
@@ -47,7 +47,7 @@ impl Place {
     /// # Errors
     ///
     /// If the subtraction causes an overflow, then an error is returned.
-    pub fn remove_token(&mut self, tokens_to_remove: usize) -> Result<(), &str> {
+    pub const fn remove_token(&mut self, tokens_to_remove: usize) -> Result<(), &str> {
         if self.marking() < tokens_to_remove {
             return Err("Cannot remove more tokens than available at this place");
         }
@@ -67,7 +67,7 @@ impl Place {
 
     /// Gets a mutable reference to the set of transitions
     /// whose edges point to this place.
-    pub fn get_preset_mut(&mut self) -> &mut BTreeSet<TransitionRef> {
+    pub const fn get_preset_mut(&mut self) -> &mut BTreeSet<TransitionRef> {
         &mut self.preset
     }
 
@@ -80,7 +80,7 @@ impl Place {
 
     /// Gets a mutable reference to the set of transitions
     /// to which edges from this place point to.
-    pub fn get_postset_mut(&mut self) -> &mut BTreeSet<TransitionRef> {
+    pub const fn get_postset_mut(&mut self) -> &mut BTreeSet<TransitionRef> {
         &mut self.postset
     }
 

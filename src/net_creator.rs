@@ -18,6 +18,7 @@ macro_rules! transition_label_from_index {
 }
 
 /// Creates a new Petri net with no arcs and `number_of_places` places and `number_of_transitions` transitions.
+///
 /// Returns the net, a vector with all place references and a vector with all transition references.
 #[must_use]
 pub fn create_basic_unconnected_net(
@@ -41,6 +42,7 @@ pub fn create_basic_unconnected_net(
 }
 
 /// Creates a new Petri net where the places and the transition form a simple chain.
+///
 /// The net contains `length` places and `length - 1` transitions.
 /// Returns the net, a vector with all place references and a vector with all transition references.
 ///

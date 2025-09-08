@@ -15,8 +15,7 @@ impl PetriNet {
         self.to_pnml(&mut writer)?;
         String::from_utf8(writer).map_err(|_|
             // This error could only be due to a bug, map it to a more standard error type.
-            std::io::Error::new(
-                std::io::ErrorKind::Other,
+            std::io::Error::other(
                 "Could not convert the string to UTF-8",
             ))
     }
@@ -34,10 +33,7 @@ impl PetriNet {
         self.write_pnml(writer).map_err(|_| {
             // Map the XML error of the library to a more standard error type
             // to stay consistent with the other export formats.
-            std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "Could not convert the net to PNML",
-            )
+            std::io::Error::other("Could not convert the net to PNML")
         })
     }
 
