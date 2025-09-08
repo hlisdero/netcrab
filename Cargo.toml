@@ -1,6 +1,6 @@
 [package]
 name = "netcrab"
-version = "1.0.0"
+version = "1.0.1"
 description = "A simple library for creating and exporting Petri nets"
 repository = "https://github.com/hlisdero/netcrab/"
 homepage = "https://github.com/hlisdero/netcrab/"
