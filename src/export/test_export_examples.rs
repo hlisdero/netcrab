@@ -140,14 +140,14 @@ TRANSITION T1
     P1 : 1;
 "#;
 
-pub const PNML_STRING_EMPTY_NET: &str = r#"<?xml version="1.0" encoding="utf-8"?>
+pub const PNML_STRING_EMPTY_NET: &str = r#"<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
   <net id="net0" type="http://www.pnml.org/version-2009/grammar/ptnet">
     <page id="page0" />
   </net>
 </pnml>"#;
 
-pub const PNML_STRING_ONLY_EMPTY_PLACES_NET: &str = r#"<?xml version="1.0" encoding="utf-8"?>
+pub const PNML_STRING_ONLY_EMPTY_PLACES_NET: &str = r#"<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
   <net id="net0" type="http://www.pnml.org/version-2009/grammar/ptnet">
     <page id="page0">
@@ -180,7 +180,7 @@ pub const PNML_STRING_ONLY_EMPTY_PLACES_NET: &str = r#"<?xml version="1.0" encod
   </net>
 </pnml>"#;
 
-pub const PNML_STRING_MARKED_PLACES_NET: &str = r#"<?xml version="1.0" encoding="utf-8"?>
+pub const PNML_STRING_MARKED_PLACES_NET: &str = r#"<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
   <net id="net0" type="http://www.pnml.org/version-2009/grammar/ptnet">
     <page id="page0">
@@ -228,7 +228,7 @@ pub const PNML_STRING_MARKED_PLACES_NET: &str = r#"<?xml version="1.0" encoding=
   </net>
 </pnml>"#;
 
-pub const PNML_STRING_ONLY_EMPTY_TRANSITIONS_NET: &str = r#"<?xml version="1.0" encoding="utf-8"?>
+pub const PNML_STRING_ONLY_EMPTY_TRANSITIONS_NET: &str = r#"<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
   <net id="net0" type="http://www.pnml.org/version-2009/grammar/ptnet">
     <page id="page0">
@@ -261,7 +261,7 @@ pub const PNML_STRING_ONLY_EMPTY_TRANSITIONS_NET: &str = r#"<?xml version="1.0" 
   </net>
 </pnml>"#;
 
-pub const PNML_STRING_NET_WITH_CHAIN_TOPOLOPY: &str = r#"<?xml version="1.0" encoding="utf-8"?>
+pub const PNML_STRING_NET_WITH_CHAIN_TOPOLOPY: &str = r#"<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
   <net id="net0" type="http://www.pnml.org/version-2009/grammar/ptnet">
     <page id="page0">
@@ -326,7 +326,7 @@ pub const PNML_STRING_NET_WITH_CHAIN_TOPOLOPY: &str = r#"<?xml version="1.0" enc
   </net>
 </pnml>"#;
 
-pub const PNML_STRING_NET_WITH_LOOP_TOPOLOGY: &str = r#"<?xml version="1.0" encoding="utf-8"?>
+pub const PNML_STRING_NET_WITH_LOOP_TOPOLOGY: &str = r#"<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
   <net id="net0" type="http://www.pnml.org/version-2009/grammar/ptnet">
     <page id="page0">
