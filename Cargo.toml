@@ -13,5 +13,9 @@ edition = "2021"
 exclude = [".github/**", "images/*"]
 
 [dependencies]
-uuid = { version = "1.3.3", features = ["v4", "fast-rng", "macro-diagnostics"] }
+uuid = { version = "1.18.1", features = [
+    "v4",
+    "fast-rng",
+    "macro-diagnostics",
+] }
 xml-rs = "1.0.0"
