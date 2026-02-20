@@ -18,4 +18,4 @@ uuid = { version = "1.21.0", features = [
     "fast-rng",
     "macro-diagnostics",
 ] }
-xml-rs = "1.0.0"
+xml = "1.2.1"
