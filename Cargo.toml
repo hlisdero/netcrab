@@ -9,7 +9,7 @@ readme = "README.md"
 license = "MIT OR Apache-2.0"
 keywords = ["petri-net", "dot", "pnml"]
 categories = ["data-structures"]
-edition = "2021"
+edition = "2024"
 exclude = [".github/**", "images/*"]
 
 [dependencies]
