@@ -254,7 +254,7 @@ mod net_tests {
     #[test]
     fn new_default_has_no_transitions() {
         let new = PetriNet::new();
-        assert_eq!(new.get_cardinality_transitions(), 0)
+        assert_eq!(new.get_cardinality_transitions(), 0);
     }
 
     #[test]

@@ -56,7 +56,7 @@ pub const DOT_STRING_NET_WITH_LOOP_TOPOLOGY: &str = r#"digraph petrinet {
 }
 "#;
 
-pub const LOLA_STRING_ONLY_EMPTY_PLACES_NET: &str = r#"PLACE
+pub const LOLA_STRING_ONLY_EMPTY_PLACES_NET: &str = r"PLACE
     P1,
     P2,
     P3,
@@ -70,9 +70,9 @@ MARKING
     P4 : 0,
     P5 : 0;
 
-"#;
+";
 
-pub const LOLA_STRING_MARKED_PLACES_NET: &str = r#"PLACE
+pub const LOLA_STRING_MARKED_PLACES_NET: &str = r"PLACE
     P1,
     P2,
     P3,
@@ -86,9 +86,9 @@ MARKING
     P4 : 2,
     P5 : 1;
 
-"#;
+";
 
-pub const LOLA_STRING_ONLY_EMPTY_TRANSITIONS_NET: &str = r#"TRANSITION T1
+pub const LOLA_STRING_ONLY_EMPTY_TRANSITIONS_NET: &str = r"TRANSITION T1
   CONSUME;
   PRODUCE;
 TRANSITION T2
@@ -103,9 +103,9 @@ TRANSITION T4
 TRANSITION T5
   CONSUME;
   PRODUCE;
-"#;
+";
 
-pub const LOLA_STRING_NET_WITH_CHAIN_TOPOLOPY: &str = r#"PLACE
+pub const LOLA_STRING_NET_WITH_CHAIN_TOPOLOPY: &str = r"PLACE
     P1,
     P2,
     P3;
@@ -125,9 +125,9 @@ TRANSITION T2
     P2 : 1;
   PRODUCE
     P3 : 1;
-"#;
+";
 
-pub const LOLA_STRING_NET_WITH_LOOP_TOPOLOGY: &str = r#"PLACE
+pub const LOLA_STRING_NET_WITH_LOOP_TOPOLOGY: &str = r"PLACE
     P1;
 
 MARKING
@@ -138,7 +138,7 @@ TRANSITION T1
     P1 : 1;
   PRODUCE
     P1 : 1;
-"#;
+";
 
 pub const PNML_STRING_EMPTY_NET: &str = r#"<?xml version="1.0" encoding="UTF-8"?>
 <pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">

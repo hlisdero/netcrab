@@ -104,7 +104,7 @@ mod net_creator_tests {
         assert_eq!(net.get_cardinality_places(), 8);
         assert_eq!(net.get_cardinality_transitions(), 14);
         assert_eq!(place_refs.len(), 8);
-        assert_eq!(transition_refs.len(), 14)
+        assert_eq!(transition_refs.len(), 14);
     }
 
     #[test]
@@ -131,17 +131,17 @@ mod net_creator_tests {
         assert!(arcs_1.is_empty());
         assert!(arcs_2.is_empty());
         assert_eq!(place_refs.len(), 8);
-        assert_eq!(transition_refs.len(), 14)
+        assert_eq!(transition_refs.len(), 14);
     }
 
     #[test]
     fn create_basic_unconnected_net_has_valid_references() {
         let (net, place_refs, transition_refs) = create_basic_unconnected_net(8, 14);
 
-        for place_ref in place_refs.iter() {
+        for place_ref in &place_refs {
             assert!(net.check_place_ref(place_ref));
         }
-        for transition_ref in transition_refs.iter() {
+        for transition_ref in &transition_refs {
             assert!(net.check_transition_ref(transition_ref));
         }
     }
@@ -175,10 +175,10 @@ mod net_creator_tests {
     fn create_net_chain_topology_has_valid_references() {
         let (net, place_refs, transition_refs) = create_net_chain_topology(3);
 
-        for place_ref in place_refs.iter() {
+        for place_ref in &place_refs {
             assert!(net.check_place_ref(place_ref));
         }
-        for transition_ref in transition_refs.iter() {
+        for transition_ref in &transition_refs {
             assert!(net.check_transition_ref(transition_ref));
         }
     }
